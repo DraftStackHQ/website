@@ -52,3 +52,23 @@ siteNav.querySelectorAll("a").forEach((link) => {
 document.addEventListener("click", (event) => {
   if (!header.contains(event.target)) closeNav();
 });
+
+const navLinks = [...siteNav.querySelectorAll("a[href^='#']")];
+const spySections = navLinks
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+const spyObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const link = navLinks.find((a) => a.getAttribute("href") === `#${entry.target.id}`);
+      if (!link) return;
+      navLinks.forEach((a) => a.classList.remove("active"));
+      link.classList.add("active");
+    });
+  },
+  { rootMargin: "-40% 0px -55% 0px" }
+);
+
+spySections.forEach((section) => spyObserver.observe(section));

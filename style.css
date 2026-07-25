@@ -134,6 +134,14 @@ nav a:hover::after {
   width: 100%;
 }
 
+nav a.active {
+  color: var(--text);
+}
+
+nav a.active::after {
+  width: 100%;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -748,21 +756,45 @@ nav a:hover::after {
 
 /* Community */
 
-.community {
+.community,
+.about-glow {
   position: relative;
   overflow: hidden;
 }
 
-.community-glow {
+.ambient-glow {
   position: absolute;
   inset: 0;
   background: radial-gradient(600px 300px at 50% 0%, var(--accent-tint), transparent 70%);
   pointer-events: none;
 }
 
+.about-glow .ambient-glow {
+  opacity: 0.5;
+}
+
 .community-inner {
   text-align: center;
   max-width: 560px;
+  margin: 0 auto;
+}
+
+.community-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: var(--accent-tint);
+  border: 1px solid var(--border);
+  color: var(--accent);
+}
+
+.community-icon svg {
+  width: 28px;
+  height: 28px;
 }
 
 .community-inner p {
