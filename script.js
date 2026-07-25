@@ -31,3 +31,24 @@ const header = document.querySelector(".site-header");
 window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 8);
 });
+
+const navToggle = document.querySelector(".nav-toggle");
+const siteNav = document.getElementById("site-nav");
+
+function closeNav() {
+  siteNav.classList.remove("nav-open");
+  navToggle.setAttribute("aria-expanded", "false");
+}
+
+navToggle.addEventListener("click", () => {
+  const isOpen = siteNav.classList.toggle("nav-open");
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+siteNav.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeNav);
+});
+
+document.addEventListener("click", (event) => {
+  if (!header.contains(event.target)) closeNav();
+});
