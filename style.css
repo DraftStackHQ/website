@@ -43,6 +43,13 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 h1, h2, h3 {
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -220,7 +227,7 @@ nav a:hover::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(10, 10, 12, 0.35) 0%, rgba(10, 10, 12, 0.55) 55%, var(--bg) 100%);
+  background: linear-gradient(180deg, rgba(10, 10, 12, 0.5) 0%, rgba(10, 10, 12, 0.65) 55%, var(--bg) 100%);
   pointer-events: none;
 }
 
@@ -254,7 +261,8 @@ nav a:hover::after {
   padding: 7px 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--accent-tint);
+  background: rgba(10, 10, 12, 0.6);
+  backdrop-filter: blur(6px);
 }
 
 .hero h1 {
@@ -374,6 +382,12 @@ nav a:hover::after {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 22px;
   margin-top: 36px;
+}
+
+@media (min-width: 700px) {
+  .services-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .card {
@@ -519,7 +533,6 @@ nav a:hover::after {
 
 .diff-icon.no {
   color: var(--text-dim);
-  opacity: 0.55;
 }
 
 @media (max-width: 760px) {
