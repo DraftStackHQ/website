@@ -368,8 +368,27 @@ nav a.active::after {
 
 .section-alt {
   background: var(--bg-alt);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.section-alt::before,
+.section-alt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 64px;
+  pointer-events: none;
+}
+
+.section-alt::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+
+.section-alt::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg), transparent);
 }
 
 .section h2 {
@@ -490,6 +509,11 @@ nav a.active::after {
   padding: 18px 28px;
   border-bottom: 1px solid var(--border);
   gap: 12px;
+  transition: background 0.2s ease;
+}
+
+.difference-row:not(.difference-head):hover {
+  background: color-mix(in srgb, var(--card-bg) 85%, var(--accent) 4%);
 }
 
 .difference-row:last-child {
@@ -540,7 +564,8 @@ nav a.active::after {
 }
 
 .diff-icon.no {
-  color: var(--text-dim);
+  color: #e5555f;
+  opacity: 0.85;
 }
 
 @media (max-width: 760px) {
@@ -769,8 +794,68 @@ nav a.active::after {
   pointer-events: none;
 }
 
-.about-glow .ambient-glow {
-  opacity: 0.5;
+.section-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-glow .ambient-glow {
+  opacity: 0.4;
+}
+
+.section-glow > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.about-copy {
+  max-width: 520px;
+}
+
+.about-visual {
+  justify-self: end;
+  max-width: 460px;
+  width: 100%;
+}
+
+.about-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-visual-caption {
+  margin: 8px 0 0;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 860px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .about-copy {
+    max-width: none;
+  }
+
+  .about-visual {
+    justify-self: center;
+    max-width: 420px;
+  }
+
+  .about-visual-caption {
+    text-align: center;
+  }
 }
 
 .community-inner {
