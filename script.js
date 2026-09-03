@@ -158,64 +158,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
   /* --------------------------------------------------------------------------
-     4. Interactive Desktop Web App Workspace
+     4. Interactive Product Screenshot Showcase & Switcher
      -------------------------------------------------------------------------- */
-  const sidebarItems = document.querySelectorAll(".sidebar-item[data-web-tab]");
-  const viewTabs = document.querySelectorAll(".app-view-tab[data-panel]");
-  const appPanels = document.querySelectorAll(".app-panel");
+  const shotTabs = document.querySelectorAll(".screenshot-tab-btn[data-shot]");
+  const shotPanels = document.querySelectorAll(".screenshot-panel");
+  const browserUrl = document.getElementById("browserUrl");
 
-  const switchWebTab = (tabKey) => {
-    // Synchronize sidebar
-    sidebarItems.forEach((item) => {
-      const key = item.getAttribute("data-web-tab");
-      item.classList.toggle("active", key === tabKey);
-    });
-
-    // Synchronize topbar view tabs
-    viewTabs.forEach((tab) => {
-      const key = tab.getAttribute("data-panel");
-      tab.classList.toggle("active", key === tabKey);
-    });
-
-    // Switch panels (matters, intake, billing)
-    appPanels.forEach((panel) => {
-      if (panel.id === `webPanel-${tabKey}`) {
-        panel.classList.add("active");
-      } else {
-        panel.classList.remove("active");
-      }
-    });
-  };
-
-  sidebarItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const key = item.getAttribute("data-web-tab");
-      if (key && document.getElementById(`webPanel-${key}`)) {
-        switchWebTab(key);
-      }
-    });
-  });
-
-  viewTabs.forEach((tab) => {
+  shotTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const key = tab.getAttribute("data-panel");
-      if (key) {
-        switchWebTab(key);
-      }
-    });
-  });
+      const shotKey = tab.getAttribute("data-shot");
+      const urlText = tab.getAttribute("data-url");
 
-  // Interactive table action buttons demo
-  document.querySelectorAll(".table-action-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const prevText = btn.textContent;
-      btn.textContent = "Opened ✓";
-      btn.style.borderColor = "var(--accent-coral)";
-      setTimeout(() => {
-        btn.textContent = prevText;
-        btn.style.borderColor = "";
-      }, 1500);
+      shotTabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      shotPanels.forEach((panel) => {
+        if (panel.id === `shot-${shotKey}`) {
+          panel.classList.add("active");
+        } else {
+          panel.classList.remove("active");
+        }
+      });
+
+      if (browserUrl && urlText) {
+        browserUrl.textContent = urlText;
+      }
     });
   });
   /* --------------------------------------------------------------------------

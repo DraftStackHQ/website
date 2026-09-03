@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/draftstack-mark.svg">
-  <link rel="stylesheet" href="style.css?v=softly-8">
+  <link rel="stylesheet" href="style.css?v=softly-9">
 </head>
 <body>
   <!-- Ambient Fluid Floating Blobs -->
@@ -216,6 +216,29 @@
       </div>
 
       <div class="container web-app-container">
+        <!-- Interactive Screenshot Switcher Tabs -->
+        <div class="screenshot-tab-bar">
+          <button type="button" class="screenshot-tab-btn active" data-shot="dashboard" data-url="app.draftstack.dev/dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Legal Dashboard</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="clients" data-url="app.draftstack.dev/clients-and-cases">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Clients & Cases</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="annex" data-url="app.draftstack.dev/annex-processing">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+            <span>Annex Processing</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="login" data-url="app.draftstack.dev/login">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Secure Sign-In</span>
+          </button>
+        </div>
+
         <!-- Desktop Browser Window Frame -->
         <div class="web-app-window">
           <!-- Window Chrome Header -->
@@ -227,223 +250,115 @@
             </div>
             <div class="browser-address-bar">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lock-icon" width="12" height="12"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              <span class="url-text">app.draftstack.dev/workspace/matters</span>
+              <span class="url-text" id="browserUrl">app.draftstack.dev/dashboard</span>
             </div>
             <div class="window-status">
               <span class="status-dot"></span>
-              <span>DraftStack Web OS</span>
+              <span>Live Application</span>
             </div>
           </div>
 
-          <!-- Web Application Layout -->
-          <div class="web-app-layout">
-            <!-- Sidebar -->
-            <aside class="app-sidebar">
-              <div class="workspace-header">
-                <img src="images/draftstack-mark.svg" alt="" class="workspace-logo-mark" width="22" height="26" aria-hidden="true">
-                <div class="workspace-info">
-                  <span class="workspace-title">Sterling & Partners</span>
-                  <span class="workspace-sub">Legal Practice &bull; Pro</span>
+          <!-- Product Screenshot Display Area -->
+          <div class="product-screenshot-viewport">
+            <!-- Screenshot 1: Dashboard -->
+            <div class="screenshot-panel active" id="shot-dashboard">
+              <div class="screenshot-img-container">
+                <img src="images/product-dashboard.png" alt="Legal Platform Dashboard Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag">Live Production Build</span>
+                  <h4 class="caption-title">Legal Operations Dashboard</h4>
+                  <p class="caption-desc">Active matter metrics, automated annex processing status, recent DOCX generation logs, and quick actions.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">Next.js 15</span>
+                  <span class="tech-pill">.NET Core API</span>
+                  <span class="tech-pill">PostgreSQL 16</span>
                 </div>
               </div>
+            </div>
 
-              <div class="sidebar-action">
-                <button type="button" class="btn btn-sidebar-action">
-                  <span>+ New Matter</span>
-                </button>
+            <!-- Screenshot 2: Clients & Cases -->
+            <div class="screenshot-panel" id="shot-clients">
+              <div class="screenshot-img-container">
+                <img src="images/product-clients-cases.png" alt="Clients and Cases Management Screenshot" class="product-screenshot-img" loading="lazy">
               </div>
-
-              <nav class="sidebar-nav">
-                <button type="button" class="sidebar-item active" data-web-tab="matters">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                  <span>Active Matters</span>
-                  <span class="sidebar-badge">18</span>
-                </button>
-
-                <button type="button" class="sidebar-item" data-web-tab="intake">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
-                  <span>Client Intake</span>
-                  <span class="sidebar-badge coral">3 new</span>
-                </button>
-
-                <button type="button" class="sidebar-item" data-web-tab="billing">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                  <span>Time & Billing</span>
-                </button>
-
-                <button type="button" class="sidebar-item" data-web-tab="vault">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
-                  <span>Document Vault</span>
-                </button>
-              </nav>
-
-              <div class="sidebar-footer">
-                <div class="storage-indicator">
-                  <div class="storage-text">
-                    <span>Team Storage</span>
-                    <span>24.8 / 100 GB</span>
-                  </div>
-                  <div class="storage-bar">
-                    <div class="storage-fill" style="width: 25%;"></div>
-                  </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag">Matter Catalog</span>
+                  <h4 class="caption-title">Clients and Cases Management</h4>
+                  <p class="caption-desc">Centralized legal docket management, client matter histories, lead attorney assignments, and audit tracking.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">Multi-tenant Data</span>
+                  <span class="tech-pill">RBAC Security</span>
+                  <span class="tech-pill">Audit Trail</span>
                 </div>
               </div>
-            </aside>
+            </div>
 
-            <!-- Main Application View -->
-            <div class="app-main">
-              <!-- Top Filter & Search Bar -->
-              <div class="app-topbar">
-                <div class="app-search-box">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon" width="14" height="14"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                  <input type="text" placeholder="Search matters, clients, documents..." class="app-search-input" readonly value="Filter: Active 2026 Q3 Matters">
+            <!-- Screenshot 3: Annex Processing -->
+            <div class="screenshot-panel" id="shot-annex">
+              <div class="screenshot-img-container">
+                <img src="images/product-annex-processing.png" alt="Annex Processing Engine Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag">Document Automation</span>
+                  <h4 class="caption-title">Automated Annex Processing Engine</h4>
+                  <p class="caption-desc">Sub-second legal annex assembly, document version comparison, placeholder replacement, and DOCX generation.</p>
                 </div>
-
-                <div class="app-view-tabs">
-                  <button type="button" class="app-view-tab active" data-panel="matters">Matters (18)</button>
-                  <button type="button" class="app-view-tab" data-panel="intake">Intake (3)</button>
-                  <button type="button" class="app-view-tab" data-panel="billing">Retainers</button>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">MinIO S3 Storage</span>
+                  <span class="tech-pill">Background Worker</span>
+                  <span class="tech-pill">OpenXML Engine</span>
                 </div>
               </div>
+            </div>
 
-              <!-- Panel 1: Matters Table -->
-              <div class="app-panel active" id="webPanel-matters">
-                <div class="data-table-wrap">
-                  <table class="data-table">
-                    <thead>
-                      <tr>
-                        <th>Matter / Client</th>
-                        <th>Phase & Progress</th>
-                        <th>Lead Attorney</th>
-                        <th>Deadline</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="matter-name">Pacific Tech Corp Acquisition</div>
-                          <div class="matter-client">Cross-Border M&A &bull; #2026-M42</div>
-                        </td>
-                        <td>
-                          <div class="phase-badge green">Phase 3 &bull; Closing</div>
-                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 82%;"></div></div>
-                        </td>
-                        <td>
-                          <div class="lead-user"><span class="user-avatar-sm">SM</span> Sarah Morales</div>
-                        </td>
-                        <td>
-                          <span class="deadline-urgent">Tomorrow, 5:00 PM</span>
-                        </td>
-                        <td>
-                          <button type="button" class="table-action-btn">Open File</button>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>
-                          <div class="matter-name">IP Patent Portfolio Defense</div>
-                          <div class="matter-client">Horizon Biotech &bull; #2026-IP09</div>
-                        </td>
-                        <td>
-                          <div class="phase-badge yellow">Partner Review</div>
-                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 55%; background: #f59e0b;"></div></div>
-                        </td>
-                        <td>
-                          <div class="lead-user"><span class="user-avatar-sm coral">MT</span> Marcus Tan</div>
-                        </td>
-                        <td>
-                          <span class="deadline-normal">Oct 18, 2026</span>
-                        </td>
-                        <td>
-                          <button type="button" class="table-action-btn">Open File</button>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>
-                          <div class="matter-name">Vanguard Fund Formation & Regulatory</div>
-                          <div class="matter-client">Vanguard Capital &bull; #2026-FN12</div>
-                        </td>
-                        <td>
-                          <div class="phase-badge green">SEC Compliance Cleared</div>
-                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 100%; background: #34d399;"></div></div>
-                        </td>
-                        <td>
-                          <div class="lead-user"><span class="user-avatar-sm lavender">DK</span> David Kim</div>
-                        </td>
-                        <td>
-                          <span class="deadline-done">Completed</span>
-                        </td>
-                        <td>
-                          <button type="button" class="table-action-btn secondary">Archive</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <!-- Screenshot 4: Login -->
+            <div class="screenshot-panel" id="shot-login">
+              <div class="screenshot-img-container">
+                <img src="images/product-login.png" alt="Web Application Login Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag">Security & Auth</span>
+                  <h4 class="caption-title">Law Firm Authentication Portal</h4>
+                  <p class="caption-desc">Encrypted authentication portal with session token validation and granular role-based authorization.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">JWT Auth</span>
+                  <span class="tech-pill">Encrypted at Rest</span>
+                  <span class="tech-pill">Role Scopes</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <!-- Panel 2: Client Intake Pipeline -->
-              <div class="app-panel" id="webPanel-intake">
-                <div class="intake-pipeline-grid">
-                  <div class="intake-card">
-                    <div class="intake-card-head">
-                      <span class="intake-id">#1048 &bull; 12 mins ago</span>
-                      <span class="phase-badge green">Conflict Check Passed</span>
-                    </div>
-                    <h4 class="intake-client-name">Vertex Real Estate Holdings</h4>
-                    <p class="intake-scope">Commercial lease acquisition, 4 parcels in Bonifacio Global City.</p>
-                    <div class="intake-footer">
-                      <span class="intake-doc-count">📎 6 verified documents attached</span>
-                      <button type="button" class="table-action-btn">Accept Matter</button>
-                    </div>
-                  </div>
-
-                  <div class="intake-card">
-                    <div class="intake-card-head">
-                      <span class="intake-id">#1049 &bull; 1 hour ago</span>
-                      <span class="phase-badge yellow">Awaiting Retainer Sign</span>
-                    </div>
-                    <h4 class="intake-client-name">Meridian Ventures Pte Ltd</h4>
-                    <p class="intake-scope">Series A venture round financing, automated SAFE agreements.</p>
-                    <div class="intake-footer">
-                      <span class="intake-doc-count">📎 3 verified documents attached</span>
-                      <button type="button" class="table-action-btn">View Intake</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Panel 3: Billing & Retainers -->
-              <div class="app-panel" id="webPanel-billing">
-                <div class="billing-summary-grid">
-                  <div class="billing-stat-box">
-                    <span class="stat-label">October Retainers Logged</span>
-                    <span class="stat-amount">₱1,480,000</span>
-                    <span class="stat-sub positive">↑ 18% vs September</span>
-                  </div>
-                  <div class="billing-stat-box">
-                    <span class="stat-label">Invoices Auto-Settled</span>
-                    <span class="stat-amount">18 / 20</span>
-                    <span class="stat-sub">GCash, Maya & Wire Webhooks</span>
-                  </div>
-                  <div class="billing-stat-box">
-                    <span class="stat-label">Average Settlement Speed</span>
-                    <span class="stat-amount">1.8 Days</span>
-                    <span class="stat-sub positive">Zero manual follow-ups</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Bottom Bar Banner -->
-              <div class="app-bottom-bar">
-                <div class="app-hint-text">
-                  <span class="sparkle-icon">✦</span>
-                  <span><strong>Live Interactive Web Preview:</strong> Click any sidebar tab or category above to explore how we architect legal & enterprise web tools.</span>
-                </div>
-                <a href="#inquire" class="btn btn-primary btn-app-cta">Deploy for your team &rarr;</a>
-              </div>
+        <!-- Product Highlight Cards below window -->
+        <div class="product-proof-grid">
+          <div class="proof-card">
+            <div class="proof-icon">⚡</div>
+            <div class="proof-text">
+              <h5>Full-Stack Architecture</h5>
+              <p>Next.js frontend backed by .NET Core microservices and high-throughput PostgreSQL database.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">📄</div>
+            <div class="proof-text">
+              <h5>Document Automation</h5>
+              <p>Automated annex packaging, placeholder injection, and version comparison for active legal matters.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">🔒</div>
+            <div class="proof-text">
+              <h5>Enterprise Grade Security</h5>
+              <p>Role-based access control (RBAC), audit trails, and secure object storage for confidential legal records.</p>
             </div>
           </div>
         </div>
@@ -699,6 +614,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=softly-4" defer></script>
+  <script src="script.js?v=softly-9" defer></script>
 </body>
 </html>
