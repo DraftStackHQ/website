@@ -1,276 +1,697 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DraftStack — Custom Software Development</title>
-<meta name="description" content="DraftStack is a startup building custom software solutions. Join our community on Facebook.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DraftStack — Thoughtful Software Engineering Studio</title>
+  <meta name="description" content="DraftStack is a modern software engineering startup crafting bespoke web applications, internal operational systems, and digital tools.">
+  <!-- Fonts: Outfit (Clean Sans-Serif) & Instrument Serif (Editorial Italic Accent) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/draftstack-mark.svg">
+  <link rel="stylesheet" href="style.css?v=softly-8">
 </head>
 <body>
-
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="#top" class="logo">Draft<span>Stack</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation menu">
-      <span></span><span></span><span></span>
-    </button>
-    <nav id="site-nav">
-      <a href="#difference">Why us</a>
-      <a href="#services">Services</a>
-      <a href="#ai">AI</a>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#community">Community</a>
-    </nav>
+  <!-- Ambient Fluid Floating Blobs -->
+  <div class="ambient-blobs" aria-hidden="true">
+    <div class="blob blob-blue"></div>
+    <div class="blob blob-cyan"></div>
+    <div class="blob blob-indigo"></div>
   </div>
-</header>
 
-<main>
-  <section id="top" class="hero">
-    <img src="images/hero-graphic.svg" class="hero-backdrop" alt="" aria-hidden="true">
-    <div class="hero-scrim" aria-hidden="true"></div>
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow reveal">Software startup</p>
-        <h1 class="reveal">We build <span class="gradient-text">custom software</span> that moves your business forward.</h1>
-        <p class="hero-sub reveal">DraftStack is a small team of developers turning ideas into reliable, well-built software — from web apps to internal tools.</p>
-        <div class="hero-actions reveal">
-          <a class="btn btn-primary" href="#services">See what we do</a>
-          <a class="btn btn-secondary" href="#community">Join our community</a>
-        </div>
-      </div>
-      <div class="hero-visual reveal">
-        <div class="browser-frame">
-          <span class="preview-badge">In progress</span>
-          <div class="browser-bar">
-            <span></span><span></span><span></span>
-            <span class="browser-bar-url">app.gymflow.ph/members</span>
-          </div>
-          <div class="status-mock">
-            <div class="status-row">
-              <span class="status-label">Active</span>
-              <span class="status-track"><span class="status-fill" style="width: 89%; background: #3ecf8e;"></span></span>
-              <span class="status-count">214</span>
-            </div>
-            <div class="status-row">
-              <span class="status-label">Expiring soon</span>
-              <span class="status-track"><span class="status-fill" style="width: 8%; background: #f5b942;"></span></span>
-              <span class="status-count">18</span>
-            </div>
-            <div class="status-row">
-              <span class="status-label">Expired</span>
-              <span class="status-track"><span class="status-fill" style="width: 3%; background: #e5555f;"></span></span>
-              <span class="status-count">6</span>
-            </div>
-          </div>
-        </div>
-        <div class="hero-visual-caption">
-          <span>GymFlow PH</span>
-          <strong>what we're building right now</strong>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="difference" class="section section-alt section-glow">
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="container">
-      <span class="kicker reveal">Why DraftStack</span>
-      <h2 class="reveal">A different way to get software built</h2>
-      <p class="reveal">No account managers, no all-outsourced busywork, no slow ticket queues. Here's how working with us compares to the usual agency experience.</p>
-      <div class="difference-panel reveal">
-        <div class="difference-row difference-head">
-          <span>What matters</span>
-          <span class="difference-us">DraftStack</span>
-          <span class="difference-them">Typical vendors</span>
-        </div>
-        <div class="difference-row">
-          <span>Direct access to the developers building your product</span>
-          <span class="difference-us"><svg class="diff-icon yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Yes</span>
-          <span class="difference-them"><svg class="diff-icon no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Routed through account managers</span>
-        </div>
-        <div class="difference-row">
-          <span>We build and run our own software too — see GymFlow PH</span>
-          <span class="difference-us"><svg class="diff-icon yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Yes</span>
-          <span class="difference-them"><svg class="diff-icon no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Outsourced work only, no skin in the game</span>
-        </div>
-        <div class="difference-row">
-          <span>Transparent, fixed-scope pricing</span>
-          <span class="difference-us"><svg class="diff-icon yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Yes</span>
-          <span class="difference-them"><svg class="diff-icon no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Hourly overruns and change-order fees</span>
-        </div>
-        <div class="difference-row">
-          <span>Small team — changes ship in days, not weeks</span>
-          <span class="difference-us"><svg class="diff-icon yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Yes</span>
-          <span class="difference-them"><svg class="diff-icon no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Slow ticket queues and long review cycles</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="section section-glow">
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="container">
-      <span class="kicker reveal">Services</span>
-      <h2 class="reveal">What we do</h2>
-      <p class="reveal">We build smart, reliable, and scalable digital solutions that help businesses simplify operations and grow.</p>
-      <div class="cards services-cards">
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          </div>
-          <h3>Website Development</h3>
-          <p>Clean, fast websites built around your business and your customers.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          </div>
-          <h3>Web Applications</h3>
-          <p>Custom-built web apps designed around how your business actually works.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-          </div>
-          <h3>POS Systems</h3>
-          <p>Point-of-sale systems that make transactions fast and reliable.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.11-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"></path><polyline points="2.32 6.16 12 11 21.68 6.16"></polyline><line x1="12" y1="22.76" x2="12" y2="11"></line></svg>
-          </div>
-          <h3>Inventory Systems</h3>
-          <p>Track stock and reduce errors with software built for your workflow.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </div>
-          <h3>Payroll Systems</h3>
-          <p>Simplify payroll processing and keep your records accurate.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.77z"></path></svg>
-          </div>
-          <h3>Custom Solutions</h3>
-          <p>Something else in mind? We'll design and build it around your exact needs.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="ai" class="section section-glow">
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="container">
-      <span class="kicker reveal">AI roadmap</span>
-      <h2 class="reveal">Building with AI in mind</h2>
-      <p class="reveal">AI is a core part of where we're headed. We're exploring ways to bring intelligent features into the products we build — not as a gimmick, but where it genuinely makes software smarter and easier to use.</p>
-      <div class="cards">
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <h3>Smart Automation</h3>
-          <p>Using AI to handle repetitive tasks and workflows automatically, so teams can focus on higher-value work.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-          </div>
-          <h3>Predictive Insights</h3>
-          <p>Turning raw business data into forward-looking insights, not just historical reports.</p>
-        </div>
-        <div class="card reveal">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-          </div>
-          <h3>Intelligent Assistants</h3>
-          <p>Chat-based assistants built into our apps to help users get things done faster.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="products" class="section section-alt section-glow">
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="container">
-      <span class="kicker reveal">Products</span>
-      <h2 class="reveal">GymFlow PH — membership software for small gyms</h2>
-      <p class="reveal">Our first product: simple membership management built for single-location Philippine gyms — flat pricing, GCash/Maya-native payment logging, no sales calls.</p>
-      <div class="cards product-cards">
-        <div class="card product-card reveal">
-          <div class="browser-frame">
-            <span class="preview-badge">In progress</span>
-            <div class="browser-bar">
-              <span></span><span></span><span></span>
-              <span class="browser-bar-url">app.gymflow.ph/members</span>
-            </div>
-            <div class="status-mock">
-              <div class="status-row">
-                <span class="status-label">Active</span>
-                <span class="status-track"><span class="status-fill" style="width: 89%; background: #3ecf8e;"></span></span>
-                <span class="status-count">214</span>
-              </div>
-              <div class="status-row">
-                <span class="status-label">Expiring soon</span>
-                <span class="status-track"><span class="status-fill" style="width: 8%; background: #f5b942;"></span></span>
-                <span class="status-count">18</span>
-              </div>
-              <div class="status-row">
-                <span class="status-label">Expired</span>
-                <span class="status-track"><span class="status-fill" style="width: 3%; background: #e5555f;"></span></span>
-                <span class="status-count">6</span>
-              </div>
-            </div>
-          </div>
-          <h3>Member status dashboard</h3>
-          <p>Active, expiring-soon, and expired members at a glance — sorted by urgency, with automatic SMS/email renewal reminders.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="about" class="section about-glow">
-    <img src="images/about-graphic.svg" class="about-backdrop" alt="" aria-hidden="true">
-    <div class="container about-copy">
-      <span class="kicker reveal">Who we are</span>
-      <h2 class="reveal">About us</h2>
-      <p class="reveal">DraftStack started with a simple idea: a few friends who love building software decided to do it together, professionally. We're just getting started, but we're serious about writing clean, dependable code and building real relationships with the people we work with.</p>
-    </div>
-    <p class="about-caption">a small team, building together</p>
-  </section>
-
-  <section id="community" class="section community">
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="container community-inner">
-      <div class="community-icon reveal" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-      </div>
-      <span class="kicker reveal">Community</span>
-      <h2 class="reveal">Follow along</h2>
-      <p class="reveal">We're building in public. Follow our Facebook group for updates on what we're working on.</p>
-      <a class="btn btn-primary reveal" href="https://www.facebook.com/profile.php?id=61590037648877" target="_blank" rel="noopener noreferrer">
-        Visit our Facebook group
+  <!-- Floating Pill Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#top" class="logo" aria-label="DraftStack Home">
+        <img src="images/draftstack-mark.svg" alt="DraftStack" class="logo-mark-img" width="26" height="31">
+        <span class="logo-text">Draft<span class="logo-accent">Stack</span></span>
       </a>
+
+      <nav id="site-nav" class="nav-menu" aria-label="Main Navigation">
+        <a href="#domains">Domains</a>
+        <a href="#experience">Experience</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#inquire" class="btn btn-nav">Start a project</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
-  </section>
-</main>
+  </header>
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p>&copy; 2026 DraftStack. All rights reserved.</p>
-    <a class="social-link" href="https://www.facebook.com/profile.php?id=61590037648877" target="_blank" rel="noopener noreferrer" aria-label="DraftStack on Facebook">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-    </a>
-  </div>
-</footer>
+  <main>
+    <!-- Hero Section -->
+    <section id="top" class="hero-section">
+      <div class="container hero-inner">
+        <div class="eyebrow-pill">
+          <span class="pulse-indicator"></span>
+          <span>Engineering Studio &bull; Accepting Q4 Projects</span>
+        </div>
 
-<script src="script.js?v=3" defer></script>
+        <h1 class="hero-title">
+          We build custom software that feels genuinely 
+          <span class="hero-highlight">thoughtful</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          DraftStack is a small software engineering startup crafting bespoke web platforms, internal operational systems, and digital tools for ambitious businesses and professional firms. No corporate bureaucracy, just senior engineers building with care.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#inquire" class="btn btn-primary">Start a project</a>
+          <a href="#experience" class="btn btn-ghost">View our experience</a>
+        </div>
+        <div class="hero-badges reveal">
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Direct senior developer access</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>100% Client code ownership</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Weekly ship cycles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal Scenario Scroll -->
+    <section id="domains" class="domains-section">
+      <div class="container section-header">
+        <span class="section-kicker">Capabilities</span>
+        <h2 class="section-title">Project domains we craft</h2>
+        <p class="section-desc">Focused software solutions designed around the exact operational realities of your team.</p>
+      </div>
+
+      <div class="horizontal-scroll-wrap" id="marqueeWrap">
+        <div class="horizontal-track" id="scenarioTrack">
+          <!-- Set 1 (Original) -->
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Bespoke Web</span>
+              <span class="scenario-time">01</span>
+            </div>
+            <h3 class="scenario-title">Custom Web Platforms</h3>
+            <p class="scenario-desc">High-performance client portals, customer web apps, and SaaS platforms built with modern full-stack architectures.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Enterprise Ops</span>
+              <span class="scenario-time">02</span>
+            </div>
+            <h3 class="scenario-title">Internal Operations OS</h3>
+            <p class="scenario-desc">Eliminate chaotic spreadsheets with tailored back-office dashboards, case management systems, and team trackers.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Client Experience</span>
+              <span class="scenario-time">03</span>
+            </div>
+            <h3 class="scenario-title">Intake & Client Portals</h3>
+            <p class="scenario-desc">Frictionless client onboarding, secure document collection, and transparent status transparency for your clients.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Automation</span>
+              <span class="scenario-time">04</span>
+            </div>
+            <h3 class="scenario-title">Automated Workflows</h3>
+            <p class="scenario-desc">Seamless API integrations connecting payment gateways, document signing, notification triggers, and data pipelines.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Professional Firms</span>
+              <span class="scenario-time">05</span>
+            </div>
+            <h3 class="scenario-title">Practice Management</h3>
+            <p class="scenario-desc">Specialized tools for legal and professional services — matter tracking, time & billing, and audit-ready workflows.</p>
+          </div>
+
+          <!-- Set 2 (Seamless Infinite Clone) -->
+          <div class="scenario-card" aria-hidden="true">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Bespoke Web</span>
+              <span class="scenario-time">01</span>
+            </div>
+            <h3 class="scenario-title">Custom Web Platforms</h3>
+            <p class="scenario-desc">High-performance client portals, customer web apps, and SaaS platforms built with modern full-stack architectures.</p>
+          </div>
+
+          <div class="scenario-card" aria-hidden="true">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Enterprise Ops</span>
+              <span class="scenario-time">02</span>
+            </div>
+            <h3 class="scenario-title">Internal Operations OS</h3>
+            <p class="scenario-desc">Eliminate chaotic spreadsheets with tailored back-office dashboards, case management systems, and team trackers.</p>
+          </div>
+
+          <div class="scenario-card" aria-hidden="true">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Client Experience</span>
+              <span class="scenario-time">03</span>
+            </div>
+            <h3 class="scenario-title">Intake & Client Portals</h3>
+            <p class="scenario-desc">Frictionless client onboarding, secure document collection, and transparent status transparency for your clients.</p>
+          </div>
+
+          <div class="scenario-card" aria-hidden="true">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Automation</span>
+              <span class="scenario-time">04</span>
+            </div>
+            <h3 class="scenario-title">Automated Workflows</h3>
+            <p class="scenario-desc">Seamless API integrations connecting payment gateways, document signing, notification triggers, and data pipelines.</p>
+          </div>
+
+          <div class="scenario-card" aria-hidden="true">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Professional Firms</span>
+              <span class="scenario-time">05</span>
+            </div>
+            <h3 class="scenario-title">Practice Management</h3>
+            <p class="scenario-desc">Specialized tools for legal and professional services — matter tracking, time & billing, and audit-ready workflows.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Motion Controls & Hint -->
+      <div class="scroll-controls container">
+        <div class="scroll-status-pill">
+          <span class="pulse-dot"></span>
+          <span>Auto-moving &bull; Hover to pause</span>
+        </div>
+        <div class="scroll-nav-buttons">
+          <button type="button" class="carousel-nav-btn" id="carouselPrev" aria-label="Slide left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="carousel-nav-btn" id="carouselNext" aria-label="Slide right">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Experience Preview (Modern Desktop Web Application Showcase) -->
+    <section id="experience" class="experience-section">
+      <div class="container text-center section-header">
+        <span class="section-kicker">Web Platform</span>
+        <h2 class="section-title">High-craft execution. Software that breathes.</h2>
+        <p class="section-desc max-w-2xl mx-auto">
+          Software shouldn't feel like a chore. We build intuitive, calm web platforms that teams actually look forward to opening every morning.
+        </p>
+      </div>
+
+      <div class="container web-app-container">
+        <!-- Desktop Browser Window Frame -->
+        <div class="web-app-window">
+          <!-- Window Chrome Header -->
+          <div class="browser-chrome">
+            <div class="window-controls">
+              <span class="control-dot close"></span>
+              <span class="control-dot minimize"></span>
+              <span class="control-dot expand"></span>
+            </div>
+            <div class="browser-address-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lock-icon" width="12" height="12"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span class="url-text">app.draftstack.dev/workspace/matters</span>
+            </div>
+            <div class="window-status">
+              <span class="status-dot"></span>
+              <span>DraftStack Web OS</span>
+            </div>
+          </div>
+
+          <!-- Web Application Layout -->
+          <div class="web-app-layout">
+            <!-- Sidebar -->
+            <aside class="app-sidebar">
+              <div class="workspace-header">
+                <img src="images/draftstack-mark.svg" alt="" class="workspace-logo-mark" width="22" height="26" aria-hidden="true">
+                <div class="workspace-info">
+                  <span class="workspace-title">Sterling & Partners</span>
+                  <span class="workspace-sub">Legal Practice &bull; Pro</span>
+                </div>
+              </div>
+
+              <div class="sidebar-action">
+                <button type="button" class="btn btn-sidebar-action">
+                  <span>+ New Matter</span>
+                </button>
+              </div>
+
+              <nav class="sidebar-nav">
+                <button type="button" class="sidebar-item active" data-web-tab="matters">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                  <span>Active Matters</span>
+                  <span class="sidebar-badge">18</span>
+                </button>
+
+                <button type="button" class="sidebar-item" data-web-tab="intake">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+                  <span>Client Intake</span>
+                  <span class="sidebar-badge coral">3 new</span>
+                </button>
+
+                <button type="button" class="sidebar-item" data-web-tab="billing">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  <span>Time & Billing</span>
+                </button>
+
+                <button type="button" class="sidebar-item" data-web-tab="vault">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-icon" width="16" height="16"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                  <span>Document Vault</span>
+                </button>
+              </nav>
+
+              <div class="sidebar-footer">
+                <div class="storage-indicator">
+                  <div class="storage-text">
+                    <span>Team Storage</span>
+                    <span>24.8 / 100 GB</span>
+                  </div>
+                  <div class="storage-bar">
+                    <div class="storage-fill" style="width: 25%;"></div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Main Application View -->
+            <div class="app-main">
+              <!-- Top Filter & Search Bar -->
+              <div class="app-topbar">
+                <div class="app-search-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon" width="14" height="14"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" placeholder="Search matters, clients, documents..." class="app-search-input" readonly value="Filter: Active 2026 Q3 Matters">
+                </div>
+
+                <div class="app-view-tabs">
+                  <button type="button" class="app-view-tab active" data-panel="matters">Matters (18)</button>
+                  <button type="button" class="app-view-tab" data-panel="intake">Intake (3)</button>
+                  <button type="button" class="app-view-tab" data-panel="billing">Retainers</button>
+                </div>
+              </div>
+
+              <!-- Panel 1: Matters Table -->
+              <div class="app-panel active" id="webPanel-matters">
+                <div class="data-table-wrap">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Matter / Client</th>
+                        <th>Phase & Progress</th>
+                        <th>Lead Attorney</th>
+                        <th>Deadline</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="matter-name">Pacific Tech Corp Acquisition</div>
+                          <div class="matter-client">Cross-Border M&A &bull; #2026-M42</div>
+                        </td>
+                        <td>
+                          <div class="phase-badge green">Phase 3 &bull; Closing</div>
+                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 82%;"></div></div>
+                        </td>
+                        <td>
+                          <div class="lead-user"><span class="user-avatar-sm">SM</span> Sarah Morales</div>
+                        </td>
+                        <td>
+                          <span class="deadline-urgent">Tomorrow, 5:00 PM</span>
+                        </td>
+                        <td>
+                          <button type="button" class="table-action-btn">Open File</button>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <div class="matter-name">IP Patent Portfolio Defense</div>
+                          <div class="matter-client">Horizon Biotech &bull; #2026-IP09</div>
+                        </td>
+                        <td>
+                          <div class="phase-badge yellow">Partner Review</div>
+                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 55%; background: #f59e0b;"></div></div>
+                        </td>
+                        <td>
+                          <div class="lead-user"><span class="user-avatar-sm coral">MT</span> Marcus Tan</div>
+                        </td>
+                        <td>
+                          <span class="deadline-normal">Oct 18, 2026</span>
+                        </td>
+                        <td>
+                          <button type="button" class="table-action-btn">Open File</button>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <div class="matter-name">Vanguard Fund Formation & Regulatory</div>
+                          <div class="matter-client">Vanguard Capital &bull; #2026-FN12</div>
+                        </td>
+                        <td>
+                          <div class="phase-badge green">SEC Compliance Cleared</div>
+                          <div class="mini-progress"><div class="mini-progress-fill" style="width: 100%; background: #34d399;"></div></div>
+                        </td>
+                        <td>
+                          <div class="lead-user"><span class="user-avatar-sm lavender">DK</span> David Kim</div>
+                        </td>
+                        <td>
+                          <span class="deadline-done">Completed</span>
+                        </td>
+                        <td>
+                          <button type="button" class="table-action-btn secondary">Archive</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Panel 2: Client Intake Pipeline -->
+              <div class="app-panel" id="webPanel-intake">
+                <div class="intake-pipeline-grid">
+                  <div class="intake-card">
+                    <div class="intake-card-head">
+                      <span class="intake-id">#1048 &bull; 12 mins ago</span>
+                      <span class="phase-badge green">Conflict Check Passed</span>
+                    </div>
+                    <h4 class="intake-client-name">Vertex Real Estate Holdings</h4>
+                    <p class="intake-scope">Commercial lease acquisition, 4 parcels in Bonifacio Global City.</p>
+                    <div class="intake-footer">
+                      <span class="intake-doc-count">📎 6 verified documents attached</span>
+                      <button type="button" class="table-action-btn">Accept Matter</button>
+                    </div>
+                  </div>
+
+                  <div class="intake-card">
+                    <div class="intake-card-head">
+                      <span class="intake-id">#1049 &bull; 1 hour ago</span>
+                      <span class="phase-badge yellow">Awaiting Retainer Sign</span>
+                    </div>
+                    <h4 class="intake-client-name">Meridian Ventures Pte Ltd</h4>
+                    <p class="intake-scope">Series A venture round financing, automated SAFE agreements.</p>
+                    <div class="intake-footer">
+                      <span class="intake-doc-count">📎 3 verified documents attached</span>
+                      <button type="button" class="table-action-btn">View Intake</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Panel 3: Billing & Retainers -->
+              <div class="app-panel" id="webPanel-billing">
+                <div class="billing-summary-grid">
+                  <div class="billing-stat-box">
+                    <span class="stat-label">October Retainers Logged</span>
+                    <span class="stat-amount">₱1,480,000</span>
+                    <span class="stat-sub positive">↑ 18% vs September</span>
+                  </div>
+                  <div class="billing-stat-box">
+                    <span class="stat-label">Invoices Auto-Settled</span>
+                    <span class="stat-amount">18 / 20</span>
+                    <span class="stat-sub">GCash, Maya & Wire Webhooks</span>
+                  </div>
+                  <div class="billing-stat-box">
+                    <span class="stat-label">Average Settlement Speed</span>
+                    <span class="stat-amount">1.8 Days</span>
+                    <span class="stat-sub positive">Zero manual follow-ups</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Bar Banner -->
+              <div class="app-bottom-bar">
+                <div class="app-hint-text">
+                  <span class="sparkle-icon">✦</span>
+                  <span><strong>Live Interactive Web Preview:</strong> Click any sidebar tab or category above to explore how we architect legal & enterprise web tools.</span>
+                </div>
+                <a href="#inquire" class="btn btn-primary btn-app-cta">Deploy for your team &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      </div>
+
+      <div class="container philosophy-grid">
+        <div class="philosophy-card">
+          <div class="card-num">01</div>
+          <h3 class="card-heading">Direct Builder Access</h3>
+          <p class="card-copy">You work directly with the senior engineers writing your code. Zero account managers, zero phone tag, zero requirements lost in translation.</p>
+        </div>
+
+        <div class="philosophy-card">
+          <div class="card-num">02</div>
+          <h3 class="card-heading">100% Code Ownership</h3>
+          <p class="card-copy">No vendor lock-in. You own the repository, the database schemas, and all intellectual property from day one with complete, readable documentation.</p>
+        </div>
+
+        <div class="philosophy-card">
+          <div class="card-num">03</div>
+          <h3 class="card-heading">Paced with Purpose</h3>
+          <p class="card-copy">We ship in predictable weekly sprint cycles with live staging environments every Friday. Continuous momentum without chaotic fire drills.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Stories (Diary Entry Testimonials) -->
+    <section id="stories" class="stories-section">
+      <div class="container section-header text-center">
+        <span class="section-kicker">Stories</span>
+        <h2 class="section-title">Notes from our partners</h2>
+        <p class="section-desc max-w-xl mx-auto">Real feedback from founders and operators who trusted us with their core systems.</p>
+      </div>
+
+      <div class="container stories-grid">
+        <!-- Story Card 1 -->
+        <div class="story-card tilt-left">
+          <div class="pin-accent"></div>
+          <p class="story-quote">
+            &ldquo;The level of care DraftStack put into our practice management platform was staggering. It felt bespoke from day one, built around how our partners actually work, not just another cookie-cutter template.&rdquo;
+          </p>
+          <div class="story-divider"></div>
+          <div class="story-author">
+            <div class="avatar-circle avatar-sage">MT</div>
+            <div class="author-meta">
+              <span class="author-name editorial-sig">Marcus T.</span>
+              <span class="author-role">Managing Partner, Corporate Practice</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Card 2 -->
+        <div class="story-card tilt-right">
+          <div class="pin-accent"></div>
+          <p class="story-quote">
+            &ldquo;Working directly with senior engineers changed everything for our delivery velocity. They understood our complex legal workflows immediately and delivered an intake portal that our clients love.&rdquo;
+          </p>
+          <div class="story-divider"></div>
+          <div class="story-author">
+            <div class="avatar-circle avatar-coral">ES</div>
+            <div class="author-meta">
+              <span class="author-name editorial-sig">Elena S.</span>
+              <span class="author-role">Legal Operations Director</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Card 3 -->
+        <div class="story-card tilt-center">
+          <div class="pin-accent"></div>
+          <p class="story-quote">
+            &ldquo;Our team used to dread our internal systems. DraftStack engineered an operations OS that feels effortless, intuitive, and calm. It has genuinely transformed our day-to-day productivity.&rdquo;
+          </p>
+          <div class="story-divider"></div>
+          <div class="story-author">
+            <div class="avatar-circle avatar-lavender">DK</div>
+            <div class="author-meta">
+              <span class="author-name editorial-sig">David K.</span>
+              <span class="author-role">Founder & CEO, Tech Advisory</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section id="faq" class="faq-section">
+      <div class="container max-w-3xl">
+        <div class="section-header text-center">
+          <span class="section-kicker">Curiosities</span>
+          <h2 class="section-title">Frequently asked questions</h2>
+          <p class="section-desc">Everything you need to know about working with DraftStack.</p>
+        </div>
+
+        <div class="accordion-group">
+          <!-- FAQ 1 -->
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>How does a typical engineering engagement work?</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                We start with a thorough architecture mapping phase to understand your specific operational bottlenecks. From there, we work in focused 2-to-4 week sprints, providing staging environments every Friday so you can test features as they are built.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>Do we own the full source code and intellectual property?</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                Yes, 100%. We transfer full intellectual property rights to you upon delivery. You get clean, modern, well-documented source code in your own private repository with zero proprietary vendor lock-in.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>What technologies and stacks do you build with?</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                We specialize in modern, battle-tested full-stack web architectures: TypeScript, React/Next.js, Node.js, PostgreSQL, Tailwind CSS, and secure cloud infrastructure. We select stacks for reliability, maintainability, and long-term performance.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>Can you integrate with our existing legal or practice software?</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                Absolutely. We frequently build custom connectors for billing systems, local payment providers (GCash, Maya, Stripe), document signing platforms, and legacy databases to automate workflows seamlessly.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="accordion-item">
+            <button class="accordion-trigger" aria-expanded="false">
+              <span>How soon can we start a project?</span>
+              <span class="accordion-icon">+</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                Because we intentionally keep our team senior and focused, we accept a limited number of client engagements each quarter. Drop us a note below and we typically respond within 24 hours with our current availability.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Waitlist / Project Inquiry Section -->
+    <section id="inquire" class="inquire-section">
+      <div class="container max-w-5xl">
+        <div class="inquire-box">
+          <div class="inquire-content">
+            <div class="inquire-icon-wrap">
+              <div class="inquire-icon-dot"></div>
+            </div>
+
+            <h2 class="inquire-heading">Ready to build something thoughtful?</h2>
+            <p class="inquire-sub">
+              We take on a limited number of bespoke software projects to ensure senior-level attention. Share your vision and let's start the conversation.
+            </p>
+
+            <form id="inquiryForm" class="inquiry-form" novalidate>
+              <div class="form-fields">
+                <input 
+                  type="text" 
+                  id="clientName" 
+                  name="name" 
+                  placeholder="Your name or organization" 
+                  class="form-input" 
+                  required
+                >
+                <input 
+                  type="email" 
+                  id="clientEmail" 
+                  name="email" 
+                  placeholder="Your work email" 
+                  class="form-input" 
+                  required
+                >
+              </div>
+              <div class="form-row">
+                <select id="projectScope" name="scope" class="form-select">
+                  <option value="" disabled selected>Select project focus</option>
+                  <option value="web-app">Custom Web Application / SaaS</option>
+                  <option value="internal-ops">Internal Operations OS / Portal</option>
+                  <option value="legal-practice">Law Firm / Professional Practice Tool</option>
+                  <option value="automation">Workflow Automation & Integration</option>
+                  <option value="other">Other Bespoke Software</option>
+                </select>
+                <button type="submit" id="submitInquiry" class="btn btn-dark">
+                  <span>Send Project Note</span>
+                </button>
+              </div>
+            </form>
+
+            <div id="formSuccess" class="form-success-msg" style="display:none;" role="status">
+              <svg viewBox="0 0 20 20" fill="currentColor" class="success-icon"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span>Thank you! Your note has been received. A senior engineer will respond within 24 hours.</span>
+            </div>
+
+            <p class="inquire-note">Direct confidential inquiry &bull; Response guaranteed within 1 business day</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="images/draftstack-mark.svg" alt="DraftStack" class="footer-logo-img" width="24" height="29">
+        <span class="brand-title">Draft<span class="logo-accent">Stack</span></span>
+        <span class="footer-tagline">Simplifying everyday. Empowering business.</span>
+
+      <div class="footer-links">
+        <a href="#domains">Domains</a>
+        <a href="#experience">Experience</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:hello@draftstack.dev" class="contact-email">hello@draftstack.dev</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2026 DraftStack. All rights reserved.</p>
+        <span class="sign-off">Precision in every detail.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=softly-4" defer></script>
 </body>
 </html>

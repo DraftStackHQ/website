@@ -1,0 +1,147 @@
+<svg viewBox="185 90 335 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Top plate (Rich Deep Blue) -->
+    <linearGradient id="tile1Top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0062e3"/>
+      <stop offset="100%" stop-color="#0047ba"/>
+    </linearGradient>
+
+    <!-- Mid plate (Vibrant Cobalt) -->
+    <linearGradient id="tile2Top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1982eb"/>
+      <stop offset="100%" stop-color="#0e68cf"/>
+    </linearGradient>
+
+    <!-- Bottom plate (Light Sky Blue) -->
+    <linearGradient id="tile3Top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#46a3f8"/>
+      <stop offset="100%" stop-color="#218cf0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Navy 'D' Outer Ribbon - Uniform 54px thickness with round inner corner -->
+  <path d="
+    M 218 215
+    L 218 126
+    L 330 126
+    C 426 126, 486 186, 486 286
+    C 486 388, 424 456, 325 456
+  " fill="none" stroke="#0A2240" stroke-width="54" stroke-linecap="butt" stroke-linejoin="miter"/>
+
+  <!-- Layer 1: Top Isometric Tile (Deep Blue) -->
+  <g transform="translate(218, 192)">
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 114 101, 120 98
+      L 204 56
+      L 204 78
+      C 204 83, 201 87, 196 90
+      L 118 129
+      C 113 131, 107 131, 102 129
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#003598"/>
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 110 101, 110 99
+      L 110 130
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#002d84" opacity="0.4"/>
+    <path d="
+      M 102 7
+      C 107 4, 113 4, 118 7
+      L 196 46
+      C 201 49, 204 53, 204 58
+      C 204 63, 201 67, 196 70
+      L 118 109
+      C 113 111, 107 111, 102 109
+      L 24 70
+      C 19 67, 16 63, 16 58
+      C 16 53, 19 49, 24 46
+      Z
+    " fill="url(#tile1Top)"/>
+  </g>
+
+  <!-- Layer 2: Mid Isometric Tile (Cobalt Blue) -->
+  <g transform="translate(218, 252)">
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 114 101, 120 98
+      L 204 56
+      L 204 78
+      C 204 83, 201 87, 196 90
+      L 118 129
+      C 113 131, 107 131, 102 129
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#0d52a8"/>
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 110 101, 110 99
+      L 110 130
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#08428c" opacity="0.35"/>
+    <path d="
+      M 102 7
+      C 107 4, 113 4, 118 7
+      L 196 46
+      C 201 49, 204 53, 204 58
+      C 204 63, 201 67, 196 70
+      L 118 109
+      C 113 111, 107 111, 102 109
+      L 24 70
+      C 19 67, 16 63, 16 58
+      C 16 53, 19 49, 24 46
+      Z
+    " fill="url(#tile2Top)"/>
+  </g>
+
+  <!-- Layer 3: Bottom Isometric Tile (Sky Blue) -->
+  <g transform="translate(218, 312)">
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 114 101, 120 98
+      L 204 56
+      L 204 78
+      C 204 83, 201 87, 196 90
+      L 118 129
+      C 113 131, 107 131, 102 129
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#1468be"/>
+    <path d="
+      M 16 56
+      L 100 98
+      C 106 101, 110 101, 110 99
+      L 110 130
+      L 24 90
+      C 19 87, 16 83, 16 78
+      Z
+    " fill="#0f5298" opacity="0.3"/>
+    <path d="
+      M 102 7
+      C 107 4, 113 4, 118 7
+      L 196 46
+      C 201 49, 204 53, 204 58
+      C 204 63, 201 67, 196 70
+      L 118 109
+      C 113 111, 107 111, 102 109
+      L 24 70
+      C 19 67, 16 63, 16 58
+      C 16 53, 19 49, 24 46
+      Z
+    " fill="url(#tile3Top)"/>
+  </g>
+</svg>
