@@ -160,29 +160,69 @@ document.addEventListener("DOMContentLoaded", () => {
   /* --------------------------------------------------------------------------
      4. Interactive Product Screenshot Showcase & Switcher
      -------------------------------------------------------------------------- */
+  const projectButtons = document.querySelectorAll(".project-pill-btn[data-project]");
+  const tabsLegal = document.getElementById("tabs-legal");
+  const tabsGymflow = document.getElementById("tabs-gymflow");
+  const proofLegal = document.getElementById("proof-legal");
+  const proofGymflow = document.getElementById("proof-gymflow");
   const shotTabs = document.querySelectorAll(".screenshot-tab-btn[data-shot]");
   const shotPanels = document.querySelectorAll(".screenshot-panel");
   const browserUrl = document.getElementById("browserUrl");
 
+  const activateScreenshot = (shotKey, urlText) => {
+    shotPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.id === `shot-${shotKey}`);
+    });
+    if (browserUrl && urlText) {
+      browserUrl.textContent = urlText;
+    }
+  };
+
+  projectButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const projectKey = btn.getAttribute("data-project");
+      projectButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      if (projectKey === "legal") {
+        if (tabsLegal) tabsLegal.style.display = "flex";
+        if (tabsGymflow) tabsGymflow.style.display = "none";
+        if (proofLegal) proofLegal.style.display = "grid";
+        if (proofGymflow) proofGymflow.style.display = "none";
+
+        const firstTab = tabsLegal ? tabsLegal.querySelector(".screenshot-tab-btn") : null;
+        if (firstTab) {
+          tabsLegal.querySelectorAll(".screenshot-tab-btn").forEach((t) => t.classList.remove("active"));
+          firstTab.classList.add("active");
+          activateScreenshot(firstTab.getAttribute("data-shot"), firstTab.getAttribute("data-url"));
+        }
+      } else if (projectKey === "gymflow") {
+        if (tabsLegal) tabsLegal.style.display = "none";
+        if (tabsGymflow) tabsGymflow.style.display = "flex";
+        if (proofLegal) proofLegal.style.display = "none";
+        if (proofGymflow) proofGymflow.style.display = "grid";
+
+        const firstTab = tabsGymflow ? tabsGymflow.querySelector(".screenshot-tab-btn") : null;
+        if (firstTab) {
+          tabsGymflow.querySelectorAll(".screenshot-tab-btn").forEach((t) => t.classList.remove("active"));
+          firstTab.classList.add("active");
+          activateScreenshot(firstTab.getAttribute("data-shot"), firstTab.getAttribute("data-url"));
+        }
+      }
+    });
+  });
+
   shotTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      const shotKey = tab.getAttribute("data-shot");
-      const urlText = tab.getAttribute("data-url");
-
-      shotTabs.forEach((t) => t.classList.remove("active"));
+      const parentBar = tab.closest(".screenshot-tab-bar");
+      if (parentBar) {
+        parentBar.querySelectorAll(".screenshot-tab-btn").forEach((t) => t.classList.remove("active"));
+      }
       tab.classList.add("active");
 
-      shotPanels.forEach((panel) => {
-        if (panel.id === `shot-${shotKey}`) {
-          panel.classList.add("active");
-        } else {
-          panel.classList.remove("active");
-        }
-      });
-
-      if (browserUrl && urlText) {
-        browserUrl.textContent = urlText;
-      }
+      const shotKey = tab.getAttribute("data-shot");
+      const urlText = tab.getAttribute("data-url");
+      activateScreenshot(shotKey, urlText);
     });
   });
   /* --------------------------------------------------------------------------

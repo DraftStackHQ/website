@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/draftstack-mark.svg">
-  <link rel="stylesheet" href="style.css?v=softly-10">
+  <link rel="stylesheet" href="style.css?v=softly-11">
 </head>
 <body>
   <!-- Ambient Fluid Floating Blobs -->
@@ -216,8 +216,23 @@
       </div>
 
       <div class="container web-app-container">
-        <!-- Interactive Screenshot Switcher Tabs -->
-        <div class="screenshot-tab-bar">
+        <!-- Flagship Project Switcher -->
+        <div class="project-flagship-selector">
+          <button type="button" class="project-pill-btn active" data-project="legal">
+            <span class="project-dot blue"></span>
+            <span class="project-title">LegalPlatform</span>
+            <span class="project-tag">Enterprise Legal OS</span>
+          </button>
+
+          <button type="button" class="project-pill-btn" data-project="gymflow">
+            <span class="project-dot green"></span>
+            <span class="project-title">GymFlow</span>
+            <span class="project-tag">Fitness &amp; Membership OS</span>
+          </button>
+        </div>
+
+        <!-- Project 1: LegalPlatform View Tabs -->
+        <div class="screenshot-tab-bar project-tabs" id="tabs-legal">
           <button type="button" class="screenshot-tab-btn active" data-shot="dashboard" data-url="app.draftstack.dev/dashboard">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <span>Legal Dashboard</span>
@@ -225,7 +240,7 @@
 
           <button type="button" class="screenshot-tab-btn" data-shot="clients" data-url="app.draftstack.dev/clients-and-cases">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            <span>Clients & Cases</span>
+            <span>Clients &amp; Cases</span>
           </button>
 
           <button type="button" class="screenshot-tab-btn" data-shot="annex" data-url="app.draftstack.dev/annex-processing">
@@ -236,6 +251,29 @@
           <button type="button" class="screenshot-tab-btn" data-shot="login" data-url="app.draftstack.dev/login">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
             <span>Secure Sign-In</span>
+          </button>
+        </div>
+
+        <!-- Project 2: GymFlow View Tabs -->
+        <div class="screenshot-tab-bar project-tabs" id="tabs-gymflow" style="display:none;">
+          <button type="button" class="screenshot-tab-btn active" data-shot="gym-dash" data-url="app.gymflow.ph/dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Gym Dashboard</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="gym-members" data-url="app.gymflow.ph/members">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Member Directory</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="gym-detail" data-url="app.gymflow.ph/members/1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Member Details &amp; QR</span>
+          </button>
+
+          <button type="button" class="screenshot-tab-btn" data-shot="gym-checkins" data-url="app.gymflow.ph/checkin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Live Check-Ins</span>
           </button>
         </div>
 
@@ -324,7 +362,7 @@
               </div>
               <div class="screenshot-caption">
                 <div class="caption-content">
-                  <span class="caption-tag">Security & Auth</span>
+                  <span class="caption-tag">Security &amp; Auth</span>
                   <h4 class="caption-title">Law Firm Authentication Portal</h4>
                   <p class="caption-desc">Encrypted authentication portal with session token validation and granular role-based authorization.</p>
                 </div>
@@ -335,11 +373,84 @@
                 </div>
               </div>
             </div>
+
+            <!-- GymFlow Screenshot 1: Dashboard -->
+            <div class="screenshot-panel" id="shot-gym-dash">
+              <div class="screenshot-img-container">
+                <img src="images/gymflow-dashboard.png" alt="GymFlow Dashboard Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag green">GymFlow PH &bull; Fitness OS</span>
+                  <h4 class="caption-title">Membership Operations &amp; Revenue Telemetry</h4>
+                  <p class="caption-desc">Monthly revenue tracking, active members delta, expiring-soon alerts, and 7-day attendance trends.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">React 18</span>
+                  <span class="tech-pill">Spring Boot 3</span>
+                  <span class="tech-pill">PostgreSQL 16</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- GymFlow Screenshot 2: Members Directory -->
+            <div class="screenshot-panel" id="shot-gym-members">
+              <div class="screenshot-img-container">
+                <img src="images/gymflow-members.png" alt="GymFlow Members Directory Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag green">Member Registry</span>
+                  <h4 class="caption-title">Comprehensive Member Directory</h4>
+                  <p class="caption-desc">Complete member roster with active/expired statuses, plan assignments, contact information, and check-in recency.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">Search &amp; Filter</span>
+                  <span class="tech-pill">Status Tracking</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- GymFlow Screenshot 3: Member Details & QR -->
+            <div class="screenshot-panel" id="shot-gym-detail">
+              <div class="screenshot-img-container">
+                <img src="images/gymflow-member-detail.png" alt="GymFlow Member Details and QR Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag green">Member Profile</span>
+                  <h4 class="caption-title">Member Details, Pass QR &amp; History</h4>
+                  <p class="caption-desc">Individual member profile with dynamic QR code generation for scanner check-in, payment history, and plan change modals.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">Dynamic QR Pass</span>
+                  <span class="tech-pill">GCash &amp; Maya Logs</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- GymFlow Screenshot 4: Check-in History -->
+            <div class="screenshot-panel" id="shot-gym-checkins">
+              <div class="screenshot-img-container">
+                <img src="images/gymflow-checkins.png" alt="GymFlow Live Check-in Stream Screenshot" class="product-screenshot-img" loading="lazy">
+              </div>
+              <div class="screenshot-caption">
+                <div class="caption-content">
+                  <span class="caption-tag green">Attendance Engine</span>
+                  <h4 class="caption-title">Real-Time Check-In Stream &amp; Audit Log</h4>
+                  <p class="caption-desc">Sub-second QR scanner attendance logs, member verification timestamps, and anomaly/flag resolution workflows.</p>
+                </div>
+                <div class="caption-tech-stack">
+                  <span class="tech-pill">Sub-Second Scan</span>
+                  <span class="tech-pill">Audit Trail</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Product Highlight Cards below window -->
-        <div class="product-proof-grid">
+        <div class="product-proof-grid" id="proof-legal">
           <div class="proof-card">
             <div class="proof-icon">⚡</div>
             <div class="proof-text">
@@ -362,7 +473,32 @@
             </div>
           </div>
         </div>
-      </div>
+
+        <!-- GymFlow Proof Grid -->
+        <div class="product-proof-grid" id="proof-gymflow" style="display:none;">
+          <div class="proof-card">
+            <div class="proof-icon">📱</div>
+            <div class="proof-text">
+              <h5>Dynamic QR Check-In Engine</h5>
+              <p>Sub-second QR attendance validation with member pass verification and automated attendance auditing.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">💳</div>
+            <div class="proof-text">
+              <h5>Localized Payment Webhooks</h5>
+              <p>Automated logging for GCash and Maya QR transactions with instant membership extension.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">🔔</div>
+            <div class="proof-text">
+              <h5>Smart Expiry Reminders</h5>
+              <p>Automated SMS renewal alerts dispatched through local telco gateways for expiring gym memberships.</p>
+            </div>
+          </div>
+        </div>
+       </div>
     </section>
 
     <!-- Craft Philosophy Section -->
@@ -614,6 +750,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=softly-9" defer></script>
+  <script src="script.js?v=softly-11" defer></script>
 </body>
 </html>
