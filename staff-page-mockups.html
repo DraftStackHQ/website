@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Staff Management (Modal-Driven Unified Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Solid Non-AI Dark Mode (Consistent with other modals & history) */
+      --bg: #111215;
+      --fg-primary: #f4f4f5;
+      --fg-secondary: #a1a1aa;
+      --fg-muted: #71717a;
+
+      --card-bg: #18191d;
+      --card-border: #27282d;
+      --header-bg: #1f2025;
+      --row-hover: #1e1f24;
+      --row-border: #232429;
+
+      --dialog-bg: #16181e;
+      --dialog-border: rgba(255, 255, 255, 0.1);
+      --input-bg: #121316;
+      --input-border: #2e3037;
+      --input-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+
+      --radius-card: 10px;
+      --radius-control: 6px;
+    }
+
+    .light-mode {
+      --bg: #f8fafc;
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --header-bg: #f1f5f9;
+      --row-hover: #f8fafc;
+      --row-border: #f1f5f9;
+
+      --dialog-bg: #ffffff;
+      --dialog-border: #e2e8f0;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #2563eb;
+
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    /* Top Showcase Bar */
+    header.top-bar {
+      background: #0d0e11;
+      border-bottom: 1px solid #222328;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pattern {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .tools-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-tool {
+      background: #1a1b20;
+      border: 1px solid #2d2e35;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: #22242a;
+      color: #fff;
+    }
+
+    /* Main Viewport */
+    .viewport {
+      flex: 1;
+      padding: 32px 40px;
+      overflow-y: auto;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+    }
+
+    /* Page Header */
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .page-title h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+    }
+
+    .page-title p {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+      margin-top: 4px;
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-add-staff-modal {
+      height: 38px;
+      background: var(--primary);
+      color: var(--primary-fg);
+      border: none;
+      padding: 0 16px;
+      border-radius: var(--radius-control);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-add-staff-modal:hover {
+      opacity: 0.92;
+    }
+
+    /* Quick KPI Ribbon */
+    .kpi-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 8px 14px;
+      border-radius: var(--radius-control);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .kpi-lbl {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    /* Unified Table Card (Matches Check-in & Payment History) */
+    .table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    table.staff-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    thead th {
+      background: var(--header-bg);
+      color: var(--fg-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--row-border);
+      transition: background 0.12s ease;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--row-hover);
+    }
+
+    tbody td {
+      padding: 13px 20px;
+      vertical-align: middle;
+    }
+
+    .staff-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .staff-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #23242a;
+      border: 1px solid #32343b;
+      color: var(--fg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .light-mode .staff-avatar {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    .staff-name {
+      font-weight: 600;
+      color: var(--fg-primary);
+    }
+
+    .email-text {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--fg-secondary);
+    }
+
+    /* Active Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .status-active {
+      background: #0f291e;
+      color: #34d399;
+      border: 1px solid #14532d;
+    }
+
+    .status-inactive {
+      background: #212226;
+      color: #71717a;
+      border: 1px solid #2e3036;
+    }
+
+    .light-mode .status-active {
+      background: #f0fdf4;
+      color: #16a34a;
+      border-color: #bbf7d0;
+    }
+
+    .light-mode .status-inactive {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #e2e8f0;
+    }
+
+    .btn-deactivate {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--fg-secondary);
+      padding: 5px 12px;
+      border-radius: var(--radius-control);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .btn-deactivate:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    /* Modal Dialog Layer */
+    .modal-backdrop-layer {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-backdrop-layer.open {
+      display: flex;
+      animation: modalBackdropFade 0.15s ease-out;
+    }
+
+    @keyframes modalBackdropFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-box {
+      background: var(--dialog-bg);
+      border: 1px solid var(--dialog-border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalBoxPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalBoxPop {
+      from { opacity: 0; transform: scale(0.98) translateY(6px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-head {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-head-title h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    .modal-head-title p {
+      font-size: 12.5px;
+      color: var(--fg-muted);
+      margin-top: 2px;
+    }
+
+    .modal-close-x {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      color: var(--fg-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .modal-close-x:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--fg-primary);
+    }
+
+    .modal-content-body {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg-primary);
+    }
+
+    .form-ctrl {
+      height: 40px;
+      padding: 0 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-control);
+      color: var(--fg-primary);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .form-ctrl:focus {
+      border-color: var(--input-focus);
+    }
+
+    .role-info-pill {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #93c5fd;
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .modal-foot {
+      padding: 14px 22px;
+      border-top: 1px solid var(--card-border);
+      background: var(--header-bg);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-cancel-modal {
+      background: transparent;
+      border: 1px solid var(--input-border);
+      color: var(--fg-secondary);
+      padding: 7px 14px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-cancel-modal:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--fg-primary);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18191d;
+      border: 1px solid #27282d;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 200;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Showcase Navigation -->
+  <header class="top-bar">
+    <div class="brand-meta">
+      <div class="brand-logo">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="badge-pattern">UNIFIED MODAL PATTERN</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="tools-cluster">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Viewport -->
+  <main class="viewport">
+    
+    <!-- Header with Primary Modal Action -->
+    <div class="page-head">
+      <div class="page-title">
+        <h1>Staff Management</h1>
+        <p>Manage counter attendant accounts and shift permissions</p>
+      </div>
+
+      <div class="header-actions">
+        <!-- Quick Stats Chips -->
+        <div class="kpi-row">
+          <div class="kpi-box">
+            <span class="kpi-lbl">Total Staff</span>
+            <span class="kpi-val" id="total-count-val">5</span>
+          </div>
+          <div class="kpi-box">
+            <span class="kpi-lbl">Active on Duty</span>
+            <span class="kpi-val" style="color: #4ade80;">5</span>
+          </div>
+        </div>
+
+        <!-- + Add Staff Modal Trigger (Matches Members, Plans, and Membership Pages!) -->
+        <button class="btn-add-staff-modal" onclick="openAddStaffModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Add Staff Member</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Clean, Focused Staff Table (No oversized inline form cluttering the screen!) -->
+    <div class="table-card">
+      <table class="staff-table">
+        <thead>
+          <tr>
+            <th>Staff Member</th>
+            <th>Email Address</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th style="text-align: right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="staff-tbody">
+          <tr>
+            <td>
+              <div class="staff-cell">
+                <div class="staff-avatar">BV</div>
+                <span class="staff-name">Bea Villanueva</span>
+              </div>
+            </td>
+            <td><span class="email-text">bea.villanueva@gymflow.test</span></td>
+            <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+            <td><span class="status-badge status-active">● Yes</span></td>
+            <td style="text-align: right;">
+              <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="staff-cell">
+                <div class="staff-avatar">RA</div>
+                <span class="staff-name">Rico Aquino</span>
+              </div>
+            </td>
+            <td><span class="email-text">rico.aquino@gymflow.test</span></td>
+            <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+            <td><span class="status-badge status-active">● Yes</span></td>
+            <td style="text-align: right;">
+              <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="staff-cell">
+                <div class="staff-avatar">MO</div>
+                <span class="staff-name">Michelle Ocampo</span>
+              </div>
+            </td>
+            <td><span class="email-text">michelle.ocampo@gymflow.test</span></td>
+            <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+            <td><span class="status-badge status-active">● Yes</span></td>
+            <td style="text-align: right;">
+              <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="staff-cell">
+                <div class="staff-avatar">JS</div>
+                <span class="staff-name">Joy Salazar</span>
+              </div>
+            </td>
+            <td><span class="email-text">joy.salazar@gymflow.test</span></td>
+            <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+            <td><span class="status-badge status-active">● Yes</span></td>
+            <td style="text-align: right;">
+              <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="staff-cell">
+                <div class="staff-avatar">AL</div>
+                <span class="staff-name">Antonio Lim</span>
+              </div>
+            </td>
+            <td><span class="email-text">antonio.lim@gymflow.test</span></td>
+            <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+            <td><span class="status-badge status-active">● Yes</span></td>
+            <td style="text-align: right;">
+              <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Footer Bar -->
+      <div style="padding: 12px 20px; border-top: 1px solid var(--card-border); background: var(--header-bg); display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--fg-muted);">
+        <span>Showing 5 staff accounts</span>
+        <span>Credentials grant counter check-in & payment access</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       INTERACTIVE MODAL: Add Staff Member (Same as Add Member / Add Guest!)
+       ============================================================ -->
+  <div class="modal-backdrop-layer" id="staffModalBackdrop" onclick="handleBackdropClick(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div class="modal-head-title">
+          <h3>Add a staff member</h3>
+          <p>Create counter credentials for front desk attendant</p>
+        </div>
+        <button class="modal-close-x" onclick="closeAddStaffModal()">✕</button>
+      </div>
+
+      <form onsubmit="handleCreateStaff(event)">
+        <div class="modal-content-body">
+          <div class="role-info-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span>Staff accounts can record member check-ins, accept cash/GCash, and view logs. They cannot modify plans or billing settings.</span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="modal-staff-name">Name *</label>
+            <input class="form-ctrl" id="modal-staff-name" placeholder="e.g. Maria Santos" required>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="modal-staff-email">Email Address *</label>
+            <input class="form-ctrl" type="email" id="modal-staff-email" placeholder="staff@gymflow.test" required>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="modal-staff-pass">Temporary Password *</label>
+            <input class="form-ctrl" type="password" id="modal-staff-pass" placeholder="••••••••••••" required>
+          </div>
+        </div>
+
+        <div class="modal-foot">
+          <button type="button" class="btn-cancel-modal" onclick="closeAddStaffModal()">Cancel</button>
+          <button type="submit" class="btn-add-staff-modal">Add staff</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+
+    function openAddStaffModal() {
+      document.getElementById('staffModalBackdrop').classList.add('open');
+      document.getElementById('modal-staff-name').focus();
+    }
+
+    function closeAddStaffModal() {
+      document.getElementById('staffModalBackdrop').classList.remove('open');
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.id === 'staffModalBackdrop') {
+        closeAddStaffModal();
+      }
+    }
+
+    function handleCreateStaff(e) {
+      e.preventDefault();
+      const name = document.getElementById('modal-staff-name').value;
+      const email = document.getElementById('modal-staff-email').value;
+      const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+      const tbody = document.getElementById('staff-tbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="staff-cell">
+            <div class="staff-avatar">${initials}</div>
+            <span class="staff-name">${name}</span>
+          </div>
+        </td>
+        <td><span class="email-text">${email}</span></td>
+        <td><span style="font-size: 12px; color: var(--fg-secondary);">Counter Attendant</span></td>
+        <td><span class="status-badge status-active">● Yes</span></td>
+        <td style="text-align: right;">
+          <button class="btn-deactivate" onclick="toggleDeactivate(this)">Deactivate</button>
+        </td>
+      `;
+      tbody.prepend(tr);
+
+      closeAddStaffModal();
+      document.getElementById('modal-staff-name').value = '';
+      document.getElementById('modal-staff-email').value = '';
+      document.getElementById('modal-staff-pass').value = '';
+
+      showToast(`Added staff account: ${name}`);
+    }
+
+    function toggleDeactivate(btn) {
+      const row = btn.closest('tr');
+      const badge = row.querySelector('.status-badge');
+      if (badge.innerText.includes('Yes')) {
+        badge.className = 'status-badge status-inactive';
+        badge.innerText = '○ No';
+        btn.innerText = 'Reactivate';
+      } else {
+        badge.className = 'status-badge status-active';
+        badge.innerText = '● Yes';
+        btn.innerText = 'Deactivate';
+      }
+      showToast('Staff status updated');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Unified History Pages (Crafted Non-AI Dark Mode)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Grounded, Solid Dark Mode (Linear / GitHub / GymFlow spec — zero glassmorphism, zero AI gradients) */
+      --bg: #111215;                   /* Solid deep neutral charcoal */
+      --fg-primary: #f4f4f5;           /* Clear white-gray text */
+      --fg-secondary: #a1a1aa;         /* Muted secondary labels */
+      --fg-muted: #71717a;             /* Subtle tertiary text */
+
+      --card-bg: #18191d;              /* Solid surface card */
+      --card-border: #27282d;          /* Crisp neutral border */
+      --header-bg: #1f2025;            /* Solid distinguished table header */
+      --row-hover: #1e1f24;            /* Solid hover state */
+      --row-border: #232429;           /* Clean row divider */
+
+      --input-bg: #131417;             /* Solid recessed input */
+      --input-border: #2d2e35;         /* Distinct input boundary */
+      --input-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+
+      --radius-table: 10px;
+      --radius-control: 6px;
+    }
+
+    .light-mode {
+      --bg: #f8fafc;
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --header-bg: #f1f5f9;
+      --row-hover: #f8fafc;
+      --row-border: #f1f5f9;
+
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #2563eb;
+
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    /* Top Control Bar */
+    header.top-bar {
+      background: #0d0e11;
+      border-bottom: 1px solid #222328;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-spec {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .page-switch-tabs {
+      display: flex;
+      background: #16171b;
+      border: 1px solid #27282d;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .page-tab-btn {
+      background: transparent;
+      border: none;
+      color: #a1a1aa;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .page-tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .page-tab-btn.active {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .tools-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-tool {
+      background: #1a1b20;
+      border: 1px solid #2d2e35;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: #22242a;
+      color: #fff;
+    }
+
+    /* Main Scrollable Canvas */
+    .history-viewport {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Unified Header */
+    .page-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .title-group h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-group p {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+      margin-top: 3px;
+    }
+
+    /* Quick KPI Summary Ribbon */
+    .kpi-ribbon {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 7px 14px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    /* Unified Filter Toolbar Card (Solid, engineered) */
+    .filter-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-table);
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-controls-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg-secondary);
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--fg-muted);
+      pointer-events: none;
+    }
+
+    .input-control, .select-control {
+      height: 38px;
+      padding: 0 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-control);
+      color: var(--fg-primary);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .input-control:focus, .select-control:focus {
+      border-color: var(--input-focus);
+    }
+
+    .search-input {
+      padding-left: 36px;
+      width: 100%;
+    }
+
+    .quick-preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--row-border);
+      font-size: 12px;
+      color: var(--fg-muted);
+    }
+
+    .quick-pill {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--fg-secondary);
+      padding: 3px 9px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .quick-pill:hover, .quick-pill.active {
+      background: var(--header-bg);
+      color: var(--fg-primary);
+      border-color: #3b82f6;
+    }
+
+    /* Unified Elevated Table Card (Solid, crisp edges) */
+    .table-container-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-table);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    table.unified-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    thead th {
+      background: var(--header-bg);
+      color: var(--fg-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--row-border);
+      transition: background 0.12s ease;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--row-hover);
+    }
+
+    tbody td {
+      padding: 12px 18px;
+      vertical-align: middle;
+      color: var(--fg-primary);
+    }
+
+    /* Member Identity Cell with Avatar Bubble */
+    .member-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-initials {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #23242a;
+      border: 1px solid #32343b;
+      color: var(--fg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .light-mode .member-initials {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    .member-name-text {
+      font-weight: 600;
+      color: var(--fg-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Account Type Tag */
+    .badge-guest {
+      font-size: 10.5px;
+      font-weight: 600;
+      background: #272015;
+      color: #f59e0b;
+      border: 1px solid #453018;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .light-mode .badge-guest {
+      background: #fef3c7;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+
+    /* Semantic Method Badges (Subtle, professional, not neon glowing) */
+    .method-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Dark mode solid semantic badges */
+    .badge-gcash {
+      background: #112240;
+      color: #60a5fa;
+      border: 1px solid #1e3a8a;
+    }
+
+    .badge-maya {
+      background: #0f291e;
+      color: #34d399;
+      border: 1px solid #14532d;
+    }
+
+    .badge-cash {
+      background: #262016;
+      color: #fbbf24;
+      border: 1px solid #4a3818;
+    }
+
+    .badge-qr {
+      background: #0c2438;
+      color: #38bdf8;
+      border: 1px solid #075985;
+    }
+
+    .badge-manual {
+      background: #221c2e;
+      color: #c084fc;
+      border: 1px solid #581c87;
+    }
+
+    .badge-flagged {
+      background: #2e1518;
+      color: #f87171;
+      border: 1px solid #7f1d1d;
+    }
+
+    /* Light mode equivalents */
+    .light-mode .badge-gcash {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #bfdbfe;
+    }
+    .light-mode .badge-maya {
+      background: #f0fdf4;
+      color: #16a34a;
+      border-color: #bbf7d0;
+    }
+    .light-mode .badge-cash {
+      background: #fefce8;
+      color: #ca8a04;
+      border-color: #fef08a;
+    }
+    .light-mode .badge-qr {
+      background: #f0f9ff;
+      color: #0284c7;
+      border-color: #bae6fd;
+    }
+    .light-mode .badge-manual {
+      background: #faf5ff;
+      color: #9333ea;
+      border-color: #e9d5ff;
+    }
+    .light-mode .badge-flagged {
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+
+    /* Monospace Amount */
+    .amount-cell {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--fg-primary);
+      font-size: 13.5px;
+    }
+
+    .ref-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--fg-secondary);
+      background: #15161a;
+      border: 1px solid #292a30;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .light-mode .ref-code {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #475569;
+    }
+
+    .timestamp-text {
+      color: var(--fg-secondary);
+      font-size: 13px;
+    }
+
+    /* Unified Table Footer Pagination */
+    .table-footer-pagination {
+      padding: 12px 18px;
+      border-top: 1px solid var(--card-border);
+      background: var(--header-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .record-count-text {
+      font-size: 13px;
+      color: var(--fg-secondary);
+    }
+
+    .pagination-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rows-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--fg-secondary);
+    }
+
+    .pg-buttons {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pg-btn {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--fg-primary);
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.12s ease;
+    }
+
+    .pg-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .pg-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .pg-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Page View Containers */
+    .history-page-view {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .history-page-view.active {
+      display: flex;
+      animation: viewFade 0.15s ease-out;
+    }
+
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Controls -->
+  <header class="top-bar">
+    <div class="brand-meta">
+      <div class="brand-logo">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="badge-spec">SOLID NON-AI DARK MODE</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Toggle between the Two History Pages -->
+    <div class="page-switch-tabs">
+      <button class="page-tab-btn active" onclick="switchPageView('checkin')" id="btn-checkin">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        <span>Check-In History</span>
+      </button>
+      <button class="page-tab-btn" onclick="switchPageView('payment')" id="btn-payment">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span>Payment History</span>
+      </button>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="tools-cluster">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Viewport Canvas -->
+  <main class="history-viewport">
+
+    <!-- ============================================================
+         PAGE 1: CHECK-IN HISTORY (Clean, Solid, Grounded)
+         ============================================================ -->
+    <div class="history-page-view active" id="view-checkin">
+      
+      <!-- Unified Header + KPI Stats Ribbon -->
+      <div class="page-header-row">
+        <div class="title-group">
+          <h1>
+            Check-In History
+          </h1>
+          <p>Every check-in across all members and guests.</p>
+        </div>
+
+        <!-- Quick Summary Ribbon -->
+        <div class="kpi-ribbon">
+          <div class="kpi-chip">
+            <span class="kpi-label">Total Check-Ins</span>
+            <span class="kpi-val">108</span>
+          </div>
+          <div class="kpi-chip">
+            <span class="kpi-label">Today's Check-Ins</span>
+            <span class="kpi-val" style="color: #4ade80;">14</span>
+          </div>
+          <div class="kpi-chip">
+            <span class="kpi-label">QR vs Manual</span>
+            <span class="kpi-val" style="color: #60a5fa;">68% QR</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Filter Toolbar Card (Solid, no glassmorphism) -->
+      <div class="filter-card">
+        <div class="filter-controls-row">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="input-control search-input" placeholder="Search by name" value="" id="checkin-search-input">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">From</label>
+            <input class="input-control" type="date" value="2026-07-01">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">To</label>
+            <input class="input-control" type="date" value="2026-08-07">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">Account Type</label>
+            <select class="select-control">
+              <option selected>All</option>
+              <option>Members only</option>
+              <option>Guest accounts</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">Method</label>
+            <select class="select-control">
+              <option selected>All methods</option>
+              <option>QR code</option>
+              <option>Manual</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="quick-preset-bar">
+          <span>Quick Filters:</span>
+          <button class="quick-pill">Today</button>
+          <button class="quick-pill">Past 7 Days</button>
+          <button class="quick-pill active">This Month</button>
+          <button class="quick-pill" style="margin-left: auto; color: #ef4444;">Reset Filters</button>
+        </div>
+      </div>
+
+      <!-- Unified Table Card (Solid surface with clear borders) -->
+      <div class="table-container-card">
+        <table class="unified-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Checked In At</th>
+              <th>Method</th>
+              <th>Flag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">RR</div>
+                  <span class="member-name-text">Ryan Gabriel Reyes</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Aug 7, 2026, 12:02 AM</span></td>
+              <td><span class="method-badge badge-manual">MANUAL</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">RR</div>
+                  <span class="member-name-text">Ryan Gabriel Reyes</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Aug 5, 2026, 7:53 PM</span></td>
+              <td><span class="method-badge badge-manual">MANUAL</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">MB</div>
+                  <span class="member-name-text">Mark Bautista</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Aug 5, 2026, 7:24 PM</span></td>
+              <td><span class="method-badge badge-manual">MANUAL</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">MS</div>
+                  <div class="member-name-text">
+                    Maria Santos
+                    <span class="badge-guest">Guest</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Aug 3, 2026, 4:10 PM</span></td>
+              <td><span class="method-badge badge-qr">QR</span></td>
+              <td><span class="method-badge badge-flagged">Flagged</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">RR</div>
+                  <span class="member-name-text">Ryan Gabriel Reyes</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Aug 2, 2026, 3:15 PM</span></td>
+              <td><span class="method-badge badge-manual">MANUAL</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">TO</div>
+                  <span class="member-name-text">Teresa Ocampo</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Jul 27, 2026, 8:55 PM</span></td>
+              <td><span class="method-badge badge-qr">QR</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">RR</div>
+                  <span class="member-name-text">Ryan Gabriel Reyes</span>
+                </div>
+              </td>
+              <td><span class="timestamp-text">Jul 27, 2026, 5:37 PM</span></td>
+              <td><span class="method-badge badge-manual">MANUAL</span></td>
+              <td><span style="color: var(--fg-muted); font-size: 13px;">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Unified Pagination Bar -->
+        <div class="table-footer-pagination">
+          <p class="record-count-text">
+            Showing 1 to 10 of 108 check-ins
+          </p>
+          <div class="pagination-actions">
+            <div class="rows-dropdown">
+              <span>Rows per page</span>
+              <select class="select-control" style="height: 30px; padding: 0 8px;">
+                <option selected>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+            </div>
+            <div class="pg-buttons">
+              <button class="pg-btn" disabled>‹</button>
+              <button class="pg-btn active">1</button>
+              <button class="pg-btn">2</button>
+              <span style="padding: 0 4px; color: var(--fg-muted);">...</span>
+              <button class="pg-btn">11</button>
+              <button class="pg-btn">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 2: PAYMENT HISTORY (Clean, Solid, Grounded)
+         ============================================================ -->
+    <div class="history-page-view" id="view-payment">
+      
+      <!-- Unified Header + KPI Stats Ribbon -->
+      <div class="page-header-row">
+        <div class="title-group">
+          <h1>
+            Payment History
+          </h1>
+          <p>Every payment across all members and guests.</p>
+        </div>
+
+        <!-- Quick Summary Ribbon -->
+        <div class="kpi-ribbon">
+          <div class="kpi-chip">
+            <span class="kpi-label">Total Collections</span>
+            <span class="kpi-val" style="color: #4ade80;">₱148,000</span>
+          </div>
+          <div class="kpi-chip">
+            <span class="kpi-label">E-Wallets (GCash/Maya)</span>
+            <span class="kpi-val" style="color: #60a5fa;">₱92,000</span>
+          </div>
+          <div class="kpi-chip">
+            <span class="kpi-label">Cash at Counter</span>
+            <span class="kpi-val" style="color: #fbbf24;">₱56,000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Filter Toolbar Card -->
+      <div class="filter-card">
+        <div class="filter-controls-row">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input class="input-control search-input" placeholder="Search by name" value="" id="payment-search-input">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">From</label>
+            <input class="input-control" type="date" value="2026-07-01">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">To</label>
+            <input class="input-control" type="date" value="2026-08-07">
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">Account Type</label>
+            <select class="select-control">
+              <option selected>All</option>
+              <option>Members only</option>
+              <option>Guest accounts</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label class="filter-label">Method</label>
+            <select class="select-control">
+              <option selected>All methods</option>
+              <option>GCash</option>
+              <option>Maya</option>
+              <option>Cash</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="quick-preset-bar">
+          <span>Quick Filters:</span>
+          <button class="quick-pill">Today</button>
+          <button class="quick-pill">Past 7 Days</button>
+          <button class="quick-pill active">This Month</button>
+          <button class="quick-pill" style="margin-left: auto; color: #ef4444;">Reset Filters</button>
+        </div>
+      </div>
+
+      <!-- Unified Table Card -->
+      <div class="table-container-card">
+        <table class="unified-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Plan / Membership</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Reference</th>
+              <th>Paid At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">TW</div>
+                  <div class="member-name-text">
+                    Test Walk-in
+                    <span class="badge-guest">Guest</span>
+                  </div>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Guest (Daily Pass)</span></td>
+              <td><span class="amount-cell">₱250</span></td>
+              <td><span class="method-badge badge-cash">CASH</span></td>
+              <td><span style="color: var(--fg-muted);">—</span></td>
+              <td><span class="timestamp-text">Aug 1, 2026, 4:11 PM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">RR</div>
+                  <span class="member-name-text">Ryan Gabriel Reyes</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Monthly Unlimited</span></td>
+              <td><span class="amount-cell">₱2,000</span></td>
+              <td><span class="method-badge badge-gcash">GCASH</span></td>
+              <td><span class="ref-code">50103123123</span></td>
+              <td><span class="timestamp-text">Jul 27, 2026, 12:26 AM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">MB</div>
+                  <span class="member-name-text">Mark Bautista</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Monthly Unlimited</span></td>
+              <td><span class="amount-cell">₱2,000</span></td>
+              <td><span class="method-badge badge-cash">CASH</span></td>
+              <td><span style="color: var(--fg-muted);">—</span></td>
+              <td><span class="timestamp-text">Jul 24, 2026, 5:27 PM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">MA</div>
+                  <span class="member-name-text">Manuel Aquino</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Monthly Unlimited</span></td>
+              <td><span class="amount-cell">₱2,000</span></td>
+              <td><span class="method-badge badge-gcash">GCASH</span></td>
+              <td><span class="ref-code">99120482012</span></td>
+              <td><span class="timestamp-text">Jul 24, 2026, 10:37 AM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">ER</div>
+                  <span class="member-name-text">Elena Reyes</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Standard Monthly</span></td>
+              <td><span class="amount-cell">₱2,000</span></td>
+              <td><span class="method-badge badge-maya">MAYA</span></td>
+              <td><span class="ref-code">MAYA-440129</span></td>
+              <td><span class="timestamp-text">Jul 13, 2026, 1:14 PM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">IC</div>
+                  <span class="member-name-text">Isabel Cruz</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Quarterly Strength</span></td>
+              <td><span class="amount-cell">₱5,500</span></td>
+              <td><span class="method-badge badge-cash">CASH</span></td>
+              <td><span style="color: var(--fg-muted);">—</span></td>
+              <td><span class="timestamp-text">Jul 11, 2026, 4:09 PM</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <div class="member-initials">PD</div>
+                  <span class="member-name-text">Paolo Del Rosario</span>
+                </div>
+              </td>
+              <td><span style="font-weight: 500;">Annual Pass</span></td>
+              <td><span class="amount-cell">₱14,000</span></td>
+              <td><span class="method-badge badge-gcash">GCASH</span></td>
+              <td><span class="ref-code">88491029411</span></td>
+              <td><span class="timestamp-text">Jul 11, 2026, 3:28 PM</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Unified Pagination Bar -->
+        <div class="table-footer-pagination">
+          <p class="record-count-text">
+            Showing 1 to 10 of 74 payments
+          </p>
+          <div class="pagination-actions">
+            <div class="rows-dropdown">
+              <span>Rows per page</span>
+              <select class="select-control" style="height: 30px; padding: 0 8px;">
+                <option selected>10</option>
+                <option>25</option>
+                <option>50</option>
+              </select>
+            </div>
+            <div class="pg-buttons">
+              <button class="pg-btn" disabled>‹</button>
+              <button class="pg-btn active">1</button>
+              <button class="pg-btn">2</button>
+              <span style="padding: 0 4px; color: var(--fg-muted);">...</span>
+              <button class="pg-btn">8</button>
+              <button class="pg-btn">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    function switchPageView(page) {
+      document.querySelectorAll('.history-page-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.page-tab-btn').forEach(b => b.classList.remove('active'));
+
+      if (page === 'checkin') {
+        document.getElementById('view-checkin').classList.add('active');
+        document.getElementById('btn-checkin').classList.add('active');
+      } else {
+        document.getElementById('view-payment').classList.add('active');
+        document.getElementById('btn-payment').classList.add('active');
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+  </script>
+</body>
+</html>

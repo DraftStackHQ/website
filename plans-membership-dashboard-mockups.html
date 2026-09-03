@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Plans, Membership & Dashboard UI Redesign</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Solid Non-AI Dark Mode (Consistent across all pages) */
+      --bg: #111215;
+      --fg-primary: #f4f4f5;
+      --fg-secondary: #a1a1aa;
+      --fg-muted: #71717a;
+
+      --card-bg: #18191d;
+      --card-border: #27282d;
+      --header-bg: #1f2025;
+      --row-hover: #1e1f24;
+      --row-border: #232429;
+
+      --input-bg: #131417;
+      --input-border: #2d2e35;
+      --input-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+
+      --radius-card: 10px;
+      --radius-control: 6px;
+    }
+
+    .light-mode {
+      --bg: #f8fafc;
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --header-bg: #f1f5f9;
+      --row-hover: #f8fafc;
+      --row-border: #f1f5f9;
+
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #2563eb;
+
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    /* Top Control Bar */
+    header.top-bar {
+      background: #0d0e11;
+      border-bottom: 1px solid #222328;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-spec {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .tabs-switch {
+      display: flex;
+      background: #16171b;
+      border: 1px solid #27282d;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .tab-nav-btn {
+      background: transparent;
+      border: none;
+      color: #a1a1aa;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .tab-nav-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-nav-btn.active {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-tool {
+      background: #1a1b20;
+      border: 1px solid #2d2e35;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: #22242a;
+      color: #fff;
+    }
+
+    /* Main Scrollable Canvas */
+    .viewport {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .page-section-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: viewFade 0.15s ease-out;
+    }
+
+    .page-section-view.active {
+      display: flex;
+    }
+
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Row */
+    .page-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .head-title-group h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+    }
+
+    .head-title-group p {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+      margin-top: 3px;
+    }
+
+    .btn-create-action {
+      height: 38px;
+      background: #f4f4f5;
+      color: #0f172a;
+      border: none;
+      padding: 0 16px;
+      border-radius: var(--radius-control);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-create-action:hover {
+      background: #ffffff;
+    }
+
+    .light-mode .btn-create-action {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    /* KPI Ribbon */
+    .kpi-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 7px 14px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .kpi-lbl {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    /* Elevated Table Card */
+    .table-container-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    table.tier-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    thead th {
+      background: var(--header-bg);
+      color: var(--fg-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--row-border);
+      transition: background 0.12s ease;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr.tier-row {
+      cursor: pointer;
+    }
+
+    tbody tr.tier-row:hover {
+      background: var(--row-hover);
+    }
+
+    tbody tr.tier-row.expanded {
+      background: rgba(37, 99, 235, 0.06);
+      border-bottom: none;
+    }
+
+    tbody td {
+      padding: 13px 18px;
+      vertical-align: middle;
+      color: var(--fg-primary);
+    }
+
+    .tier-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tier-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    .icon-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .icon-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .icon-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .icon-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+    .tier-title {
+      font-weight: 600;
+      color: var(--fg-primary);
+    }
+
+    .price-mono {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-active {
+      background: #0f291e;
+      color: #34d399;
+      border: 1px solid #14532d;
+    }
+
+    .light-mode .badge-active {
+      background: #f0fdf4;
+      color: #16a34a;
+      border-color: #bbf7d0;
+    }
+
+    /* Refined Accordion Expansion Detail Panel (Eliminated sunken dark boxes & "TODO") */
+    .detail-drawer-row td {
+      padding: 0 18px 18px 18px;
+      background: rgba(37, 99, 235, 0.03);
+    }
+
+    .detail-drawer-card {
+      background: #141518;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .light-mode .detail-drawer-card {
+      background: #f8fafc;
+    }
+
+    .drawer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spec-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .spec-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg-primary);
+    }
+
+    .spec-sub {
+      font-size: 11.5px;
+      color: var(--fg-muted);
+    }
+
+    .drawer-footer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--row-border);
+      padding-top: 12px;
+    }
+
+    .btn-edit-tier {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--fg-primary);
+      padding: 5px 14px;
+      border-radius: var(--radius-control);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .btn-edit-tier:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-deactivate-tier {
+      background: #2b1417;
+      border: 1px solid #5f1d24;
+      color: #f87171;
+      padding: 5px 14px;
+      border-radius: var(--radius-control);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .btn-deactivate-tier:hover {
+      background: #3f191e;
+      color: #fca5a5;
+    }
+
+    /* ============================================================
+       DASHBOARD STYLING (Solid elevated stat tiles & feeds)
+       ============================================================ */
+    .dashboard-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .dashboard-tiles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .stat-card-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--fg-secondary);
+    }
+
+    .stat-icon-bubble {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-card-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--fg-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-card-footer {
+      font-size: 11.5px;
+      color: var(--fg-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Color accents for left indicator bar */
+    .stat-card.accent-blue { border-left: 3px solid #3b82f6; }
+    .stat-card.accent-emerald { border-left: 3px solid #10b981; }
+    .stat-card.accent-amber { border-left: 3px solid #f59e0b; }
+    .stat-card.accent-red { border-left: 3px solid #ef4444; }
+    .stat-card.accent-sky { border-left: 3px solid #0ea5e9; }
+
+    /* Charts Row */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chart-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    .chart-range-toggle {
+      display: flex;
+      background: #141518;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .range-btn {
+      background: transparent;
+      border: none;
+      color: var(--fg-secondary);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .range-btn.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .chart-svg-container {
+      height: 180px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Activity Feeds */
+    .activity-feeds-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .activity-feeds-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feed-panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feed-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--row-border);
+      padding-bottom: 12px;
+    }
+
+    .feed-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    .feed-empty-state {
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .feed-empty-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: var(--fg-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feed-empty-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--fg-secondary);
+    }
+
+    .feed-empty-sub {
+      font-size: 12px;
+      color: var(--fg-muted);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18191d;
+      border: 1px solid #27282d;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Showcase Navigation Bar -->
+  <header class="top-bar">
+    <div class="brand-meta">
+      <div class="brand-logo">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="badge-spec">PLANS, MEMBERSHIP & DASHBOARD</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Switch between the 3 Pages -->
+    <div class="tabs-switch">
+      <button class="tab-nav-btn active" onclick="switchPage('plans')" id="tab-plans">
+        <span>1. Plans Page</span>
+      </button>
+      <button class="tab-nav-btn" onclick="switchPage('membership')" id="tab-membership">
+        <span>2. Membership Page</span>
+      </button>
+      <button class="tab-nav-btn" onclick="switchPage('dashboard')" id="tab-dashboard">
+        <span>3. Dashboard</span>
+      </button>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="tools-cluster">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Viewport Stage -->
+  <main class="viewport">
+
+    <!-- ============================================================
+         PAGE 1: PLANS PAGE (/plans)
+         Elevated Table Card + Refined Detail Drawer without "TODO"
+         ============================================================ -->
+    <div class="page-section-view active" id="view-plans">
+      
+      <div class="page-head-row">
+        <div class="head-title-group">
+          <h1>Plans</h1>
+          <p>Define and manage your gym's service tiers and walk-in passes.</p>
+        </div>
+
+        <button class="btn-create-action" onclick="showToast('Opens New Plan Modal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Plan
+        </button>
+      </div>
+
+      <!-- Quick KPI Ribbon -->
+      <div class="kpi-row">
+        <div class="kpi-chip">
+          <span class="kpi-label">Active Tiers</span>
+          <span class="kpi-val">4</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Most Popular</span>
+          <span class="kpi-val" style="color: #60a5fa;">Monthly Unlimited</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Walk-In Pass</span>
+          <span class="kpi-val" style="color: #34d399;">₱250.00 / day</span>
+        </div>
+      </div>
+
+      <!-- Elevated Table Card -->
+      <div class="table-container-card">
+        <table class="tier-table">
+          <thead>
+            <tr>
+              <th>Plan Name</th>
+              <th>Price</th>
+              <th>Duration</th>
+              <th>Available For</th>
+              <th style="text-align: right;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1: Expanded Plan (Monthly) -->
+            <tr class="tier-row expanded" onclick="toggleRow('drawer-monthly', this)">
+              <td>
+                <div class="tier-name-cell">
+                  <div class="tier-icon-box icon-blue">📅</div>
+                  <span class="tier-title">Monthly</span>
+                </div>
+              </td>
+              <td><span class="price-mono">₱2,000</span></td>
+              <td><span style="color: var(--fg-secondary);">30 days</span></td>
+              <td><span style="color: var(--fg-secondary);">Anyone</span></td>
+              <td style="text-align: right;"><span class="status-badge badge-active">● Active</span></td>
+            </tr>
+
+            <!-- Expanded Details Drawer (Clean, Non-Clunky, No "TODO" text) -->
+            <tr class="detail-drawer-row" id="drawer-monthly">
+              <td colspan="5">
+                <div class="detail-drawer-card">
+                  <div class="drawer-grid">
+                    <div class="spec-item">
+                      <span class="spec-lbl">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        Plan Status
+                      </span>
+                      <span class="spec-val" style="color: #34d399;">Active for Enrollment</span>
+                      <span class="spec-sub">Visible at counter register</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                        Rate & Renewal
+                      </span>
+                      <span class="spec-val price-mono">₱2,000.00</span>
+                      <span class="spec-sub">Auto-calculated upon payment</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/></svg>
+                        Duration
+                      </span>
+                      <span class="spec-val">30 Calendar Days</span>
+                      <span class="spec-sub">Extends member expiry date</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/></svg>
+                        Eligibility
+                      </span>
+                      <span class="spec-val">Members & Walk-Ins</span>
+                      <span class="spec-sub">Unrestricted customer tier</span>
+                    </div>
+                  </div>
+
+                  <div class="drawer-footer-actions">
+                    <button class="btn-edit-tier" onclick="showToast('Edit Monthly Plan')">Edit Plan</button>
+                    <button class="btn-deactivate-tier" onclick="showToast('Deactivate Plan')">Deactivate</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2: Annual -->
+            <tr class="tier-row" onclick="toggleRow('drawer-annual', this)">
+              <td>
+                <div class="tier-name-cell">
+                  <div class="tier-icon-box icon-amber">🏆</div>
+                  <span class="tier-title">Annual All-Access</span>
+                </div>
+              </td>
+              <td><span class="price-mono">₱20,000</span></td>
+              <td><span style="color: var(--fg-secondary);">365 days</span></td>
+              <td><span style="color: var(--fg-secondary);">Anyone</span></td>
+              <td style="text-align: right;"><span class="status-badge badge-active">● Active</span></td>
+            </tr>
+
+            <!-- Row 3: Guest Daily Pass -->
+            <tr class="tier-row" onclick="toggleRow('drawer-guest', this)">
+              <td>
+                <div class="tier-name-cell">
+                  <div class="tier-icon-box icon-emerald">⚡</div>
+                  <span class="tier-title">Guest (Daily Pass)</span>
+                </div>
+              </td>
+              <td><span class="price-mono">₱250</span></td>
+              <td><span style="color: var(--fg-secondary);">1 day</span></td>
+              <td><span style="color: var(--fg-secondary);">Anyone</span></td>
+              <td style="text-align: right;"><span class="status-badge badge-active">● Active</span></td>
+            </tr>
+
+            <!-- Row 4: Special Pass -->
+            <tr class="tier-row" onclick="toggleRow('drawer-sfd', this)">
+              <td>
+                <div class="tier-name-cell">
+                  <div class="tier-icon-box icon-purple">🏷️</div>
+                  <span class="tier-title">Special Trial Pass</span>
+                </div>
+              </td>
+              <td><span class="price-mono">₱1,231</span></td>
+              <td><span style="color: var(--fg-secondary);">1 day</span></td>
+              <td><span style="color: var(--fg-secondary);">Guests only</span></td>
+              <td style="text-align: right;"><span class="status-badge badge-active">● Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="padding: 12px 18px; border-top: 1px solid var(--card-border); background: var(--header-bg); display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--fg-muted);">
+          <span>4 service tiers configured</span>
+          <span>Click any row to inspect specifications or edit rates</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 2: MEMBERSHIP PAGE (/membership)
+         ============================================================ -->
+    <div class="page-section-view" id="view-membership">
+      
+      <div class="page-head-row">
+        <div class="head-title-group">
+          <h1>Membership</h1>
+          <p>Manage core annual subscription tiers and membership dues.</p>
+        </div>
+
+        <button class="btn-create-action" onclick="showToast('Opens New Membership Type Modal')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Membership Type
+        </button>
+      </div>
+
+      <!-- Quick KPI Ribbon -->
+      <div class="kpi-row">
+        <div class="kpi-chip">
+          <span class="kpi-label">Enrolled Members</span>
+          <span class="kpi-val" style="color: #34d399;">3 Members</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Default Annual Fee</span>
+          <span class="kpi-val">₱0.00 (Standard)</span>
+        </div>
+        <div class="kpi-chip">
+          <span class="kpi-label">Validity</span>
+          <span class="kpi-val">365 Days</span>
+        </div>
+      </div>
+
+      <!-- Elevated Table Card -->
+      <div class="table-container-card">
+        <table class="tier-table">
+          <thead>
+            <tr>
+              <th>Membership Tier</th>
+              <th>Annual Fee</th>
+              <th>Duration</th>
+              <th>Subscribers</th>
+              <th style="text-align: right;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tier-row expanded" onclick="toggleRow('drawer-standard-mem', this)">
+              <td>
+                <div class="tier-name-cell">
+                  <div class="tier-icon-box icon-emerald">🛡️</div>
+                  <span class="tier-title">Standard Membership</span>
+                </div>
+              </td>
+              <td><span class="price-mono">₱0</span></td>
+              <td><span style="color: var(--fg-secondary);">365 days</span></td>
+              <td>
+                <span style="font-family: var(--font-mono); font-weight: 700; color: var(--fg-primary);">3 members</span>
+              </td>
+              <td style="text-align: right;"><span class="status-badge badge-active">● Active</span></td>
+            </tr>
+
+            <!-- Expanded Details Drawer -->
+            <tr class="detail-drawer-row" id="drawer-standard-mem">
+              <td colspan="5">
+                <div class="detail-drawer-card">
+                  <div class="drawer-grid">
+                    <div class="spec-item">
+                      <span class="spec-lbl">Tier Status</span>
+                      <span class="spec-val" style="color: #34d399;">Active Core Membership</span>
+                      <span class="spec-sub">Default tier assigned upon registration</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">Annual Due</span>
+                      <span class="spec-val price-mono">₱0.00</span>
+                      <span class="spec-sub">Waived onboarding fee</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">Validity Duration</span>
+                      <span class="spec-val">365 Days (1 Year)</span>
+                      <span class="spec-sub">Annual renewal cycle</span>
+                    </div>
+                    <div class="spec-item">
+                      <span class="spec-lbl">Active Subscribers</span>
+                      <span class="spec-val" style="color: #60a5fa;">3 Members on Record</span>
+                      <span class="spec-sub">Eligible for facility access</span>
+                    </div>
+                  </div>
+
+                  <div class="drawer-footer-actions">
+                    <button class="btn-edit-tier" onclick="showToast('Edit Membership Tier')">Edit Tier</button>
+                    <button class="btn-deactivate-tier" onclick="showToast('Deactivate Tier')">Deactivate</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="padding: 12px 18px; border-top: 1px solid var(--card-border); background: var(--header-bg); display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--fg-muted);">
+          <span>1 core membership tier configured</span>
+          <span>Governs annual gym membership validity across all members</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         PAGE 3: DASHBOARD (/dashboard)
+         Elevated Stat Tiles + Non-AI Clean Charts + Actionable Activity Feeds
+         ============================================================ -->
+    <div class="page-section-view" id="view-dashboard">
+      
+      <div class="page-head-row">
+        <div class="head-title-group">
+          <h1>Dashboard</h1>
+          <p>Today's counter metrics and attendance overview</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 12px; font-family: var(--font-mono); color: #4ade80;">● Online Desk</span>
+        </div>
+      </div>
+
+      <!-- Elevated KPI Stat Tiles (Matching Solid Engineered Palette) -->
+      <div class="dashboard-tiles-grid">
+        <!-- Revenue this month -->
+        <div class="stat-card accent-blue">
+          <div class="stat-card-head">
+            <span class="stat-card-label">Revenue this month</span>
+            <div class="stat-icon-bubble icon-blue">₱</div>
+          </div>
+          <div class="stat-card-val">₱0.00</div>
+          <div class="stat-card-footer">
+            <span style="color: #f87171;">↓ 100%</span>
+            <span>vs last month</span>
+          </div>
+        </div>
+
+        <!-- Active members -->
+        <div class="stat-card accent-emerald">
+          <div class="stat-card-head">
+            <span class="stat-card-label">Active members</span>
+            <div class="stat-icon-bubble icon-emerald">👥</div>
+          </div>
+          <div class="stat-card-val">3</div>
+          <div class="stat-card-footer">
+            <span style="color: #34d399;">+0</span>
+            <span>new this month</span>
+          </div>
+        </div>
+
+        <!-- Expiring this week -->
+        <div class="stat-card accent-amber">
+          <div class="stat-card-head">
+            <span class="stat-card-label">Expiring this week</span>
+            <div class="stat-icon-bubble icon-amber">⏳</div>
+          </div>
+          <div class="stat-card-val">0</div>
+          <div class="stat-card-footer">
+            <span>Within 7 days</span>
+          </div>
+        </div>
+
+        <!-- Expired members -->
+        <div class="stat-card accent-red">
+          <div class="stat-card-head">
+            <span class="stat-card-label">Expired members</span>
+            <div class="stat-icon-bubble icon-purple" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">⚠️</div>
+          </div>
+          <div class="stat-card-val" style="color: #f87171;">15</div>
+          <div class="stat-card-footer">
+            <span style="color: #f87171; font-weight: 600;">Needs follow-up</span>
+          </div>
+        </div>
+
+        <!-- Check-ins today -->
+        <div class="stat-card accent-sky">
+          <div class="stat-card-head">
+            <span class="stat-card-label">Check-ins today</span>
+            <div class="stat-icon-bubble icon-blue" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">✓</div>
+          </div>
+          <div class="stat-card-val">0</div>
+          <div class="stat-card-footer">
+            <a href="#" style="color: #38bdf8; text-decoration: none; font-weight: 600;" onclick="showToast('Navigates to /checkin')">
+              Log check-in →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <!-- Check-Ins Trend -->
+        <div class="chart-panel-card">
+          <div class="chart-head">
+            <span class="chart-title">Check-Ins Trend</span>
+            <div class="chart-range-toggle">
+              <button class="range-btn active" onclick="showToast('7 days selected')">7 days</button>
+              <button class="range-btn" onclick="showToast('14 days selected')">14 days</button>
+            </div>
+          </div>
+
+          <!-- Clean Line Chart Simulation -->
+          <div class="chart-svg-container">
+            <svg width="100%" height="100%" viewBox="0 0 500 160" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="40" y1="20" x2="490" y2="20" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="40" y1="60" x2="490" y2="60" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="40" y1="100" x2="490" y2="100" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="40" y1="140" x2="490" y2="140" stroke="var(--card-border)" stroke-width="1" />
+
+              <!-- Y Axis labels -->
+              <text x="15" y="24" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">4</text>
+              <text x="15" y="64" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">3</text>
+              <text x="15" y="104" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">2</text>
+              <text x="15" y="144" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">0</text>
+
+              <!-- Flat trend line -->
+              <polyline points="50,140 120,140 190,140 260,140 330,140 400,140 470,140" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+              <circle cx="50" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="120" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="190" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="260" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="330" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="400" cy="140" r="3" fill="#3b82f6" />
+              <circle cx="470" cy="140" r="3" fill="#3b82f6" />
+            </svg>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--fg-muted); padding: 0 10px; font-family: var(--font-mono);">
+            <span>Aug 28</span>
+            <span>Aug 30</span>
+            <span>Sep 1</span>
+            <span>Sep 3</span>
+          </div>
+        </div>
+
+        <!-- Membership Distribution -->
+        <div class="chart-panel-card">
+          <div class="chart-head">
+            <span class="chart-title">Membership Distribution</span>
+            <span style="font-size: 12px; color: var(--fg-muted);">Active subscribers</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center; height: 180px; gap: 32px;">
+            <!-- Donut Simulation -->
+            <div style="position: relative; width: 120px; height: 120px;">
+              <svg width="120" height="120" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="48" fill="none" stroke="#2563eb" stroke-width="16" />
+              </svg>
+              <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <span style="font-size: 20px; font-weight: 800; font-family: var(--font-mono); color: var(--fg-primary);">3</span>
+                <span style="font-size: 10px; color: var(--fg-muted); text-transform: uppercase;">Members</span>
+              </div>
+            </div>
+
+            <!-- Donut Legend -->
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 13px;">
+                <span style="width: 10px; height: 10px; border-radius: 2px; background: #2563eb;"></span>
+                <span style="font-weight: 600;">Annual Pass</span>
+                <span style="font-family: var(--font-mono); color: var(--fg-muted);">(100%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actionable Activity Feeds (Elevated, Not Depressing Slabs) -->
+      <div class="activity-feeds-row">
+        <!-- Payments Logged Today -->
+        <div class="feed-panel-card">
+          <div class="feed-title-row">
+            <span class="feed-title">Payments Logged Today</span>
+            <a href="#" style="font-size: 12px; color: #3b82f6; text-decoration: none; font-weight: 600;" onclick="showToast('Open payment history')">
+              View History →
+            </a>
+          </div>
+
+          <div class="feed-empty-state">
+            <div class="feed-empty-icon">₱</div>
+            <div class="feed-empty-title">No transactions recorded today</div>
+            <div class="feed-empty-sub">Walk-in fees and membership renewals will show up here as they occur.</div>
+          </div>
+        </div>
+
+        <!-- New Members This Month -->
+        <div class="feed-panel-card">
+          <div class="feed-title-row">
+            <span class="feed-title">New Members This Month</span>
+            <a href="#" style="font-size: 12px; color: #3b82f6; text-decoration: none; font-weight: 600;" onclick="showToast('Open members directory')">
+              View Directory →
+            </a>
+          </div>
+
+          <div class="feed-empty-state">
+            <div class="feed-empty-icon">👥</div>
+            <div class="feed-empty-title">No new registrations yet for September</div>
+            <div class="feed-empty-sub">Add a member from the counter to track active enrollment.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast">
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <script>
+    function switchPage(page) {
+      document.querySelectorAll('.page-section-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById('view-' + page).classList.add('active');
+      document.getElementById('tab-' + page).classList.add('active');
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+
+    function toggleRow(drawerId, rowEl) {
+      const drawer = document.getElementById(drawerId);
+      if (!drawer) return;
+      const isHidden = drawer.style.display === 'none';
+      drawer.style.display = isHidden ? 'table-row' : 'none';
+      rowEl.classList.toggle('expanded', isHidden);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>

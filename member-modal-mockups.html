@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Add Member Modal UI Redesign Mockups</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Light Mode Tokens (matching GymFlow index.css) */
+      --bg: hsl(0, 0%, 97%);
+      --fg: hsl(0, 0%, 11%);
+      --card-bg: #ffffff;
+      --border: hsl(0, 0%, 80%);
+      --input: hsl(0, 0%, 80%);
+      --muted-bg: hsl(0, 0%, 95%);
+      --muted-fg: hsl(0, 0%, 42%);
+      --primary: hsl(221, 83%, 53%);
+      --primary-hover: hsl(221, 83%, 45%);
+      --primary-fg: #ffffff;
+
+      --radius-card: 0.625rem; /* 10px */
+      --radius-control: 6px;
+      --radius-sm: 4px;
+
+      --shadow-1: 0 1px 2px rgba(20, 20, 20, 0.04), 0 1px 3px rgba(20, 20, 20, 0.06);
+      --shadow-2: 0 1px 2px rgba(20, 20, 20, 0.05), 0 6px 12px rgba(20, 20, 20, 0.08);
+      --shadow-3: 0 4px 6px rgba(20, 20, 20, 0.06), 0 16px 32px rgba(20, 20, 20, 0.14);
+    }
+
+    .dark-mode {
+      --bg: hsl(0, 0%, 9%);
+      --fg: hsl(0, 0%, 98%);
+      --card-bg: hsl(0, 0%, 14%);
+      --border: hsl(0, 0%, 26%);
+      --input: hsl(0, 0%, 26%);
+      --muted-bg: hsl(0, 0%, 18%);
+      --muted-fg: hsl(0, 0%, 65%);
+      --primary: hsl(0, 0%, 92%);
+      --primary-hover: hsl(0, 0%, 100%);
+      --primary-fg: hsl(0, 0%, 12%);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #090c10;
+      color: #f1f5f9;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Control Bar */
+    header.control-bar {
+      background: #0d1117;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .brand-label {
+      font-weight: 700;
+      font-size: 14px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .concept-chip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Navigation Tabs */
+    .tab-group {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .tab-item {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .tab-item:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-item.active {
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-tag {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    /* Utility Tools */
+    .tool-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-tool {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* Stage Canvas */
+    .stage-area {
+      flex: 1;
+      background: #070a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: auto;
+      position: relative;
+    }
+
+    /* Dimmed backdrop simulating modal overlay */
+    .modal-backdrop-sim {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Common Modal Card */
+    .modal-card {
+      display: none;
+      background: var(--card-bg);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-3);
+      width: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-card.active {
+      display: flex;
+    }
+
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.985) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Header */
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .header-title-group h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--fg);
+    }
+
+    .header-title-group p {
+      font-size: 13px;
+      color: var(--muted-fg);
+      margin-top: 2px;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      color: var(--muted-fg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .close-btn:hover {
+      background: var(--muted-bg);
+      color: var(--fg);
+    }
+
+    /* Scrollable Body */
+    .modal-body {
+      padding: 22px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Footer */
+    .modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--muted-bg);
+      flex-shrink: 0;
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 8px 16px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--muted-bg);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-fg);
+      border: none;
+      padding: 8px 18px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+
+    /* Form Primitives */
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 6px;
+    }
+
+    .field-input, .field-select, .field-textarea {
+      width: 100%;
+      height: 38px;
+      padding: 0 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-control);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field-textarea {
+      height: 72px;
+      padding: 8px 12px;
+      resize: vertical;
+    }
+
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .dark-mode .field-input:focus, .dark-mode .field-select:focus {
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Section Containers */
+    .form-section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 2px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted-fg);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Avatar Upload Component */
+    .avatar-uploader-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 4px 0;
+    }
+
+    .avatar-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--muted-bg);
+      border: 2px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .avatar-circle:hover {
+      border-color: var(--primary);
+    }
+
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-instructions h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .avatar-instructions p {
+      font-size: 12px;
+      color: var(--muted-fg);
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+
+    .btn-file-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      padding: 5px 10px;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-file-label:hover {
+      border-color: var(--primary);
+    }
+
+    /* Fee Breakdown Pill Box */
+    .fee-summary-bar {
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fee-item-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .fee-label-mini {
+      font-size: 11px;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .fee-val-mini {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .fee-total-tag {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .fee-total-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 800;
+      color: #22c55e;
+    }
+
+    /* ============================================================
+       CONCEPT 1: Modern Split-Grid Modal (max-w-3xl, High Craft)
+       ============================================================ */
+    #concept-1 {
+      max-width: 780px;
+      max-height: 86vh;
+    }
+
+    /* ============================================================
+       CONCEPT 2: Desk Workstation (2-Column Form + Sticky Right Summary)
+       ============================================================ */
+    #concept-2 {
+      max-width: 890px;
+      max-height: 86vh;
+    }
+
+    .c2-grid-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+      height: 100%;
+    }
+
+    .c2-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .c2-right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .c2-summary-card {
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .c2-line-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--fg);
+    }
+
+    .c2-total-box {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ============================================================
+       CONCEPT 3: 2-Step Stepper Modal (Profile Info -> Plan Setup)
+       ============================================================ */
+    #concept-3 {
+      max-width: 620px;
+      max-height: 84vh;
+    }
+
+    .stepper-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--muted-bg);
+      padding: 3px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--border);
+    }
+
+    .step-pill {
+      flex: 1;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--muted-fg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .step-pill.active {
+      background: var(--card-bg);
+      color: var(--fg);
+      box-shadow: var(--shadow-1);
+    }
+
+    .step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--muted-fg);
+      color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .step-pill.active .step-num {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar Controls -->
+  <header class="control-bar">
+    <div class="brand-group">
+      <div class="brand-icon">G</div>
+      <div>
+        <span class="brand-label">
+          Add Member Modal <span class="concept-chip">UI Redesign</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Switch between 3 Modal Designs -->
+    <div class="tab-group">
+      <button class="tab-item active" onclick="showModal(1)" id="btn-m1">
+        <span>1. Structured Grouped Cards</span>
+        <span class="tab-tag">RECOMMENDED</span>
+      </button>
+      <button class="tab-item" onclick="showModal(2)" id="btn-m2">
+        <span>2. Two-Column Desk Station</span>
+      </button>
+      <button class="tab-item" onclick="showModal(3)" id="btn-m3">
+        <span>3. 2-Step Segmented Flow</span>
+      </button>
+    </div>
+
+    <!-- Theme & Utilities -->
+    <div class="tool-group">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeText">Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Canvas Stage -->
+  <main class="stage-area" id="stageArea">
+    <div class="modal-backdrop-sim">
+
+      <!-- ============================================================
+           CONCEPT 1: Structured Grouped Cards (Recommended)
+           Fits in 86vh, eliminates awkward scrolling, sticky header & footer
+           ============================================================ -->
+      <div class="modal-card active" id="concept-1">
+        <div class="modal-header">
+          <div class="header-title-group">
+            <h2>Add Member</h2>
+            <p>Register a new member and initialize subscription</p>
+          </div>
+          <button class="close-btn" onclick="showToast('Close modal')">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Identity & Photo Card -->
+          <div class="form-section-card">
+            <div class="section-head">
+              <span class="section-title">👤 Basic Information</span>
+              <span style="font-size: 11px; color: #2563eb; font-weight: 600;">REQUIRED</span>
+            </div>
+
+            <div class="avatar-uploader-row">
+              <div class="avatar-circle" onclick="document.getElementById('c1-photo-input').click()" title="Click to upload member photo">
+                <img id="c1-avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E" alt="Avatar">
+              </div>
+              <div class="avatar-instructions">
+                <h4>Member Profile Photo</h4>
+                <p>JPG or PNG for member verification at counter check-in.</p>
+                <label class="btn-file-label">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                  Upload Photo
+                  <input type="file" id="c1-photo-input" accept="image/*" style="display: none;" onchange="previewPhoto(event, 'c1-avatar-img')">
+                </label>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div style="grid-column: span 2;">
+                <label class="field-label" for="c1-name">Full Name *</label>
+                <input class="field-input" id="c1-name" placeholder="e.g. Juan Dela Cruz" value="Juan Dela Cruz">
+              </div>
+              <div>
+                <label class="field-label" for="c1-phone">Phone Number</label>
+                <input class="field-input" id="c1-phone" placeholder="0917 123 4567" value="0917 829 1042">
+              </div>
+              <div>
+                <label class="field-label" for="c1-email">Email Address</label>
+                <input class="field-input" id="c1-email" type="email" placeholder="juan@gmail.com" value="juan.delacruz@gmail.com">
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal & Emergency Card -->
+          <div class="form-section-card">
+            <div class="section-head">
+              <span class="section-title">📋 Personal & Emergency Details</span>
+              <span style="font-size: 11px; color: var(--muted-fg);">OPTIONAL</span>
+            </div>
+
+            <div class="grid-2">
+              <div>
+                <label class="field-label" for="c1-dob">Date of Birth</label>
+                <input class="field-input" type="date" id="c1-dob" value="1996-05-14">
+              </div>
+              <div>
+                <label class="field-label" for="c1-gender">Gender</label>
+                <select class="field-select" id="c1-gender">
+                  <option value="MALE" selected>Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other / Prefer not to say</option>
+                </select>
+              </div>
+              <div style="grid-column: span 2;">
+                <label class="field-label" for="c1-emergency">Emergency Contact</label>
+                <input class="field-input" id="c1-emergency" placeholder="Name - Phone number (e.g. Maria Dela Cruz - 0918 222 3333)" value="Maria Dela Cruz - 0918 222 3333">
+              </div>
+              <div style="grid-column: span 2;">
+                <label class="field-label" for="c1-address">Address</label>
+                <textarea class="field-textarea" id="c1-address" placeholder="Barangay, City, Province">142 San Antonio St, Pasig City</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Membership Setup Card -->
+          <div class="form-section-card">
+            <div class="section-head">
+              <span class="section-title">💳 Membership & Plan Subscription</span>
+              <span style="font-size: 11px; color: #2563eb; font-weight: 600;">CASH COUNTER</span>
+            </div>
+
+            <div class="grid-3">
+              <div>
+                <label class="field-label">Membership Type *</label>
+                <select class="field-select" id="c1-mtype" onchange="updateTotal(1)">
+                  <option value="1000" selected>Standard Membership (₱1,000 / yr)</option>
+                  <option value="2500">VIP Club Membership (₱2,500 / yr)</option>
+                  <option value="0">Waived / Free</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label">Plan *</label>
+                <select class="field-select" id="c1-plan" onchange="updateTotal(1)">
+                  <option value="1500" selected>Monthly Unlimited (₱1,500 / 30d)</option>
+                  <option value="4000">3-Month Strength Pass (₱4,000 / 90d)</option>
+                  <option value="12000">Annual All-Access (₱12,000 / 365d)</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label">Start Date</label>
+                <input class="field-input" type="date" id="c1-start" value="2026-09-03">
+              </div>
+            </div>
+
+            <!-- Integrated Real-time Fee Summary -->
+            <div class="fee-summary-bar">
+              <div style="display: flex; gap: 24px;">
+                <div class="fee-item-mini">
+                  <span class="fee-label-mini">Membership Fee</span>
+                  <span class="fee-val-mini" id="c1-fee-m">₱1,000.00</span>
+                </div>
+                <div class="fee-item-mini">
+                  <span class="fee-label-mini">Plan Fee</span>
+                  <span class="fee-val-mini" id="c1-fee-p">₱1,500.00</span>
+                </div>
+              </div>
+              <div class="fee-total-tag">
+                <span class="fee-label-mini">Total Due at Counter</span>
+                <span class="fee-total-val" id="c1-fee-tot">₱2,500.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div style="font-size: 12px; color: var(--muted-fg);">
+            Initial cash fee will be recorded automatically
+          </div>
+          <div class="footer-actions">
+            <button class="btn-secondary" onclick="showToast('Cancelled')">Cancel</button>
+            <button class="btn-primary" onclick="showToast('Member Saved!')">
+              <span>Save Member</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ============================================================
+           CONCEPT 2: Two-Column Desk Workstation Modal
+           Form Left (60%) + Sticky Payment Summary Right (40%)
+           ============================================================ -->
+      <div class="modal-card" id="concept-2">
+        <div class="modal-header">
+          <div class="header-title-group">
+            <h2>Add Member</h2>
+            <p>Front-Desk Counter Workstation</p>
+          </div>
+          <button class="close-btn" onclick="showToast('Close modal')">✕</button>
+        </div>
+
+        <div class="modal-body" style="padding: 20px;">
+          <div class="c2-grid-layout">
+            <!-- Left: Profile & Personal Details -->
+            <div class="c2-left-col">
+              <div class="form-section-card">
+                <span class="section-title">👤 Member Profile</span>
+                
+                <div class="avatar-uploader-row" style="padding: 0;">
+                  <div class="avatar-circle" style="width: 56px; height: 56px;" onclick="document.getElementById('c2-photo-input').click()">
+                    <img id="c2-avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E" alt="Avatar">
+                  </div>
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600;">Upload photo</div>
+                    <label class="btn-file-label" style="margin-top: 4px;">
+                      Choose File
+                      <input type="file" id="c2-photo-input" accept="image/*" style="display: none;" onchange="previewPhoto(event, 'c2-avatar-img')">
+                    </label>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="field-label">Full Name *</label>
+                  <input class="field-input" placeholder="e.g. Maria Santos" value="Maria Santos">
+                </div>
+
+                <div class="grid-2">
+                  <div>
+                    <label class="field-label">Phone Number</label>
+                    <input class="field-input" placeholder="0917 000 0000" value="0917 555 1234">
+                  </div>
+                  <div>
+                    <label class="field-label">Email</label>
+                    <input class="field-input" placeholder="name@email.com" value="maria@gmail.com">
+                  </div>
+                </div>
+
+                <div class="grid-2">
+                  <div>
+                    <label class="field-label">Date of Birth</label>
+                    <input class="field-input" type="date" value="1998-11-20">
+                  </div>
+                  <div>
+                    <label class="field-label">Gender</label>
+                    <select class="field-select">
+                      <option>Female</option>
+                      <option>Male</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="field-label">Emergency Contact</label>
+                  <input class="field-input" placeholder="Name - Phone" value="Carlos Santos - 0917 999 8888">
+                </div>
+
+                <div>
+                  <label class="field-label">Address</label>
+                  <input class="field-input" placeholder="Street, Barangay, City" value="Kapitolyo, Pasig City">
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Subscription & Sticky Checkout Panel -->
+            <div class="c2-right-col">
+              <div class="c2-summary-card">
+                <span class="section-title">💳 Subscription Setup</span>
+
+                <div>
+                  <label class="field-label">Membership Type *</label>
+                  <select class="field-select" id="c2-mtype" onchange="updateTotal(2)">
+                    <option value="1000" selected>Standard Annual (₱1,000)</option>
+                    <option value="2500">Gold VIP (₱2,500)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="field-label">Plan *</label>
+                  <select class="field-select" id="c2-plan" onchange="updateTotal(2)">
+                    <option value="1500" selected>Monthly Unlimited (₱1,500)</option>
+                    <option value="12000">Annual All-Access (₱12,000)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="field-label">Start Date</label>
+                  <input class="field-input" type="date" value="2026-09-03">
+                </div>
+
+                <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+                  <div class="c2-line-item">
+                    <span style="color: var(--muted-fg);">Membership Fee</span>
+                    <span style="font-family: var(--font-mono);" id="c2-fee-m">₱1,000.00</span>
+                  </div>
+                  <div class="c2-line-item">
+                    <span style="color: var(--muted-fg);">Plan Fee</span>
+                    <span style="font-family: var(--font-mono);" id="c2-fee-p">₱1,500.00</span>
+                  </div>
+                  <div class="c2-line-item">
+                    <span style="color: var(--muted-fg);">Initial Payment</span>
+                    <span style="font-size: 11px; background: #22c55e22; color: #22c55e; padding: 2px 6px; border-radius: 4px; font-weight: 700;">CASH ONLY</span>
+                  </div>
+                </div>
+
+                <div class="c2-total-box">
+                  <span style="font-weight: 700; font-size: 14px;">Total Payable</span>
+                  <span style="font-size: 20px; font-weight: 800; color: #22c55e; font-family: var(--font-mono);" id="c2-fee-tot">₱2,500.00</span>
+                </div>
+
+                <button class="btn-primary" style="height: 42px; width: 100%; justify-content: center; margin-top: 10px;" onclick="showToast('Member created & receipt generated')">
+                  Confirm & Save Member
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <span style="font-size: 12px; color: var(--muted-fg);">All payments logged directly into gym cash register</span>
+          <button class="btn-secondary" onclick="showToast('Cancelled')">Close</button>
+        </div>
+      </div>
+
+
+      <!-- ============================================================
+           CONCEPT 3: 2-Step Segmented Flow Modal
+           Step 1: Member Profile -> Step 2: Membership & Plan
+           ============================================================ -->
+      <div class="modal-card" id="concept-3">
+        <div class="modal-header">
+          <div class="header-title-group">
+            <h2>Add Member</h2>
+            <p>Step-by-step registration</p>
+          </div>
+          <button class="close-btn" onclick="showToast('Close modal')">✕</button>
+        </div>
+
+        <!-- Step Nav in Header -->
+        <div style="padding: 12px 24px; border-bottom: 1px solid var(--border);">
+          <div class="stepper-nav">
+            <button class="step-pill active" id="pill-step-1" onclick="switchStep(1)">
+              <span class="step-num">1</span>
+              <span>Member Profile</span>
+            </button>
+            <button class="step-pill" id="pill-step-2" onclick="switchStep(2)">
+              <span class="step-num">2</span>
+              <span>Membership & Plan</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <!-- STEP 1 CONTENT -->
+          <div id="step-1-content">
+            <div class="form-section-card" style="border: none; padding: 0;">
+              <div class="avatar-uploader-row">
+                <div class="avatar-circle" onclick="document.getElementById('c3-photo-input').click()">
+                  <img id="c3-avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E" alt="Avatar">
+                </div>
+                <div class="avatar-instructions">
+                  <h4>Member Profile Photo</h4>
+                  <p>Optional counter photo</p>
+                  <label class="btn-file-label">
+                    Upload Photo
+                    <input type="file" id="c3-photo-input" accept="image/*" style="display: none;" onchange="previewPhoto(event, 'c3-avatar-img')">
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label class="field-label">Full Name *</label>
+                <input class="field-input" placeholder="e.g. Angelo Mendoza" value="Angelo Mendoza">
+              </div>
+
+              <div class="grid-2">
+                <div>
+                  <label class="field-label">Phone</label>
+                  <input class="field-input" placeholder="09xx xxx xxxx" value="0920 111 2233">
+                </div>
+                <div>
+                  <label class="field-label">Email</label>
+                  <input class="field-input" placeholder="email@domain.com" value="angelo.m@gmail.com">
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div>
+                  <label class="field-label">Date of Birth</label>
+                  <input class="field-input" type="date" value="1992-03-24">
+                </div>
+                <div>
+                  <label class="field-label">Gender</label>
+                  <select class="field-select">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="field-label">Emergency Contact</label>
+                <input class="field-input" placeholder="Name - Phone" value="Grace Mendoza - 0917 888 7777">
+              </div>
+
+              <div>
+                <label class="field-label">Address</label>
+                <input class="field-input" placeholder="Address" value="Ortigas Ext, Pasig">
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2 CONTENT -->
+          <div id="step-2-content" style="display: none; flex-direction: column; gap: 16px;">
+            <div class="form-section-card">
+              <span class="section-title">Select Tier</span>
+              <div>
+                <label class="field-label">Membership Type *</label>
+                <select class="field-select" id="c3-mtype" onchange="updateTotal(3)">
+                  <option value="1000" selected>Standard Membership (₱1,000 / yr)</option>
+                  <option value="2500">VIP Membership (₱2,500 / yr)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label">Plan *</label>
+                <select class="field-select" id="c3-plan" onchange="updateTotal(3)">
+                  <option value="1500" selected>Monthly Unlimited (₱1,500)</option>
+                  <option value="12000">Annual Pass (₱12,000)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label">Membership Start Date</label>
+                <input class="field-input" type="date" value="2026-09-03">
+              </div>
+            </div>
+
+            <div class="fee-summary-bar">
+              <div style="display: flex; gap: 20px;">
+                <div class="fee-item-mini">
+                  <span class="fee-label-mini">Membership</span>
+                  <span class="fee-val-mini" id="c3-fee-m">₱1,000</span>
+                </div>
+                <div class="fee-item-mini">
+                  <span class="fee-label-mini">Plan</span>
+                  <span class="fee-val-mini" id="c3-fee-p">₱1,500</span>
+                </div>
+              </div>
+              <div class="fee-total-tag">
+                <span class="fee-label-mini">Total Due</span>
+                <span class="fee-total-val" id="c3-fee-tot">₱2,500.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-secondary" id="c3-back-btn" style="visibility: hidden;" onclick="switchStep(1)">
+            ← Back
+          </button>
+          <div class="footer-actions">
+            <button class="btn-secondary" onclick="showToast('Cancelled')">Cancel</button>
+            <button class="btn-primary" id="c3-next-btn" onclick="switchStep(2)">
+              <span>Next: Membership Setup</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+    <span id="toast-text">Action successful</span>
+  </div>
+
+  <script>
+    function showModal(conceptId) {
+      document.querySelectorAll('.modal-card').forEach(m => m.classList.remove('active'));
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+
+      document.getElementById('concept-' + conceptId).classList.add('active');
+      document.getElementById('btn-m' + conceptId).classList.add('active');
+    }
+
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      document.getElementById('themeText').innerText = isDark ? 'Light Mode' : 'Dark Mode';
+    }
+
+    function previewPhoto(event, imgId) {
+      const file = event.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        document.getElementById(imgId).src = url;
+        showToast('Photo selected for upload');
+      }
+    }
+
+    function updateTotal(conceptNum) {
+      const mPrice = parseInt(document.getElementById(`c${conceptNum}-mtype`).value || 0, 10);
+      const pPrice = parseInt(document.getElementById(`c${conceptNum}-plan`).value || 0, 10);
+      const tot = mPrice + pPrice;
+
+      const mEl = document.getElementById(`c${conceptNum}-fee-m`);
+      const pEl = document.getElementById(`c${conceptNum}-fee-p`);
+      const totEl = document.getElementById(`c${conceptNum}-fee-tot`);
+
+      if (mEl) mEl.innerText = `₱${mPrice.toLocaleString()}.00`;
+      if (pEl) pEl.innerText = `₱${pPrice.toLocaleString()}.00`;
+      if (totEl) totEl.innerText = `₱${tot.toLocaleString()}.00`;
+    }
+
+    function switchStep(stepNum) {
+      const s1 = document.getElementById('step-1-content');
+      const s2 = document.getElementById('step-2-content');
+      const p1 = document.getElementById('pill-step-1');
+      const p2 = document.getElementById('pill-step-2');
+      const backBtn = document.getElementById('c3-back-btn');
+      const nextBtn = document.getElementById('c3-next-btn');
+
+      if (stepNum === 1) {
+        s1.style.display = 'flex';
+        s2.style.display = 'none';
+        p1.classList.add('active');
+        p2.classList.remove('active');
+        backBtn.style.visibility = 'hidden';
+        nextBtn.innerHTML = '<span>Next: Membership Setup</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+        nextBtn.onclick = () => switchStep(2);
+      } else {
+        s1.style.display = 'none';
+        s2.style.display = 'flex';
+        p2.classList.add('active');
+        p1.classList.remove('active');
+        backBtn.style.visibility = 'visible';
+        nextBtn.innerHTML = '<span>Save Member</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>';
+        nextBtn.onclick = () => showToast('Member Saved!');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>

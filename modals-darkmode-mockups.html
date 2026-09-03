@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Dark Mode Modals Redesign (Add Member & Add Guest)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Refined Dark Mode Palette (No more muddy gray or dark-on-dark inversions) */
+      --dialog-bg: #14171f;          /* Rich, deep neutral-slate modal surface */
+      --dialog-border: rgba(255, 255, 255, 0.1);
+      --section-bg: rgba(255, 255, 255, 0.03); /* Subtle luminous translucent card */
+      --section-border: rgba(255, 255, 255, 0.07);
+      --input-bg: rgba(0, 0, 0, 0.35);  /* Recessed tactile input */
+      --input-border: rgba(255, 255, 255, 0.12);
+      --input-focus-border: #3b82f6;
+      --input-focus-ring: rgba(59, 130, 246, 0.25);
+      --fg-primary: #f8fafc;
+      --fg-secondary: #94a3b8;
+      --fg-muted: #64748b;
+      --footer-bg: rgba(15, 18, 26, 0.95);
+      --primary-btn-bg: #f8fafc;
+      --primary-btn-fg: #0f172a;
+      --primary-btn-hover: #ffffff;
+      --badge-required-bg: rgba(56, 189, 248, 0.12);
+      --badge-required-fg: #38bdf8;
+      --badge-required-border: rgba(56, 189, 248, 0.25);
+      --badge-cash-bg: rgba(34, 197, 94, 0.12);
+      --badge-cash-fg: #4ade80;
+      --badge-cash-border: rgba(34, 197, 94, 0.25);
+      --fee-box-bg: rgba(255, 255, 255, 0.025);
+      --fee-box-border: rgba(255, 255, 255, 0.08);
+
+      --radius-modal: 14px;
+      --radius-card: 10px;
+      --radius-control: 6px;
+    }
+
+    /* Light mode override for testing */
+    .light-mode {
+      --dialog-bg: #ffffff;
+      --dialog-border: #e2e8f0;
+      --section-bg: #f8fafc;
+      --section-border: #e2e8f0;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus-border: #2563eb;
+      --input-focus-ring: rgba(37, 99, 235, 0.15);
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+      --footer-bg: #f8fafc;
+      --primary-btn-bg: #2563eb;
+      --primary-btn-fg: #ffffff;
+      --primary-btn-hover: #1d4ed8;
+      --badge-required-bg: #eff6ff;
+      --badge-required-fg: #2563eb;
+      --badge-required-border: #bfdbfe;
+      --badge-cash-bg: #f0fdf4;
+      --badge-cash-fg: #16a34a;
+      --badge-cash-border: #bbf7d0;
+      --fee-box-bg: #f1f5f9;
+      --fee-box-border: #e2e8f0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #080a0f;
+      color: #f1f5f9;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Control Header */
+    header.top-controls {
+      background: #0d1118;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-theme {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Tabs */
+    .tab-container {
+      display: flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      background: #1e293b;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .tools-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Modal Backdrop Simulation */
+    .viewport-canvas {
+      flex: 1;
+      background: radial-gradient(circle at 50% 20%, #111520 0%, #06080d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: auto;
+    }
+
+    /* Modal Surface */
+    .modal-window {
+      display: none;
+      background: var(--dialog-bg);
+      border: 1px solid var(--dialog-border);
+      border-radius: var(--radius-modal);
+      box-shadow: 
+        0 24px 60px -12px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+      width: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-window.active {
+      display: flex;
+    }
+
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.99) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    #modal-add-member {
+      max-width: 740px;
+      max-height: 88vh;
+    }
+
+    #modal-add-guest {
+      max-width: 520px;
+      max-height: 85vh;
+    }
+
+    /* Fixed Header */
+    .m-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--dialog-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: var(--dialog-bg);
+    }
+
+    .m-header-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--fg-primary);
+    }
+
+    .m-header-sub {
+      font-size: 13px;
+      color: var(--fg-muted);
+      margin-top: 2px;
+    }
+
+    .btn-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      color: var(--fg-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .btn-close:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--fg-primary);
+    }
+
+    /* Scrollable Form Body */
+    .m-body {
+      padding: 22px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Custom Slim Dark Scrollbar */
+    .m-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .m-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .m-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+    }
+    .m-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Section Card (Luminous, not muddy) */
+    .m-section-card {
+      background: var(--section-bg);
+      border: 1px solid var(--section-border);
+      border-radius: var(--radius-card);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .m-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--section-border);
+      padding-bottom: 10px;
+    }
+
+    .m-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--fg-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Badges */
+    .badge-req {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--badge-required-bg);
+      color: var(--badge-required-fg);
+      border: 1px solid var(--badge-required-border);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .badge-opt {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--fg-muted);
+    }
+
+    .badge-cash {
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--badge-cash-bg);
+      color: var(--badge-cash-fg);
+      border: 1px solid var(--badge-cash-border);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Input & Labels */
+    .m-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg-primary);
+      margin-bottom: 6px;
+    }
+
+    .m-input, .m-select, .m-textarea {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-control);
+      color: var(--fg-primary);
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .m-input::placeholder, .m-textarea::placeholder {
+      color: var(--fg-muted);
+    }
+
+    .m-input:focus, .m-select:focus, .m-textarea:focus {
+      border-color: var(--input-focus-border);
+      box-shadow: 0 0 0 2px var(--input-focus-ring);
+    }
+
+    .m-textarea {
+      height: 72px;
+      padding: 8px 12px;
+      resize: vertical;
+    }
+
+    .col-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Avatar Row */
+    .avatar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar-preview-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px dashed var(--input-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg-muted);
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .avatar-preview-box:hover {
+      border-color: #3b82f6;
+    }
+
+    .avatar-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .btn-photo-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--input-border);
+      color: var(--fg-primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      margin-top: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-photo-upload:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Financial Fee Ledger Box */
+    .fee-ledger {
+      background: var(--fee-box-bg);
+      border: 1px solid var(--fee-box-border);
+      border-radius: var(--radius-control);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .fee-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--fg-secondary);
+    }
+
+    .fee-row-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      border-top: 1px dashed var(--fee-box-border);
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    .amount-highlight {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      color: #4ade80;
+    }
+
+    /* Fixed Footer */
+    .m-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--dialog-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--footer-bg);
+      flex-shrink: 0;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--fg-muted);
+    }
+
+    .footer-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1px solid var(--input-border);
+      color: var(--fg-primary);
+      padding: 8px 16px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-confirm {
+      background: var(--primary-btn-bg);
+      color: var(--primary-btn-fg);
+      border: none;
+      padding: 8px 18px;
+      border-radius: var(--radius-control);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-confirm:hover {
+      background: var(--primary-btn-hover);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Quick Highlight Pill on Guest */
+    .guest-info-banner {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12.5px;
+      color: #93c5fd;
+      line-height: 1.45;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar Controls -->
+  <header class="top-controls">
+    <div class="brand-area">
+      <div class="brand-badge">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="pill-theme">Dark Mode Color Fix</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Toggle between Add Member and Add Guest -->
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="switchModal('member')" id="tab-member">
+        <span>Add Member Modal</span>
+      </button>
+      <button class="tab-btn" onclick="switchModal('guest')" id="tab-guest">
+        <span>Add Guest Modal</span>
+      </button>
+    </div>
+
+    <!-- Light/Dark Mode Switcher -->
+    <div class="tools-area">
+      <button class="btn-toggle" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Stage Canvas -->
+  <main class="viewport-canvas">
+
+    <!-- ============================================================
+         MODAL 1: Add Member (Polished Dark Mode Palette)
+         ============================================================ -->
+    <div class="modal-window active" id="modal-add-member">
+      <div class="m-header">
+        <div>
+          <h2 class="m-header-title">Add Member</h2>
+          <p class="m-header-sub">Register a new member and initialize subscription</p>
+        </div>
+        <button class="btn-close" onclick="showToast('Close dialog')">✕</button>
+      </div>
+
+      <div class="m-body">
+        <!-- Section 1: Basic Info -->
+        <div class="m-section-card">
+          <div class="m-section-head">
+            <span class="m-section-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Basic Info
+            </span>
+            <span class="badge-req">Required</span>
+          </div>
+
+          <div class="avatar-wrap">
+            <div class="avatar-preview-box" onclick="document.getElementById('m-photo-file').click()" title="Click to upload">
+              <img id="m-avatar-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='1.5'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E" alt="Avatar">
+            </div>
+            <div>
+              <div style="font-size: 13.5px; font-weight: 600; color: var(--fg-primary);">Member Photo</div>
+              <div style="font-size: 12px; color: var(--fg-muted); margin-top: 2px;">Used for counter verification and QR check-in.</div>
+              <label class="btn-photo-upload">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                Change photo
+                <input type="file" id="m-photo-file" accept="image/*" style="display: none;" onchange="updatePhotoPreview(event, 'm-avatar-img')">
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="m-label" for="mem-name">Full Name *</label>
+            <input class="m-input" id="mem-name" placeholder="e.g. Juan Dela Cruz" value="Juan Dela Cruz">
+          </div>
+
+          <div class="col-2">
+            <div>
+              <label class="m-label" for="mem-phone">Phone Number</label>
+              <input class="m-input" id="mem-phone" placeholder="0917 123 4567" value="0917 123 4567">
+            </div>
+            <div>
+              <label class="m-label" for="mem-email">Email Address</label>
+              <input class="m-input" id="mem-email" type="email" placeholder="juan@example.com" value="juan@example.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Personal Details -->
+        <div class="m-section-card">
+          <div class="m-section-head">
+            <span class="m-section-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Personal Details
+            </span>
+            <span class="badge-opt">Optional</span>
+          </div>
+
+          <div class="col-2">
+            <div>
+              <label class="m-label" for="mem-dob">Date of Birth</label>
+              <input class="m-input" type="date" id="mem-dob" value="1996-08-20">
+            </div>
+            <div>
+              <label class="m-label" for="mem-gender">Gender</label>
+              <select class="m-select" id="mem-gender">
+                <option selected>Male</option>
+                <option>Female</option>
+                <option>Other / Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="m-label" for="mem-emergency">Emergency Contact</label>
+            <input class="m-input" id="mem-emergency" placeholder="Name - Phone number" value="Maria Dela Cruz - 0918 555 1234">
+          </div>
+
+          <div>
+            <label class="m-label" for="mem-address">Address</label>
+            <textarea class="m-textarea" id="mem-address" placeholder="Barangay, City, Province">142 San Antonio St, Pasig City</textarea>
+          </div>
+        </div>
+
+        <!-- Section 3: Membership Setup -->
+        <div class="m-section-card">
+          <div class="m-section-head">
+            <span class="m-section-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Membership Subscription
+            </span>
+            <span class="badge-cash">Cash Counter</span>
+          </div>
+
+          <div class="col-2">
+            <div>
+              <label class="m-label">Membership Type *</label>
+              <select class="m-select" id="mem-type-select" onchange="calculateMemberTotal()">
+                <option value="1000" selected>Standard Membership (₱1,000 / yr)</option>
+                <option value="2500">Gold Club Tier (₱2,500 / yr)</option>
+                <option value="0">Waived (₱0)</option>
+              </select>
+            </div>
+            <div>
+              <label class="m-label">Plan *</label>
+              <select class="m-select" id="mem-plan-select" onchange="calculateMemberTotal()">
+                <option value="1500" selected>Monthly Unlimited (₱1,500 / 30d)</option>
+                <option value="4000">3-Month Strength Pass (₱4,000 / 90d)</option>
+                <option value="12000">Annual All-Access (₱12,000 / 365d)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div>
+              <label class="m-label" for="mem-start-date">Start Date</label>
+              <input class="m-input" type="date" id="mem-start-date" value="2026-09-03">
+            </div>
+          </div>
+
+          <!-- Clear, Crisp Fee Breakdown -->
+          <div class="fee-ledger">
+            <div class="fee-row">
+              <span>Membership Fee</span>
+              <span style="font-family: var(--font-mono);" id="mem-fee-m">₱1,000</span>
+            </div>
+            <div class="fee-row">
+              <span>Plan Fee</span>
+              <span style="font-family: var(--font-mono);" id="mem-fee-p">₱1,500</span>
+            </div>
+            <div class="fee-row-total">
+              <span>Total Due at Counter</span>
+              <span class="amount-highlight" id="mem-fee-tot">₱2,500.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Sticky Footer -->
+      <div class="m-footer">
+        <span class="footer-note">Initial fee will be recorded in cash register</span>
+        <div class="footer-btns">
+          <button class="btn-cancel" onclick="showToast('Cancelled')">Cancel</button>
+          <button class="btn-confirm" onclick="showToast('Member Saved!')">
+            Save Member
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         MODAL 2: Add Guest (Polished Dark Mode Counter Pass)
+         ============================================================ -->
+    <div class="modal-window" id="modal-add-guest">
+      <div class="m-header">
+        <div>
+          <h2 class="m-header-title">Add Guest</h2>
+          <p class="m-header-sub">Register single-visit walk-in and log cash payment</p>
+        </div>
+        <button class="btn-close" onclick="showToast('Close dialog')">✕</button>
+      </div>
+
+      <div class="m-body">
+        <div class="guest-info-banner">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <div>
+            Creates a temporary guest account and immediately logs the cash day-pass transaction in your daily register.
+          </div>
+        </div>
+
+        <div class="m-section-card">
+          <div class="m-section-head">
+            <span class="m-section-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Guest Information
+            </span>
+            <span class="badge-req">Required</span>
+          </div>
+
+          <div>
+            <label class="m-label" for="guest-name">Full Name *</label>
+            <input class="m-input" id="guest-name" placeholder="e.g. Walk-in Wilma" value="Walk-in Wilma" required>
+          </div>
+
+          <div>
+            <label class="m-label" for="guest-phone">Phone Number</label>
+            <input class="m-input" id="guest-phone" placeholder="09xx xxx xxxx" value="0999 888 7777">
+          </div>
+        </div>
+
+        <div class="m-section-card">
+          <div class="m-section-head">
+            <span class="m-section-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Select Day Pass
+            </span>
+            <span class="badge-cash">Cash Only</span>
+          </div>
+
+          <div>
+            <label class="m-label">Guest Plan *</label>
+            <select class="m-select" id="guest-plan-select" onchange="calculateGuestTotal()">
+              <option value="250" selected>Guest Day Pass (₱250.00 / 1 day)</option>
+              <option value="500">Weekend Special Pass (₱500.00 / 2 days)</option>
+              <option value="1200">1-Week Trial Pass (₱1,200.00 / 7 days)</option>
+            </select>
+          </div>
+
+          <div class="fee-ledger">
+            <div class="fee-row">
+              <span>Day Pass Fee</span>
+              <span style="font-family: var(--font-mono);" id="guest-fee-plan">₱250.00</span>
+            </div>
+            <div class="fee-row-total">
+              <span>Total Payable Now</span>
+              <span class="amount-highlight" id="guest-fee-tot">₱250.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-footer">
+        <span class="footer-note">Initializes 1-day guest pass immediately</span>
+        <div class="footer-btns">
+          <button class="btn-cancel" onclick="showToast('Cancelled')">Cancel</button>
+          <button class="btn-confirm" onclick="showToast('Guest Added & Payment Logged!')">
+            Add Guest & Log Payment
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+    <span id="toast-msg">Action performed</span>
+  </div>
+
+  <script>
+    function switchModal(type) {
+      document.querySelectorAll('.modal-window').forEach(m => m.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      if (type === 'member') {
+        document.getElementById('modal-add-member').classList.add('active');
+        document.getElementById('tab-member').classList.add('active');
+      } else {
+        document.getElementById('modal-add-guest').classList.add('active');
+        document.getElementById('tab-guest').classList.add('active');
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+
+    function updatePhotoPreview(e, imgId) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById(imgId).src = URL.createObjectURL(file);
+        showToast('Photo selected');
+      }
+    }
+
+    function calculateMemberTotal() {
+      const m = parseInt(document.getElementById('mem-type-select').value || 0, 10);
+      const p = parseInt(document.getElementById('mem-plan-select').value || 0, 10);
+      const tot = m + p;
+
+      document.getElementById('mem-fee-m').innerText = `₱${m.toLocaleString()}`;
+      document.getElementById('mem-fee-p').innerText = `₱${p.toLocaleString()}`;
+      document.getElementById('mem-fee-tot').innerText = `₱${tot.toLocaleString()}.00`;
+    }
+
+    function calculateGuestTotal() {
+      const p = parseInt(document.getElementById('guest-plan-select').value || 0, 10);
+      document.getElementById('guest-fee-plan').innerText = `₱${p.toLocaleString()}.00`;
+      document.getElementById('guest-fee-tot').innerText = `₱${p.toLocaleString()}.00`;
+    }
+
+    function showToast(text) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = text;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
+</body>
+</html>

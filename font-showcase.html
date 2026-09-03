@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Typography & Font Pairing Showcase</title>
+  
+  <!-- Font Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Load Candidate Fonts for Live Comparison -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Grounded Solid Dark Mode (Default) */
+      --bg: #111215;
+      --fg-primary: #f4f4f5;
+      --fg-secondary: #a1a1aa;
+      --fg-muted: #71717a;
+
+      --card-bg: #18191d;
+      --card-border: #27282d;
+      --header-bg: #1f2025;
+      --row-hover: #1e1f24;
+      --row-border: #232429;
+
+      --input-bg: #131417;
+      --input-border: #2d2e35;
+      --input-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+
+      --radius-card: 10px;
+      --radius-control: 6px;
+
+      /* Active Font Variables */
+      --active-font-sans: 'Plus Jakarta Sans', sans-serif;
+      --active-font-mono: 'JetBrains Mono', monospace;
+    }
+
+    .light-mode {
+      --bg: #f8fafc;
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --header-bg: #f1f5f9;
+      --row-hover: #f8fafc;
+      --row-border: #f1f5f9;
+
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #2563eb;
+
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+    }
+
+    body {
+      font-family: var(--active-font-sans);
+      background: var(--bg);
+      color: var(--fg-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .font-mono-val {
+      font-family: var(--active-font-mono);
+    }
+
+    /* Top Showcase Bar */
+    header.top-bar {
+      background: #0d0e11;
+      border-bottom: 1px solid #222328;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-spec {
+      font-family: var(--active-font-mono);
+      font-size: 11px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Font Switcher Tabs */
+    .font-tabs-group {
+      display: flex;
+      background: #16171b;
+      border: 1px solid #27282d;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .font-tab-btn {
+      background: transparent;
+      border: none;
+      color: #a1a1aa;
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .font-tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .font-tab-btn.active {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-badge {
+      font-size: 9.5px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .btn-tool {
+      background: #1a1b20;
+      border: 1px solid #2d2e35;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: #22242a;
+      color: #fff;
+    }
+
+    /* Main Viewport */
+    .viewport {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header Banner with active font spec */
+    .font-spec-banner {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .font-meta-cluster h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .font-meta-cluster p {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+      margin-top: 4px;
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    .font-pairing-chip {
+      background: #131417;
+      border: 1px solid var(--input-border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .light-mode .font-pairing-chip {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    /* Specimen Grid */
+    .specimen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 960px) {
+      .specimen-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Component Cards */
+    .sample-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sample-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--row-border);
+      padding-bottom: 10px;
+    }
+
+    .sample-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--fg-secondary);
+    }
+
+    /* Sample Table */
+    table.sample-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    thead th {
+      background: var(--header-bg);
+      color: var(--fg-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--row-border);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody td {
+      padding: 10px 14px;
+      vertical-align: middle;
+      color: var(--fg-primary);
+    }
+
+    .badge-sample {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--active-font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .badge-blue { background: #112240; color: #60a5fa; border: 1px solid #1e3a8a; }
+    .badge-green { background: #0f291e; color: #34d399; border: 1px solid #14532d; }
+    .badge-amber { background: #262016; color: #fbbf24; border: 1px solid #4a3818; }
+
+    .light-mode .badge-blue { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+    .light-mode .badge-green { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+    .light-mode .badge-amber { background: #fefce8; color: #ca8a04; border-color: #fef08a; }
+
+    /* Sample Form Inputs */
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--fg-primary);
+    }
+
+    .input-field {
+      height: 38px;
+      padding: 0 12px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-control);
+      color: var(--fg-primary);
+      font-family: var(--active-font-sans);
+      font-size: 13.5px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--input-focus);
+    }
+
+    /* Numeric Showcase */
+    .numbers-showcase {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .num-card {
+      background: #141518;
+      border: 1px solid var(--card-border);
+      padding: 12px 14px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .light-mode .num-card {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+
+    .num-lbl {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      font-weight: 600;
+    }
+
+    .num-val {
+      font-family: var(--active-font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    /* Comparison Table at Bottom */
+    .comparison-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .comp-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .comp-box {
+      background: #141518;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .light-mode .comp-box {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+
+    .comp-box:hover, .comp-box.selected {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .comp-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--fg-primary);
+    }
+
+    .comp-desc {
+      font-size: 12px;
+      color: var(--fg-secondary);
+      line-height: 1.45;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18191d;
+      border: 1px solid #27282d;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Control Bar -->
+  <header class="top-bar">
+    <div class="brand-meta">
+      <div class="brand-logo">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="badge-spec">TYPOGRAPHY SYSTEM</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- 4 Curated Font Pairings -->
+    <div class="font-tabs-group">
+      <button class="font-tab-btn active" onclick="applyFont('jakarta', this)" id="btn-jakarta">
+        <span>1. Plus Jakarta Sans</span>
+        <span class="tab-badge">RECOMMENDED</span>
+      </button>
+      <button class="font-tab-btn" onclick="applyFont('inter', this)" id="btn-inter">
+        <span>2. Inter</span>
+      </button>
+      <button class="font-tab-btn" onclick="applyFont('geist', this)" id="btn-geist">
+        <span>3. Geist</span>
+      </button>
+      <button class="font-tab-btn" onclick="applyFont('outfit', this)" id="btn-outfit">
+        <span>4. Outfit</span>
+      </button>
+    </div>
+
+    <div class="tools-cluster">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Viewport -->
+  <main class="viewport">
+
+    <!-- Active Font Meta Banner -->
+    <div class="font-spec-banner">
+      <div class="font-meta-cluster">
+        <h1 id="banner-font-name">
+          Plus Jakarta Sans + JetBrains Mono
+        </h1>
+        <p id="banner-font-desc">
+          High-energy geometric sans-serif engineered for modern athletic & operational systems. Features sharp letterforms, punchy bold weights, and rock-solid monospace numerals for Philippine Pesos and dates.
+        </p>
+      </div>
+
+      <div class="font-pairing-chip">
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--fg-muted); font-weight: 700;">Active Tokens</div>
+        <div style="font-size: 13px; font-weight: 600; color: var(--fg-primary);" id="token-sans">font-sans: 'Plus Jakarta Sans'</div>
+        <div style="font-size: 12px; font-family: var(--active-font-mono); color: #60a5fa;" id="token-mono">font-mono: 'JetBrains Mono'</div>
+      </div>
+    </div>
+
+    <!-- Live Numeric & Currency Alignment Test -->
+    <div class="numbers-showcase">
+      <div class="num-card">
+        <span class="num-lbl">Gross Revenue</span>
+        <span class="num-val" style="color: #60a5fa;">₱148,500.00</span>
+      </div>
+      <div class="num-card">
+        <span class="num-lbl">Monthly Pass</span>
+        <span class="num-val" style="color: #34d399;">₱2,000.00</span>
+      </div>
+      <div class="num-card">
+        <span class="num-lbl">Active Members</span>
+        <span class="num-val">25</span>
+      </div>
+      <div class="num-card">
+        <span class="num-lbl">GCash Ref #</span>
+        <span class="num-val" style="font-size: 14px; color: var(--fg-secondary);">5010-3123-1234</span>
+      </div>
+    </div>
+
+    <!-- Specimen UI Grid: Table + Form -->
+    <div class="specimen-grid">
+      <!-- Card 1: Sample Table Row -->
+      <div class="sample-card">
+        <div class="sample-card-head">
+          <span class="sample-card-title">Table Typography Specimen</span>
+          <span style="font-size: 11px; color: var(--fg-muted);">Live Rendering</span>
+        </div>
+
+        <table class="sample-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Plan</th>
+              <th>Amount</th>
+              <th>Method</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="font-weight: 600;">Juan Dela Cruz</div>
+                <div style="font-size: 11.5px; color: var(--fg-muted); font-family: var(--active-font-mono);">0917 123 4567</div>
+              </td>
+              <td>Monthly Unlimited</td>
+              <td><span class="font-mono-val" style="font-weight: 700;">₱2,000</span></td>
+              <td><span class="badge-sample badge-blue">GCASH</span></td>
+              <td><span class="badge-sample badge-green">Active</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight: 600;">Maria Santos</div>
+                <div style="font-size: 11.5px; color: var(--fg-muted); font-family: var(--active-font-mono);">0999 888 7777</div>
+              </td>
+              <td>Annual Pass</td>
+              <td><span class="font-mono-val" style="font-weight: 700;">₱12,000</span></td>
+              <td><span class="badge-sample badge-amber">CASH</span></td>
+              <td><span class="badge-sample badge-green">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card 2: Sample Form Controls -->
+      <div class="sample-card">
+        <div class="sample-card-head">
+          <span class="sample-card-title">Form Controls & Hierarchy</span>
+          <span style="font-size: 11px; color: var(--fg-muted);">Live Inputs</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="input-row">
+            <label class="input-label">Full Name</label>
+            <input class="input-field" value="Ryan Gabriel Reyes">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="input-row">
+              <label class="input-label">Fee (Pesos)</label>
+              <input class="input-field font-mono-val" value="₱2,500.00">
+            </div>
+            <div class="input-row">
+              <label class="input-label">Validity</label>
+              <input class="input-field" value="30 Calendar Days">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Font Pairings Comparison Grid -->
+    <div class="comparison-card">
+      <div style="font-size: 15px; font-weight: 700; color: var(--fg-primary);">
+        Compare Font Proposals for GymFlow
+      </div>
+
+      <div class="comp-grid">
+        <!-- 1. Plus Jakarta Sans -->
+        <div class="comp-box selected" id="box-jakarta" onclick="applyFont('jakarta', document.getElementById('btn-jakarta'))">
+          <div class="comp-name" style="font-family: 'Plus Jakarta Sans', sans-serif;">1. Plus Jakarta Sans</div>
+          <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #60a5fa;">+ JetBrains Mono</div>
+          <p class="comp-desc">
+            Athletic, precision-engineered, geometric. Distinct letters with punchy headers. Ideal for Philippine fitness studios and counter software.
+          </p>
+          <div style="margin-top: auto; font-size: 11px; color: #34d399; font-weight: 600;">★ Recommended</div>
+        </div>
+
+        <!-- 2. Inter -->
+        <div class="comp-box" id="box-inter" onclick="applyFont('inter', document.getElementById('btn-inter'))">
+          <div class="comp-name" style="font-family: 'Inter', sans-serif;">2. Inter</div>
+          <div style="font-size: 11px; font-family: 'Roboto Mono', monospace; color: #60a5fa;">+ Roboto Mono</div>
+          <p class="comp-desc">
+            The industry standard for clean enterprise software (Linear, Stripe, Vercel). Neutral, highly readable, zero distraction.
+          </p>
+          <div style="margin-top: auto; font-size: 11px; color: var(--fg-muted);">Enterprise Standard</div>
+        </div>
+
+        <!-- 3. Geist -->
+        <div class="comp-box" id="box-geist" onclick="applyFont('geist', document.getElementById('btn-geist'))">
+          <div class="comp-name" style="font-family: 'Geist', sans-serif;">3. Geist</div>
+          <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #60a5fa;">+ Geist / JetBrains Mono</div>
+          <p class="comp-desc">
+            Technical modern Swiss Grotesque. Monolinear, tight spacing, crisp geometric rhythm developed for developer platforms.
+          </p>
+          <div style="margin-top: auto; font-size: 11px; color: var(--fg-muted);">Modern Technical</div>
+        </div>
+
+        <!-- 4. Outfit -->
+        <div class="comp-box" id="box-outfit" onclick="applyFont('outfit', document.getElementById('btn-outfit'))">
+          <div class="comp-name" style="font-family: 'Outfit', sans-serif;">4. Outfit</div>
+          <div style="font-size: 11px; font-family: 'Space Mono', monospace; color: #60a5fa;">+ Space Mono</div>
+          <p class="comp-desc">
+            Friendly, circular, bold boutique fitness character. Distinct curves and commercial gym aesthetic.
+          </p>
+          <div style="margin-top: auto; font-size: 11px; color: var(--fg-muted);">Boutique Studio</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast">
+    <span id="toast-msg">Font changed</span>
+  </div>
+
+  <script>
+    const fontConfigs = {
+      jakarta: {
+        name: "Plus Jakarta Sans + JetBrains Mono",
+        desc: "High-energy geometric sans-serif engineered for modern athletic & operational systems. Features sharp letterforms, punchy bold weights, and rock-solid monospace numerals for Philippine Pesos and dates.",
+        sans: "'Plus Jakarta Sans', sans-serif",
+        mono: "'JetBrains Mono', monospace"
+      },
+      inter: {
+        name: "Inter + Roboto Mono",
+        desc: "The universal benchmark for web application design. Clean, neutral, high x-height, and unmatched legibility in compact data tables and administrative rows.",
+        sans: "'Inter', sans-serif",
+        mono: "'Roboto Mono', monospace"
+      },
+      geist: {
+        name: "Geist + JetBrains Mono",
+        desc: "Modern Swiss grotesque typeface engineered by Vercel. Tight tracking, technical proportions, and mathematical precision designed specifically for screens.",
+        sans: "'Geist', -apple-system, sans-serif",
+        mono: "'JetBrains Mono', monospace"
+      },
+      outfit: {
+        name: "Outfit + Space Mono",
+        desc: "Bold, energetic geometric sans inspired by athletic branding and boutique fitness clubs. Circular letterforms with high charisma.",
+        sans: "'Outfit', sans-serif",
+        mono: "'Space Mono', monospace"
+      }
+    };
+
+    function applyFont(key, btn) {
+      document.querySelectorAll('.font-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.comp-box').forEach(b => b.classList.remove('selected'));
+      
+      if (btn) btn.classList.add('active');
+      const box = document.getElementById('box-' + key);
+      if (box) box.classList.add('selected');
+
+      const config = fontConfigs[key];
+      document.documentElement.style.setProperty('--active-font-sans', config.sans);
+      document.documentElement.style.setProperty('--active-font-mono', config.mono);
+
+      document.getElementById('banner-font-name').innerText = config.name;
+      document.getElementById('banner-font-desc').innerText = config.desc;
+      document.getElementById('token-sans').innerText = `font-sans: ${config.sans}`;
+      document.getElementById('token-mono').innerText = `font-mono: ${config.mono}`;
+
+      showToast(`Applied ${config.name}`);
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>

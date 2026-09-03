@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Login Page UI Redesign Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.35);
+      --bg-topbar: #090d16;
+      --border-topbar: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: #0b0f19;
+      color: #f1f5f9;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Control Bar */
+    header.showcase-header {
+      background: var(--bg-topbar);
+      border-bottom: 1px solid var(--border-topbar);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #2563eb, #38bdf8);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+    }
+
+    .brand-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    /* Tab Switcher */
+    .tab-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.5);
+    }
+
+    .tab-badge {
+      font-size: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .tab-btn.active .tab-badge {
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    /* Viewport Resizer & Actions */
+    .viewport-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .viewport-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .viewport-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .viewport-btn.active {
+      color: #38bdf8;
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* Main Showcase Canvas */
+    .showcase-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #07090e;
+      position: relative;
+      overflow: auto;
+      padding: 24px;
+    }
+
+    .showcase-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    .stage-wrapper {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stage-wrapper.size-tablet {
+      max-width: 768px;
+    }
+
+    .stage-wrapper.size-mobile {
+      max-width: 412px;
+    }
+
+    .stage-wrapper.size-desktop {
+      max-width: 100%;
+    }
+
+    .concept-container {
+      width: 100%;
+      height: 100%;
+      display: none;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .concept-container.active {
+      display: flex;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.995); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ============================================================
+       CONCEPT 1: Modern Split-Screen "Athletic Operations"
+       ============================================================ */
+    .c1-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    /* Left Hero / Brand Banner */
+    .c1-hero {
+      flex: 1.1;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.3) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 50%),
+        #0b1120;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .c1-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .c1-hero-top {
+      position: relative;
+      z-index: 2;
+    }
+
+    .c1-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .c1-logo-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
+    }
+
+    .c1-brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+
+    .c1-brand-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-left: 6px;
+    }
+
+    .c1-tagline-lead {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .c1-tagline-lead span {
+      background: linear-gradient(135deg, #60a5fa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .c1-subtext {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 440px;
+      margin-bottom: 36px;
+    }
+
+    .c1-feature-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 440px;
+    }
+
+    .c1-feat-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .c1-feat-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .c1-feat-text h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    .c1-feat-text p {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .c1-hero-footer {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .c1-system-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      color: #4ade80;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    /* Right Form Side */
+    .c1-form-side {
+      flex: 1;
+      background: #ffffff;
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #0f172a;
+    }
+
+    .c1-form-box {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .c1-header {
+      margin-bottom: 28px;
+    }
+
+    .c1-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .c1-header p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    /* Quick Preset Badges */
+    .preset-drawer {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 24px;
+    }
+
+    .preset-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .preset-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .preset-chip {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .preset-chip:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      display: flex;
+      align-items: pointer;
+      pointer-events: none;
+    }
+
+    .input-field {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 42px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: #0f172a;
+      background: #ffffff;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-toggle:hover {
+      color: #475569;
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      font-size: 13px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #475569;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember-me input {
+      accent-color: #2563eb;
+      width: 15px;
+      height: 15px;
+    }
+
+    .forgot-link {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-submit-c1 {
+      width: 100%;
+      height: 46px;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 9px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-submit-c1:hover {
+      background: #1d4ed8;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Error alert simulation */
+    .c-alert {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #dc2626;
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .c-alert.visible {
+      display: flex;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 860px) {
+      .c1-hero {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation Bar -->
+  <header class="showcase-header">
+    <div class="brand-cluster">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 18h12M6 6h12M6 12h12M4 6v12M20 6v12M8 4v4M16 4v4M8 16v4M16 16v4" />
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">
+          GymFlow PH <span class="brand-badge">Split-Screen Pro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Viewport Size Controls -->
+    <div class="viewport-controls">
+      <button class="viewport-btn active" onclick="setViewport('desktop', this)" title="Desktop View">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Desktop (1440px)
+      </button>
+      <button class="viewport-btn" onclick="setViewport('tablet', this)" title="Tablet (iPad)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        Tablet (768px)
+      </button>
+      <button class="viewport-btn" onclick="setViewport('mobile', this)" title="Mobile Phone">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        Mobile (412px)
+      </button>
+    </div>
+  </header>
+
+  <!-- Showcase Canvas Stage -->
+  <main class="showcase-stage">
+    <div class="stage-wrapper size-desktop" id="stageWrapper">
+
+      <div class="concept-container active" id="concept-1">
+        <div class="c1-wrapper">
+          <!-- Left: Brand & Athletic Value Props -->
+          <div class="c1-hero">
+            <div class="c1-hero-top">
+              <div class="c1-brand">
+                <div class="c1-logo-box">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 18h12M6 6h12M6 12h12M4 6v12M20 6v12M8 4v4M16 4v4M8 16v4M16 16v4" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="c1-brand-name">GymFlow</span>
+                  <span class="c1-brand-tag">PH EDITION</span>
+                </div>
+              </div>
+
+              <h1 class="c1-tagline-lead">
+                The modern operating system for <span>Philippine Gyms</span>.
+              </h1>
+              <p class="c1-subtext">
+                Fast counter check-ins, cash & GCash payment logging with auto expiry tracking, and owner-governed staff permissions.
+              </p>
+
+              <div class="c1-feature-cards">
+                <div class="c1-feat-card">
+                  <div class="c1-feat-icon">⚡</div>
+                  <div class="c1-feat-text">
+                    <h4>Instant Member Check-In</h4>
+                    <p>Lookup by name, QR badge, or contact in &lt; 2 seconds.</p>
+                  </div>
+                </div>
+                <div class="c1-feat-card">
+                  <div class="c1-feat-icon">₱</div>
+                  <div class="c1-feat-text">
+                    <h4>GCash & Cash Unified Ledger</h4>
+                    <p>Zero math for front desk staff. Auto-extends member expiry date.</p>
+                  </div>
+                </div>
+                <div class="c1-feat-card">
+                  <div class="c1-feat-icon">🛡️</div>
+                  <div class="c1-feat-text">
+                    <h4>Staff Shift & Audit Guard</h4>
+                    <p>Granular access control prevents unrecorded cash collections.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="c1-hero-footer">
+              <div class="c1-system-pill">
+                <div class="pulse-dot"></div>
+                API Connected • Spring Boot 3
+              </div>
+              <div>Demo Gym • Pasig City</div>
+            </div>
+          </div>
+
+          <!-- Right: Clean Login Card -->
+          <div class="c1-form-side">
+            <div class="c1-form-box">
+              <div class="c1-header">
+                <h2>Welcome back</h2>
+                <p>Sign in with your GymFlow staff or owner credentials</p>
+              </div>
+
+              <!-- Quick fill preset chip drawer -->
+              <div class="preset-drawer">
+                <div class="preset-label">
+                  <span>Demo Preset Accounts</span>
+                  <span style="font-size: 10px; color: #2563eb;">1-CLICK LOAD</span>
+                </div>
+                <div class="preset-actions">
+                  <button type="button" class="preset-chip" onclick="fillCredentials('owner@example.com', 'changeme123')">
+                    👑 Owner
+                  </button>
+                  <button type="button" class="preset-chip" onclick="fillCredentials('staff@example.com', 'changeme123')">
+                    🏋️ Staff
+                  </button>
+                  <button type="button" class="preset-chip" onclick="triggerError()" style="color: #dc2626;">
+                    ⚠️ Test Error
+                  </button>
+                </div>
+              </div>
+
+              <div class="c-alert" id="c1-alert">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span id="c1-alert-msg">Invalid email or password.</span>
+              </div>
+
+              <form onsubmit="handleSimulatedLogin(event)">
+                <div class="form-group">
+                  <label class="form-label" for="c1-email">Email Address</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    </span>
+                    <input class="input-field" type="email" id="c1-email" placeholder="name@yourgym.com" required value="owner@example.com">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="c1-password">Password</label>
+                  <div class="input-wrapper">
+                    <span class="input-icon">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </span>
+                    <input class="input-field" type="password" id="c1-password" placeholder="••••••••••••" required value="changeme123">
+                    <button type="button" class="password-toggle" onclick="togglePassword('c1-password')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-options">
+                  <label class="remember-me">
+                    <input type="checkbox" checked>
+                    <span>Remember terminal</span>
+                  </label>
+                  <a href="#" class="forgot-link" onclick="showToast('Forgot password: Contact gym owner to reset.')">Need help?</a>
+                </div>
+
+                <button type="submit" class="btn-submit-c1">
+                  <span>Sign in to GymFlow</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+    <span id="toast-text">Credentials copied</span>
+  </div>
+
+  <script>
+    function setViewport(mode, btn) {
+      document.querySelectorAll('.viewport-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const stage = document.getElementById('stageWrapper');
+      stage.className = 'stage-wrapper size-' + mode;
+    }
+
+    function fillCredentials(email, pass) {
+      document.getElementById('c1-email').value = email;
+      document.getElementById('c1-password').value = pass;
+      showToast(`Loaded ${email.split('@')[0].toUpperCase()} preset`);
+    }
+
+    function triggerError() {
+      const alert = document.getElementById('c1-alert');
+      if (alert) {
+        alert.classList.toggle('visible');
+      }
+    }
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function handleSimulatedLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('c1-email').value;
+      showToast(`Signing in as ${email}...`);
+      setTimeout(() => {
+        showToast(`Authentication successful! Redirecting to /dashboard`);
+      }, 600);
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

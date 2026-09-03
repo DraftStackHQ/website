@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymFlow PH — Analytics Page UI Redesign Mockups</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Solid Non-AI Dark Mode (Consistent across all pages) */
+      --bg: #111215;
+      --fg-primary: #f4f4f5;
+      --fg-secondary: #a1a1aa;
+      --fg-muted: #71717a;
+
+      --card-bg: #18191d;
+      --card-border: #27282d;
+      --header-bg: #1f2025;
+      --row-border: #232429;
+
+      --input-bg: #131417;
+      --input-border: #2d2e35;
+      --input-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-fg: #ffffff;
+
+      --radius-card: 10px;
+      --radius-control: 6px;
+    }
+
+    .light-mode {
+      --bg: #f8fafc;
+      --fg-primary: #0f172a;
+      --fg-secondary: #475569;
+      --fg-muted: #94a3b8;
+
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --header-bg: #f1f5f9;
+      --row-border: #f1f5f9;
+
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --input-focus: #2563eb;
+
+      --primary: #2563eb;
+      --primary-fg: #ffffff;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    /* Top Showcase Bar */
+    header.top-bar {
+      background: #0d0e11;
+      border-bottom: 1px solid #222328;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-spec {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .concept-switch-tabs {
+      display: flex;
+      background: #16171b;
+      border: 1px solid #27282d;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .concept-tab-btn {
+      background: transparent;
+      border: none;
+      color: #a1a1aa;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .concept-tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .concept-tab-btn.active {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .tools-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-tool {
+      background: #1a1b20;
+      border: 1px solid #2d2e35;
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-tool:hover {
+      background: #22242a;
+      color: #fff;
+    }
+
+    /* Main Scrollable Canvas */
+    .viewport {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Page Header */
+    .page-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .title-group h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+    }
+
+    .title-group p {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+      margin-top: 3px;
+    }
+
+    /* Range Switcher Buttons */
+    .range-selector-group {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-control);
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .btn-range-pill {
+      background: transparent;
+      border: none;
+      color: var(--fg-secondary);
+      font-family: var(--font-sans);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-range-pill:hover {
+      color: var(--fg-primary);
+    }
+
+    .btn-range-pill.active {
+      background: #f4f4f5;
+      color: #0f172a;
+      font-weight: 700;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .light-mode .btn-range-pill.active {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    /* KPI Summary Metrics Ribbon */
+    .kpi-ribbon {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .kpi-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 8px 16px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+      min-width: 160px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--fg-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--fg-primary);
+    }
+
+    /* Chart Container Card (Solid, non-AI dark mode) */
+    .chart-panel-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--row-border);
+      padding-bottom: 14px;
+    }
+
+    .chart-title-cluster h2 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--fg-primary);
+    }
+
+    .chart-title-cluster p {
+      font-size: 12.5px;
+      color: var(--fg-muted);
+      margin-top: 2px;
+    }
+
+    .chart-stat-badge {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: #141518;
+      border: 1px solid var(--card-border);
+      color: var(--fg-secondary);
+      white-space: nowrap;
+    }
+
+    .light-mode .chart-stat-badge {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    /* Custom SVG Chart Area with Formatted Ticks */
+    .svg-chart-wrapper {
+      width: 100%;
+      height: 230px;
+      position: relative;
+    }
+
+    /* Layout Concept 1: 2-Column Grid */
+    .concept-1-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .concept-1-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Chart Legend */
+    .chart-legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding-top: 6px;
+      font-size: 12px;
+      color: var(--fg-secondary);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .concept-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: viewFade 0.15s ease-out;
+    }
+
+    .concept-view.active {
+      display: flex;
+    }
+
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #18191d;
+      border: 1px solid #27282d;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Showcase Navigation -->
+  <header class="top-bar">
+    <div class="brand-meta">
+      <div class="brand-logo">G</div>
+      <div>
+        <span class="brand-title">
+          GymFlow PH <span class="badge-spec">ANALYTICS REDESIGN</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Toggle between Concept 1 and Concept 2 -->
+    <div class="concept-switch-tabs">
+      <button class="concept-tab-btn active" onclick="switchConcept(1)" id="btn-c1">
+        <span>1. Executive Responsive Dashboard</span>
+      </button>
+      <button class="concept-tab-btn" onclick="switchConcept(2)" id="btn-c2">
+        <span>2. Streamlined Full-Width Stack</span>
+      </button>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="tools-cluster">
+      <button class="btn-tool" onclick="toggleTheme()" id="themeBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeLabel">Light Mode Preview</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Viewport Canvas -->
+  <main class="viewport">
+
+    <!-- Common Page Header -->
+    <div class="page-header-row">
+      <div class="title-group">
+        <h1>Analytics</h1>
+        <p>Financial revenue trends, member retention, and gym attendance metrics.</p>
+      </div>
+
+      <!-- Time Range Selector (3 / 6 / 12 months) -->
+      <div class="range-selector-group">
+        <button class="btn-range-pill" onclick="selectRange(3, this)">3 months</button>
+        <button class="btn-range-pill active" onclick="selectRange(6, this)">6 months</button>
+        <button class="btn-range-pill" onclick="selectRange(12, this)">12 months</button>
+      </div>
+    </div>
+
+    <!-- Top Executive KPI Summary Ribbon (Macro Answers at a Glance) -->
+    <div class="kpi-ribbon">
+      <div class="kpi-chip">
+        <span class="kpi-label">Period Gross Revenue</span>
+        <span class="kpi-val" style="color: #60a5fa;" id="kpi-rev">₱88,500.00</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Avg. Monthly Run-Rate</span>
+        <span class="kpi-val" id="kpi-avg">₱14,750 / mo</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Net Member Change</span>
+        <span class="kpi-val" style="color: #f87171;" id="kpi-net">-8 Members</span>
+      </div>
+      <div class="kpi-chip">
+        <span class="kpi-label">Total Check-In Volume</span>
+        <span class="kpi-val" style="color: #38bdf8;" id="kpi-visits">142 Visits</span>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         CONCEPT 1: Executive 2-Column Responsive Dashboard
+         Revenue (Full-Width Top) + Growth vs Churn (Left) & Check-ins (Right)
+         ============================================================ -->
+    <div class="concept-view active" id="concept-1">
+      
+      <!-- Chart 1: Revenue (Full-Width Hero Chart with Formatted ₱ Ticks) -->
+      <div class="chart-panel-card">
+        <div class="chart-head-row">
+          <div class="chart-title-cluster">
+            <h2>Revenue</h2>
+            <p>Gross collections from membership renewals and service tier plans.</p>
+          </div>
+          <span class="chart-stat-badge" style="color: #60a5fa;">Peak: ₱38,000 (Apr 2026)</span>
+        </div>
+
+        <div class="svg-chart-wrapper">
+          <svg width="100%" height="100%" viewBox="0 0 900 220" preserveAspectRatio="none">
+            <!-- Defs for clean area gradient -->
+            <defs>
+              <linearGradient id="c1-rev-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+
+            <!-- Horizontal Grid lines -->
+            <line x1="60" y1="20" x2="880" y2="20" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="65" x2="880" y2="65" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="110" x2="880" y2="110" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="155" x2="880" y2="155" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="200" x2="880" y2="200" stroke="var(--card-border)" stroke-width="1" />
+
+            <!-- Y-Axis Formatted Labels (Instead of raw unformatted 38000!) -->
+            <text x="50" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">₱38,000</text>
+            <text x="50" y="69" text-anchor="end" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">₱28,500</text>
+            <text x="50" y="114" text-anchor="end" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">₱19,000</text>
+            <text x="50" y="159" text-anchor="end" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">₱9,500</text>
+            <text x="50" y="204" text-anchor="end" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">₱0</text>
+
+            <!-- Revenue Area Fill -->
+            <path d="M 80 20 C 180 20, 260 25, 340 50 C 420 80, 480 140, 520 145 C 570 150, 620 120, 680 120 C 740 120, 780 190, 840 200 L 840 200 L 80 200 Z" fill="url(#c1-rev-grad)" />
+
+            <!-- Revenue Stroke Curve -->
+            <path d="M 80 20 C 180 20, 260 25, 340 50 C 420 80, 480 140, 520 145 C 570 150, 620 120, 680 120 C 740 120, 780 190, 840 200" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+
+            <!-- X Axis Ticks -->
+            <text x="80" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">Apr 2026</text>
+            <text x="232" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">May 2026</text>
+            <text x="384" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">Jun 2026</text>
+            <text x="536" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">Jul 2026</text>
+            <text x="688" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">Aug 2026</text>
+            <text x="840" y="218" text-anchor="middle" fill="var(--fg-muted)" font-size="11" font-family="var(--font-mono)">Sep 2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bottom 2-Column Grid: Membership Retention (Left) + Check-Ins (Right) -->
+      <div class="concept-1-grid">
+        <!-- Chart 2: Membership Growth vs. Churn -->
+        <div class="chart-panel-card">
+          <div class="chart-head-row">
+            <div class="chart-title-cluster">
+              <h2>Membership growth vs. churn</h2>
+              <p>Acquisitions vs expired subscriptions.</p>
+            </div>
+            <span class="chart-stat-badge" style="color: #f87171;">Churn Spike: Aug 2026</span>
+          </div>
+
+          <div class="svg-chart-wrapper">
+            <svg width="100%" height="100%" viewBox="0 0 440 200" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="churn-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#ef4444" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#ef4444" stopOpacity="0.0" />
+                </linearGradient>
+                <linearGradient id="new-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              <line x1="30" y1="20" x2="430" y2="20" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="60" x2="430" y2="60" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="100" x2="430" y2="100" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="140" x2="430" y2="140" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="180" x2="430" y2="180" stroke="var(--card-border)" stroke-width="1" />
+
+              <text x="24" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">12</text>
+              <text x="24" y="64" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">9</text>
+              <text x="24" y="104" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">6</text>
+              <text x="24" y="144" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">3</text>
+              <text x="24" y="184" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">0</text>
+
+              <!-- Churned curve (Red) -->
+              <path d="M 40 155 C 100 160, 160 165, 230 160 C 290 155, 330 60, 365 60 C 400 60, 410 170, 425 180" fill="none" stroke="#ef4444" stroke-width="2.2" />
+              <!-- New members curve (Blue) -->
+              <path d="M 40 140 C 100 150, 160 170, 230 170 C 270 170, 285 140, 310 140 C 335 140, 370 180, 425 180" fill="none" stroke="#3b82f6" stroke-width="2.2" />
+
+              <!-- X Ticks -->
+              <text x="40" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Apr</text>
+              <text x="117" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">May</text>
+              <text x="194" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Jun</text>
+              <text x="271" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Jul</text>
+              <text x="348" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Aug</text>
+              <text x="425" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Sep</text>
+            </svg>
+          </div>
+
+          <div class="chart-legend-row">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #ef4444;"></span>
+              <span>Churned members</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #3b82f6;"></span>
+              <span>New members</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 3: Check-Ins Volume -->
+        <div class="chart-panel-card">
+          <div class="chart-head-row">
+            <div class="chart-title-cluster">
+              <h2>Check-ins</h2>
+              <p>Facility attendance and counter foot-traffic.</p>
+            </div>
+            <span class="chart-stat-badge" style="color: #38bdf8;">Peak: 40 visits (Jul)</span>
+          </div>
+
+          <div class="svg-chart-wrapper">
+            <svg width="100%" height="100%" viewBox="0 0 440 200" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="checkin-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              <line x1="30" y1="20" x2="430" y2="20" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="60" x2="430" y2="60" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="100" x2="430" y2="100" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="140" x2="430" y2="140" stroke="var(--row-border)" stroke-width="1" />
+              <line x1="30" y1="180" x2="430" y2="180" stroke="var(--card-border)" stroke-width="1" />
+
+              <text x="24" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">40</text>
+              <text x="24" y="64" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">30</text>
+              <text x="24" y="104" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">20</text>
+              <text x="24" y="144" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">10</text>
+              <text x="24" y="184" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">0</text>
+
+              <!-- Checkins Area & Curve -->
+              <path d="M 40 180 C 100 180, 160 180, 230 180 C 260 180, 280 20, 310 20 C 340 20, 370 180, 425 180 L 425 180 L 40 180 Z" fill="url(#checkin-grad)" />
+              <path d="M 40 180 C 100 180, 160 180, 230 180 C 260 180, 280 20, 310 20 C 340 20, 370 180, 425 180" fill="none" stroke="#0ea5e9" stroke-width="2.5" />
+
+              <!-- X Ticks -->
+              <text x="40" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Apr</text>
+              <text x="117" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">May</text>
+              <text x="194" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Jun</text>
+              <text x="271" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Jul</text>
+              <text x="348" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Aug</text>
+              <text x="425" y="196" text-anchor="middle" fill="var(--fg-muted)" font-size="9" font-family="var(--font-mono)">Sep</text>
+            </svg>
+          </div>
+
+          <div class="chart-legend-row">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #0ea5e9;"></span>
+              <span>Check-ins</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         CONCEPT 2: Streamlined Full-Width Stack
+         Retains vertical stack from user's screenshot, but with solid dark mode & formatted Y-axis
+         ============================================================ -->
+    <div class="concept-view" id="concept-2">
+      
+      <!-- Chart 1: Revenue -->
+      <div class="chart-panel-card">
+        <div class="chart-head-row">
+          <div class="chart-title-cluster">
+            <h2>Revenue</h2>
+            <p>Monthly gross collections</p>
+          </div>
+          <span class="chart-stat-badge">₱38k Peak</span>
+        </div>
+        <div class="svg-chart-wrapper" style="height: 190px;">
+          <!-- Same curve scaled -->
+          <svg width="100%" height="100%" viewBox="0 0 900 190" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="c2-rev" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            <line x1="60" y1="20" x2="880" y2="20" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="60" x2="880" y2="60" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="100" x2="880" y2="100" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="140" x2="880" y2="140" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="170" x2="880" y2="170" stroke="var(--card-border)" stroke-width="1" />
+
+            <text x="50" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">₱38,000</text>
+            <text x="50" y="64" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">₱28,500</text>
+            <text x="50" y="104" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">₱19,000</text>
+            <text x="50" y="144" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">₱9,500</text>
+            <text x="50" y="174" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">₱0</text>
+
+            <path d="M 80 20 C 180 20, 260 25, 340 45 C 420 70, 480 120, 520 125 C 570 130, 620 100, 680 100 C 740 100, 780 160, 840 170 L 840 170 L 80 170 Z" fill="url(#c2-rev)" />
+            <path d="M 80 20 C 180 20, 260 25, 340 45 C 420 70, 480 120, 520 125 C 570 130, 620 100, 680 100 C 740 100, 780 160, 840 170" fill="none" stroke="#3b82f6" stroke-width="2.5" />
+
+            <text x="80" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Apr 2026</text>
+            <text x="232" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">May 2026</text>
+            <text x="384" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jun 2026</text>
+            <text x="536" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jul 2026</text>
+            <text x="688" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Aug 2026</text>
+            <text x="840" y="185" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Sep 2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Chart 2: Membership Growth vs Churn -->
+      <div class="chart-panel-card">
+        <div class="chart-head-row">
+          <div class="chart-title-cluster">
+            <h2>Membership growth vs. churn</h2>
+            <p>New registrations vs expired memberships</p>
+          </div>
+          <div class="chart-legend-row" style="padding: 0;">
+            <div class="legend-item"><span class="legend-dot" style="background: #ef4444;"></span> Churned</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #3b82f6;"></span> New</div>
+          </div>
+        </div>
+        <div class="svg-chart-wrapper" style="height: 180px;">
+          <svg width="100%" height="100%" viewBox="0 0 900 180" preserveAspectRatio="none">
+            <line x1="60" y1="20" x2="880" y2="20" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="55" x2="880" y2="55" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="90" x2="880" y2="90" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="125" x2="880" y2="125" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="160" x2="880" y2="160" stroke="var(--card-border)" stroke-width="1" />
+
+            <text x="50" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">12</text>
+            <text x="50" y="59" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">9</text>
+            <text x="50" y="94" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">6</text>
+            <text x="50" y="129" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">3</text>
+            <text x="50" y="164" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">0</text>
+
+            <path d="M 80 135 C 200 145, 350 150, 480 145 C 580 140, 650 45, 690 45 C 740 45, 780 150, 840 160" fill="none" stroke="#ef4444" stroke-width="2.2" />
+            <path d="M 80 120 C 200 135, 350 155, 480 155 C 550 155, 590 125, 630 125 C 680 125, 750 160, 840 160" fill="none" stroke="#3b82f6" stroke-width="2.2" />
+
+            <text x="80" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Apr 2026</text>
+            <text x="232" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">May 2026</text>
+            <text x="384" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jun 2026</text>
+            <text x="536" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jul 2026</text>
+            <text x="688" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Aug 2026</text>
+            <text x="840" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Sep 2026</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Chart 3: Check-Ins -->
+      <div class="chart-panel-card">
+        <div class="chart-head-row">
+          <div class="chart-title-cluster">
+            <h2>Check-ins</h2>
+            <p>Facility counter check-in attendances</p>
+          </div>
+          <span class="chart-stat-badge">40 Peak</span>
+        </div>
+        <div class="svg-chart-wrapper" style="height: 180px;">
+          <svg width="100%" height="100%" viewBox="0 0 900 180" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="c2-checkin" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            <line x1="60" y1="20" x2="880" y2="20" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="55" x2="880" y2="55" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="90" x2="880" y2="90" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="125" x2="880" y2="125" stroke="var(--row-border)" stroke-width="1" />
+            <line x1="60" y1="160" x2="880" y2="160" stroke="var(--card-border)" stroke-width="1" />
+
+            <text x="50" y="24" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">40</text>
+            <text x="50" y="59" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">30</text>
+            <text x="50" y="94" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">20</text>
+            <text x="50" y="129" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">10</text>
+            <text x="50" y="164" text-anchor="end" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">0</text>
+
+            <path d="M 80 160 C 200 160, 350 160, 480 160 C 560 160, 600 20, 630 20 C 670 20, 720 160, 840 160 L 840 160 L 80 160 Z" fill="url(#c2-checkin)" />
+            <path d="M 80 160 C 200 160, 350 160, 480 160 C 560 160, 600 20, 630 20 C 670 20, 720 160, 840 160" fill="none" stroke="#0ea5e9" stroke-width="2.5" />
+
+            <text x="80" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Apr 2026</text>
+            <text x="232" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">May 2026</text>
+            <text x="384" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jun 2026</text>
+            <text x="536" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Jul 2026</text>
+            <text x="688" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Aug 2026</text>
+            <text x="840" y="175" text-anchor="middle" fill="var(--fg-muted)" font-size="10" font-family="var(--font-mono)">Sep 2026</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast">
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <script>
+    function switchConcept(id) {
+      document.querySelectorAll('.concept-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.concept-tab-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById('concept-' + id).classList.add('active');
+      document.getElementById('btn-c' + id).classList.add('active');
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle('light-mode');
+      document.getElementById('themeLabel').innerText = isLight ? 'Dark Mode Preview' : 'Light Mode Preview';
+    }
+
+    function selectRange(months, btn) {
+      document.querySelectorAll('.btn-range-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (months === 3) {
+        document.getElementById('kpi-rev').innerText = '₱48,000.00';
+        document.getElementById('kpi-avg').innerText = '₱16,000 / mo';
+        document.getElementById('kpi-net').innerText = '-10 Members';
+        document.getElementById('kpi-visits').innerText = '63 Visits';
+      } else if (months === 6) {
+        document.getElementById('kpi-rev').innerText = '₱88,500.00';
+        document.getElementById('kpi-avg').innerText = '₱14,750 / mo';
+        document.getElementById('kpi-net').innerText = '-8 Members';
+        document.getElementById('kpi-visits').innerText = '142 Visits';
+      } else {
+        document.getElementById('kpi-rev').innerText = '₱182,000.00';
+        document.getElementById('kpi-avg').innerText = '₱15,166 / mo';
+        document.getElementById('kpi-net').innerText = '+12 Members';
+        document.getElementById('kpi-visits').innerText = '298 Visits';
+      }
+
+      showToast(`Loaded ${months}-month analytics trends`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>
