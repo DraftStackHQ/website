@@ -15,8 +15,7 @@
     (function() {
       try {
         const savedTheme = localStorage.getItem('draftstack_theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+        const theme = savedTheme === 'dark' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();

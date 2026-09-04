@@ -340,8 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const getPreferredTheme = () => {
     const stored = localStorage.getItem("draftstack_theme");
-    if (stored === "dark" || stored === "light") return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return stored === "dark" ? "dark" : "light";
   };
 
   const applyTheme = (theme) => {
@@ -364,13 +363,5 @@ document.addEventListener("DOMContentLoaded", () => {
       applyTheme(nextTheme);
     });
   }
-
-  // Listen to system preference changes if user hasn't set an explicit preference
-  if (window.matchMedia) {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("draftstack_theme")) {
-        applyTheme(e.matches ? "dark" : "light");
-      }
-    });
-  }
+  // If user explicitly changes theme, it is persisted to localStorage.
 });
