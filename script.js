@@ -332,4 +332,45 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 700);
     });
   }
+
+  /* --------------------------------------------------------------------------
+     8. Dark / Light Mode Theme Toggle
+     -------------------------------------------------------------------------- */
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+
+  const getPreferredTheme = () => {
+    const stored = localStorage.getItem("draftstack_theme");
+    if (stored === "dark" || stored === "light") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  };
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute("data-theme", theme);
+    if (themeToggleBtn) {
+      const label = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+      themeToggleBtn.setAttribute("aria-label", label);
+      themeToggleBtn.setAttribute("title", label);
+    }
+  };
+
+  // Initialize theme
+  applyTheme(getPreferredTheme());
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      localStorage.setItem("draftstack_theme", nextTheme);
+      applyTheme(nextTheme);
+    });
+  }
+
+  // Listen to system preference changes if user hasn't set an explicit preference
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("draftstack_theme")) {
+        applyTheme(e.matches ? "dark" : "light");
+      }
+    });
+  }
 });

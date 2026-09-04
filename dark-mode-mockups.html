@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark" data-concept="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DraftStack — Dark Mode Design System & Interactive Mockup</title>
+  <meta name="description" content="Interactive Dark Mode design proposals and live preview for DraftStack software engineering studio website.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/draftstack-mark.svg">
+  
+  <style>
+    /* ==========================================================================
+       DRAFTSTACK THEME TOKENS
+       3 Distinct Concepts for Dark Mode + Light Mode Baseline
+       ========================================================================== */
+
+    /* 1. Base / Light Mode Baseline (from production style.css) */
+    :root, [data-theme="light"] {
+      --theme-name: "DraftStack Light Baseline";
+      --bg-primary: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-subtle-1: #F1F5F9;
+      --bg-subtle-2: #EFF6FF;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F8FAFC;
+      --bg-nav: rgba(255, 255, 255, 0.85);
+      --bg-browser-header: #F1F5F9;
+      --bg-browser-address: #FFFFFF;
+      --bg-viewport: #0B132B;
+
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --text-muted: #64748B;
+      --text-subtle: #94A3B8;
+
+      --accent-primary: #2563EB;
+      --accent-primary-hover: #1D4ED8;
+      --accent-glow: rgba(37, 99, 235, 0.25);
+      --accent-teal: #0D9488;
+      --accent-emerald: #10B981;
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-stone: rgba(15, 23, 42, 0.14);
+      --border-active: #2563EB;
+
+      --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      --shadow-card: 0 10px 30px -4px rgba(15, 23, 42, 0.07);
+      --shadow-float: 0 20px 40px -12px rgba(15, 23, 42, 0.09);
+      --shadow-device: 0 32px 64px -16px rgba(15, 23, 42, 0.12);
+
+      --blob-1: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.02) 50%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(14, 165, 233, 0.10) 0%, rgba(14, 165, 233, 0.02) 50%, transparent 75%);
+      --blob-3: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0.01) 50%, transparent 75%);
+
+      --logo-mark-filter: none;
+      --input-bg: #FFFFFF;
+      --input-border: rgba(15, 23, 42, 0.12);
+    }
+
+    /* 2. Concept 1: Slate Obsidian (Studio Standard — Recommended) */
+    [data-theme="dark"][data-concept="obsidian"] {
+      --theme-name: "Concept 1: Slate Obsidian (Studio Recommended)";
+      --bg-primary: #090D16;        /* Deep slate charcoal */
+      --bg-surface: #0F1626;        /* Elevated slate navy */
+      --bg-subtle-1: #151F33;       /* Subtle row & tag background */
+      --bg-subtle-2: #192742;       /* Active state / soft tint */
+      --bg-card: #0F172A;           /* Surface card */
+      --bg-card-hover: #141F38;
+      --bg-nav: rgba(11, 16, 28, 0.82);
+      --bg-browser-header: #0F172A;
+      --bg-browser-address: #151F33;
+      --bg-viewport: #060911;
+
+      --text-primary: #F8FAFC;      /* Crisp slate 50 */
+      --text-secondary: #CBD5E1;    /* Slate 300 */
+      --text-muted: #8493A8;        /* Balanced contrast muted */
+      --text-subtle: #475569;       /* Slate 600 */
+
+      --accent-primary: #3B82F6;    /* Vibrant electric blue */
+      --accent-primary-hover: #60A5FA;
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      --accent-teal: #14B8A6;
+      --accent-emerald: #34D399;
+
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-stone: rgba(255, 255, 255, 0.14);
+      --border-active: #3B82F6;
+
+      --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+      --shadow-card: 0 12px 36px -4px rgba(0, 0, 0, 0.55);
+      --shadow-float: 0 24px 48px -12px rgba(0, 0, 0, 0.65);
+      --shadow-device: 0 32px 72px -16px rgba(0, 0, 0, 0.75);
+
+      --blob-1: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, rgba(59, 130, 246, 0.04) 45%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(14, 165, 233, 0.14) 0%, rgba(14, 165, 233, 0.03) 50%, transparent 75%);
+      --blob-3: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.02) 50%, transparent 75%);
+
+      --logo-mark-filter: drop-shadow(0 2px 10px rgba(59, 130, 246, 0.3));
+      --input-bg: #111A2E;
+      --input-border: rgba(255, 255, 255, 0.12);
+    }
+
+    /* 3. Concept 2: Pure Pitch / Carbon (OLED Minimalist) */
+    [data-theme="dark"][data-concept="carbon"] {
+      --theme-name: "Concept 2: Pure Carbon (OLED Minimalist)";
+      --bg-primary: #070709;        /* True near-black */
+      --bg-surface: #111115;        /* Neutral dark slate */
+      --bg-subtle-1: #191A20;
+      --bg-subtle-2: #22232B;
+      --bg-card: #121318;
+      --bg-card-hover: #181A22;
+      --bg-nav: rgba(9, 9, 12, 0.85);
+      --bg-browser-header: #14151B;
+      --bg-browser-address: #1C1D24;
+      --bg-viewport: #000000;
+
+      --text-primary: #FFFFFF;
+      --text-secondary: #D4D4D8;
+      --text-muted: #8E8E93;
+      --text-subtle: #52525B;
+
+      --accent-primary: #38BDF8;    /* Luminous tech sky */
+      --accent-primary-hover: #7DD3FC;
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --accent-teal: #2DD4BF;
+      --accent-emerald: #10B981;
+
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-stone: rgba(255, 255, 255, 0.13);
+      --border-active: #38BDF8;
+
+      --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.6);
+      --shadow-card: 0 12px 36px -4px rgba(0, 0, 0, 0.7);
+      --shadow-float: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+      --shadow-device: 0 32px 72px -16px rgba(0, 0, 0, 0.9);
+
+      --blob-1: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, transparent 65%);
+      --blob-2: radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, transparent 70%);
+      --blob-3: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+
+      --logo-mark-filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.3));
+      --input-bg: #14151B;
+      --input-border: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 4. Concept 3: Midnight Sapphire (Atmospheric Cloud) */
+    [data-theme="dark"][data-concept="sapphire"] {
+      --theme-name: "Concept 3: Midnight Sapphire (Rich Atmospheric)";
+      --bg-primary: #050B18;        /* Luminous deep navy */
+      --bg-surface: #0B152E;        /* Royal midnight slate */
+      --bg-subtle-1: #112044;
+      --bg-subtle-2: #182C5D;
+      --bg-card: #0D1936;
+      --bg-card-hover: #13244D;
+      --bg-nav: rgba(7, 13, 29, 0.85);
+      --bg-browser-header: #0E1A38;
+      --bg-browser-address: #14244D;
+      --bg-viewport: #030711;
+
+      --text-primary: #F0F6FF;
+      --text-secondary: #BFDBFE;
+      --text-muted: #8AA4C8;
+      --text-subtle: #415A85;
+
+      --accent-primary: #60A5FA;    /* Bright sapphire */
+      --accent-primary-hover: #93C5FD;
+      --accent-glow: rgba(96, 165, 250, 0.4);
+      --accent-teal: #2DD4BF;
+      --accent-emerald: #34D399;
+
+      --border-subtle: rgba(96, 165, 250, 0.12);
+      --border-stone: rgba(96, 165, 250, 0.22);
+      --border-active: #60A5FA;
+
+      --shadow-soft: 0 4px 20px -2px rgba(2, 6, 23, 0.5);
+      --shadow-card: 0 12px 36px -4px rgba(2, 6, 23, 0.7);
+      --shadow-float: 0 24px 48px -12px rgba(2, 6, 23, 0.8);
+      --shadow-device: 0 32px 72px -16px rgba(2, 6, 23, 0.9);
+
+      --blob-1: radial-gradient(circle, rgba(96, 165, 250, 0.22) 0%, rgba(96, 165, 250, 0.05) 50%, transparent 75%);
+      --blob-2: radial-gradient(circle, rgba(59, 130, 246, 0.16) 0%, transparent 75%);
+      --blob-3: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, transparent 75%);
+
+      --logo-mark-filter: drop-shadow(0 2px 14px rgba(96, 165, 250, 0.4));
+      --input-bg: #0F1D3D;
+      --input-border: rgba(96, 165, 250, 0.2);
+    }
+
+    /* Base Reset & Variables */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background-color: var(--bg-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Top Review & Mockup Controls Toolbar */
+    .mockup-controls-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 14, 23, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: #F8FAFC;
+    }
+
+    .mockup-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mockup-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.18);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      letter-spacing: 0.04em;
+    }
+
+    .control-groups {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .concept-select-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .concept-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-btn.active {
+      background: #3B82F6;
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+    }
+
+    .theme-mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 4px 6px 4px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #F8FAFC;
+    }
+
+    .toggle-switch-btn {
+      background: #3B82F6;
+      border: none;
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+
+    .toggle-switch-knob {
+      width: 18px;
+      height: 18px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    [data-theme="light"] .toggle-switch-btn {
+      background: #CBD5E1;
+    }
+
+    [data-theme="light"] .toggle-switch-knob {
+      transform: translateX(20px);
+    }
+
+    .jump-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .jump-link {
+      font-size: 0.78rem;
+      color: #94A3B8;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: color 0.15s ease;
+    }
+
+    .jump-link:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .spec-drawer-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #F8FAFC;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .spec-drawer-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #3B82F6;
+    }
+
+    /* Ambient Blobs */
+    .ambient-blobs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      transition: background 0.4s ease;
+    }
+
+    .blob-blue {
+      top: -10%;
+      left: -8%;
+      width: 650px;
+      height: 650px;
+      background: var(--blob-1);
+      animation: float1 24s ease-in-out infinite alternate;
+    }
+
+    .blob-cyan {
+      bottom: 5%;
+      right: -6%;
+      width: 700px;
+      height: 700px;
+      background: var(--blob-2);
+      animation: float2 28s ease-in-out infinite alternate;
+    }
+
+    .blob-indigo {
+      top: 40%;
+      right: 12%;
+      width: 500px;
+      height: 500px;
+      background: var(--blob-3);
+      animation: float1 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes float1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, -50px) scale(1.06); }
+      100% { transform: translate(-30px, 35px) scale(0.95); }
+    }
+
+    @keyframes float2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-45px, 40px) scale(1.08); }
+      100% { transform: translate(35px, -30px) scale(0.93); }
+    }
+
+    /* Layout Containers */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Site Header Navigation (Sticky Pill) */
+    .site-header {
+      position: sticky;
+      top: 54px; /* below mockup controls */
+      z-index: 900;
+      padding: 16px 24px;
+      pointer-events: none;
+    }
+
+    .nav-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--bg-nav);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-stone);
+      box-shadow: var(--shadow-soft);
+      border-radius: 9999px;
+      padding: 8px 12px 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: auto;
+      transition: all 0.3s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-mark-img {
+      filter: var(--logo-mark-filter);
+      transition: filter 0.3s ease;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+
+    .logo-accent {
+      color: var(--accent-primary);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .nav-menu a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Proposed In-Navbar Theme Toggle Button */
+    .in-nav-theme-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-subtle-1);
+      border: 1px solid var(--border-stone);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .in-nav-theme-btn:hover {
+      background: var(--bg-subtle-2);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      transform: scale(1.05);
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-nav {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .btn-nav:hover {
+      background: var(--accent-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      box-shadow: 0 8px 24px -4px var(--accent-glow);
+      padding: 13px 28px;
+      font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -4px var(--accent-glow);
+    }
+
+    .btn-ghost {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-stone);
+      color: var(--text-primary);
+      padding: 12px 26px;
+      font-size: 1rem;
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-subtle-1);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 60px 0 90px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+    }
+
+    .pulse-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+      animation: pulseGreen 2s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+    }
+
+    .hero-highlight {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
+    }
+
+    .hero-badges {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .badge-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--accent-emerald);
+      flex-shrink: 0;
+    }
+
+    /* Section Kickers & Headers */
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 52px;
+    }
+
+    .section-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.6vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    /* Horizontal Scenario Scroll Section */
+    .domains-section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .horizontal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .scenario-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scenario-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-primary);
+      box-shadow: var(--shadow-float);
+    }
+
+    .scenario-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .scenario-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-subtle-1);
+      color: var(--accent-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .scenario-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .scenario-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .scenario-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Flagship Showcase Section */
+    .showcase-section {
+      padding: 90px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-pill-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .project-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-stone);
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-primary);
+    }
+
+    .project-pill-btn:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-1px);
+    }
+
+    .project-pill-btn.active {
+      background: var(--bg-card);
+      border-color: var(--accent-primary);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .project-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .project-dot.blue { background: #3B82F6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+    .project-dot.green { background: #10B981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+
+    .project-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .project-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 2px 8px;
+      background: var(--bg-subtle-1);
+      color: var(--text-muted);
+      border-radius: 9999px;
+    }
+
+    /* Sub-view Tab Buttons */
+    .screenshot-tab-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .screenshot-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .screenshot-tab-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--accent-primary);
+    }
+
+    .screenshot-tab-btn.active {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      border-color: var(--accent-primary);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    .screenshot-tab-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* Mockup Browser Frame */
+    .mock-browser-window {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-device);
+      margin-bottom: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .browser-header-bar {
+      height: 46px;
+      background: var(--bg-browser-header);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .browser-controls {
+      display: flex;
+      gap: 7px;
+    }
+
+    .control-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .control-dot.close { background: #EF4444; opacity: 0.8; }
+    .control-dot.minimize { background: #F59E0B; opacity: 0.8; }
+    .control-dot.expand { background: #10B981; opacity: 0.8; }
+
+    .browser-address-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-browser-address);
+      padding: 4px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .lock-icon { color: var(--accent-emerald); }
+
+    .window-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      animation: pulseGreen 2s infinite;
+    }
+
+    .screenshot-img-container {
+      width: 100%;
+      background: var(--bg-viewport);
+      position: relative;
+    }
+
+    .product-screenshot-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .screenshot-caption {
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .caption-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .caption-tag.blue { color: var(--accent-primary); }
+    .caption-tag.green { color: var(--accent-emerald); }
+
+    .caption-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .caption-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .caption-tech-stack {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      background: var(--bg-subtle-1);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+    }
+
+    /* Proof Cards Grid */
+    .product-proof-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .proof-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: var(--shadow-card);
+    }
+
+    .proof-icon {
+      font-size: 1.4rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--bg-subtle-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .proof-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .proof-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Philosophy Section */
+    .philosophy-section {
+      padding: 90px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .phil-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    .phil-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 22px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .phil-num {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-size: 2.2rem;
+      color: var(--accent-primary);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .phil-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .phil-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Stories Section */
+    .stories-section {
+      padding: 90px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .story-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 22px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .story-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-subtle-1);
+      color: var(--accent-primary);
+      display: inline-block;
+      margin-bottom: 18px;
+    }
+
+    .story-quote {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      line-height: 1.45;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .story-author {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .story-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 90px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-list {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: border-color 0.2s ease;
+    }
+
+    .accordion-item:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .accordion-btn {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 20px 24px;
+      font-family: inherit;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .accordion-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--accent-primary);
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .accordion-item.open .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 0 24px 22px;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .accordion-item.open .accordion-content {
+      display: block;
+    }
+
+    /* Contact / Inquiry Card */
+    .inquiry-section {
+      padding: 80px 0 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .inquiry-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: var(--shadow-device);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inquiry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .inquiry-grid { grid-template-columns: 1fr; }
+    }
+
+    .inquiry-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .inquiry-desc {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .inquiry-email-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      background: var(--bg-subtle-1);
+      color: var(--accent-primary);
+      border-radius: 9999px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .inquiry-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 18px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .form-btn-submit {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+      font-size: 0.98rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px -4px var(--accent-glow);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .form-btn-submit:hover {
+      background: var(--accent-primary-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Site Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-stone);
+      padding: 48px 0 32px;
+      background: var(--bg-surface);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-copy {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: color 0.15s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-primary);
+    }
+
+    /* Spec & Token Drawer Modal */
+    .spec-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .spec-modal-overlay.open {
+      display: flex;
+    }
+
+    .spec-modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-stone);
+      border-radius: 24px;
+      max-width: 820px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px;
+      box-shadow: var(--shadow-device);
+      color: var(--text-primary);
+    }
+
+    .spec-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+
+    .spec-modal-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .spec-modal-close {
+      background: var(--bg-subtle-1);
+      border: 1px solid var(--border-stone);
+      color: var(--text-primary);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .token-table th, .token-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .token-table th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .token-preview-dot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      vertical-align: middle;
+      margin-right: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mockup Control Bar -->
+  <aside class="mockup-controls-bar" aria-label="Mockup review controls">
+    <div class="mockup-brand">
+      <span class="mockup-pill">DRAFTSTACK SPEC</span>
+      <span style="font-weight: 700; font-size: 0.95rem;">Dark Mode Proposals</span>
+    </div>
+
+    <div class="control-groups">
+      <!-- 3 Design Concepts -->
+      <div class="concept-select-group" id="conceptPicker">
+        <button type="button" class="concept-btn active" data-concept="obsidian" onclick="setConcept('obsidian')">
+          <span>👑 Slate Obsidian</span>
+          <span style="font-size:0.68rem; opacity:0.8; font-weight:400;">(Recommended)</span>
+        </button>
+        <button type="button" class="concept-btn" data-concept="carbon" onclick="setConcept('carbon')">
+          <span>⚡ Pure Carbon</span>
+        </button>
+        <button type="button" class="concept-btn" data-concept="sapphire" onclick="setConcept('sapphire')">
+          <span>🌌 Midnight Sapphire</span>
+        </button>
+      </div>
+
+      <!-- Instant Dark / Light Toggle -->
+      <div class="theme-mode-toggle">
+        <span id="themeModeLabel">🌙 Dark Mode</span>
+        <button type="button" class="toggle-switch-btn" id="modeSwitchBtn" onclick="toggleThemeMode()" aria-label="Toggle Light and Dark Mode">
+          <div class="toggle-switch-knob" id="modeSwitchKnob">🌙</div>
+        </button>
+      </div>
+
+      <!-- Quick Section Jump -->
+      <div class="jump-nav">
+        <a href="#top" class="jump-link">Hero</a>
+        <a href="#domains" class="jump-link">Domains</a>
+        <a href="#experience" class="jump-link">Showcase</a>
+        <a href="#philosophy" class="jump-link">Philosophy</a>
+        <a href="#faq" class="jump-link">FAQ</a>
+        <a href="#inquire" class="jump-link">Contact</a>
+      </div>
+
+      <!-- Token Specs Modal Button -->
+      <button type="button" class="spec-drawer-btn" onclick="openSpecModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        <span>Token Matrix</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Ambient Blobs -->
+  <div class="ambient-blobs" aria-hidden="true">
+    <div class="blob blob-blue"></div>
+    <div class="blob blob-cyan"></div>
+    <div class="blob blob-indigo"></div>
+  </div>
+
+  <!-- Main Website Header Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#top" class="logo" aria-label="DraftStack Home">
+        <img src="images/draftstack-mark.svg" alt="DraftStack" class="logo-mark-img" width="26" height="31">
+        <span class="logo-text">Draft<span class="logo-accent">Stack</span></span>
+      </a>
+
+      <nav id="site-nav" class="nav-menu" aria-label="Main Navigation">
+        <a href="#domains">Domains</a>
+        <a href="#experience">Experience</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Proposed Live Theme Toggle Inside Navbar -->
+        <button class="in-nav-theme-btn" id="inNavThemeBtn" onclick="toggleThemeMode()" title="Toggle Dark / Light Mode" aria-label="Toggle Theme">
+          <svg id="navSunIcon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="navMoonIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <a href="#inquire" class="btn btn-nav">Start a project</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="top" class="hero-section">
+      <div class="container hero-inner">
+        <div class="eyebrow-pill">
+          <span class="pulse-indicator"></span>
+          <span>Engineering Studio &bull; Accepting Q4 Projects</span>
+        </div>
+
+        <h1 class="hero-title">
+          We build custom software that feels genuinely 
+          <span class="hero-highlight">thoughtful</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          DraftStack is a small software engineering startup crafting bespoke web platforms, internal operational systems, and digital tools for ambitious businesses and professional firms. No corporate bureaucracy, just senior engineers building with care.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#inquire" class="btn btn-primary">Start a project</a>
+          <a href="#experience" class="btn btn-ghost">View our experience</a>
+        </div>
+
+        <div class="hero-badges">
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Direct senior developer access</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>100% Client code ownership</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 20 20" fill="currentColor" class="badge-icon"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <span>Weekly ship cycles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Domains Section -->
+    <section id="domains" class="domains-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Capabilities</span>
+          <h2 class="section-title">Project domains we craft</h2>
+          <p class="section-desc">Focused software solutions designed around the exact operational realities of your team.</p>
+        </div>
+
+        <div class="horizontal-grid">
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Bespoke Web</span>
+              <span class="scenario-time">01</span>
+            </div>
+            <h3 class="scenario-title">Custom Web Platforms</h3>
+            <p class="scenario-desc">High-performance client portals, customer web apps, and SaaS platforms built with modern full-stack architectures.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Enterprise Ops</span>
+              <span class="scenario-time">02</span>
+            </div>
+            <h3 class="scenario-title">Internal Operations OS</h3>
+            <p class="scenario-desc">Eliminate chaotic spreadsheets with tailored back-office dashboards, case management systems, and team trackers.</p>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-meta">
+              <span class="scenario-tag">Client Experience</span>
+              <span class="scenario-time">03</span>
+            </div>
+            <h3 class="scenario-title">Intake & Client Portals</h3>
+            <p class="scenario-desc">Frictionless client onboarding, secure document collection, and transparent status transparency for your clients.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience / Flagship Systems Showcase -->
+    <section id="experience" class="showcase-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Flagship Systems</span>
+          <h2 class="section-title">Production systems built with craft</h2>
+          <p class="section-desc">Explore the live architectures and interfaces engineered for mission-critical operations.</p>
+        </div>
+
+        <!-- Project Switcher Buttons -->
+        <div class="project-pill-bar">
+          <button type="button" class="project-pill-btn active" id="btnProjectLegal" onclick="switchProject('legal')">
+            <span class="project-dot blue"></span>
+            <span class="project-title">LegalPlatform</span>
+            <span class="project-tag">Enterprise Legal OS</span>
+          </button>
+
+          <button type="button" class="project-pill-btn" id="btnProjectGym" onclick="switchProject('gym')">
+            <span class="project-dot green"></span>
+            <span class="project-title">GymFlow</span>
+            <span class="project-tag">Fitness & Membership OS</span>
+          </button>
+        </div>
+
+        <!-- Tabs for LegalPlatform -->
+        <div class="screenshot-tab-bar" id="tabsLegal">
+          <button type="button" class="screenshot-tab-btn active" onclick="switchShot('product-annex-processing.png', 'Annex Document Pipeline', 'Secure multi-document OCR ingestion and automated annex bundling.', 'legal.internal.io/annex-pipeline')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Annex Automation</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('product-clients-cases.png', 'Clients & Case Dossiers', 'Unified client relationship index with automated court timeline tracking.', 'legal.internal.io/dossiers')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Clients & Cases</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('product-dashboard.png', 'Operational Dashboard', 'Telemetry metrics, document pipeline throughput, and queue monitoring.', 'legal.internal.io/dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Real-time Dashboard</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('product-login.png', 'Enterprise Auth & RBAC', 'Role-based access controls with hardware token and SSO capabilities.', 'legal.internal.io/auth')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Secure Staff Login</span>
+          </button>
+        </div>
+
+        <!-- Tabs for GymFlow (Featuring the freshly updated screenshots!) -->
+        <div class="screenshot-tab-bar" id="tabsGym" style="display:none;">
+          <button type="button" class="screenshot-tab-btn active" onclick="switchShot('gymflow-dashboard.png', 'Gym Dashboard', 'Membership operations, revenue tracking, and 7-day attendance trends.', 'app.gymflow.ph/dashboard', 'green')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span>Gym Dashboard</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('gymflow-members.png', 'Member Directory', 'Card-anchored member roster with status badges and quick check-in actions.', 'app.gymflow.ph/members', 'green')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Member Directory</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('gymflow-member-detail.png', 'Member Details & Pass QR', 'Individual member record with dynamic QR code generator and payment history.', 'app.gymflow.ph/members/1', 'green')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Member Details & QR</span>
+          </button>
+          <button type="button" class="screenshot-tab-btn" onclick="switchShot('gymflow-checkins.png', 'Live Check-Ins', 'Real-time check-in stream, manual overrides, and attendance telemetry.', 'app.gymflow.ph/checkin', 'green')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Live Check-Ins</span>
+          </button>
+        </div>
+
+        <!-- Browser Mockup Window Frame -->
+        <div class="mock-browser-window">
+          <div class="browser-header-bar">
+            <div class="browser-controls">
+              <span class="control-dot close"></span>
+              <span class="control-dot minimize"></span>
+              <span class="control-dot expand"></span>
+            </div>
+
+            <div class="browser-address-bar">
+              <span class="lock-icon">🔒</span>
+              <span id="activeUrlText">legal.internal.io/annex-pipeline</span>
+            </div>
+
+            <div class="window-status">
+              <span class="live-dot"></span>
+              <span>Live Application</span>
+            </div>
+          </div>
+
+          <div class="screenshot-img-container">
+            <img id="mainScreenshotImg" src="images/product-annex-processing.png" alt="Product Screenshot" class="product-screenshot-img">
+          </div>
+
+          <div class="screenshot-caption">
+            <div>
+              <span class="caption-tag blue" id="captionTag">LegalPlatform &bull; Production System</span>
+              <h3 class="caption-title" id="captionTitle">Annex Document Pipeline</h3>
+              <p class="caption-desc" id="captionDesc">Secure multi-document OCR ingestion and automated annex bundling.</p>
+            </div>
+
+            <div class="caption-tech-stack" id="captionTechStack">
+              <span class="tech-pill">.NET 9</span>
+              <span class="tech-pill">React 18</span>
+              <span class="tech-pill">PostgreSQL</span>
+              <span class="tech-pill">Docker</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proof Cards Grid -->
+        <div class="product-proof-grid" id="proofLegal">
+          <div class="proof-card">
+            <div class="proof-icon">⚡</div>
+            <div>
+              <h4 class="proof-title">Sub-Second Processing</h4>
+              <p class="proof-desc">Engineered for large multi-gigabyte filings with background worker queue guarantees.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">🛡️</div>
+            <div>
+              <h4 class="proof-title">Zero Data Leakage</h4>
+              <p class="proof-desc">Strict tenant isolation, encrypted data at rest, and detailed audit access logging.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">📊</div>
+            <div>
+              <h4 class="proof-title">Telemetry & Audit</h4>
+              <p class="proof-desc">Real-time status monitoring, worker state telemetry, and court submission logs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-proof-grid" id="proofGym" style="display:none;">
+          <div class="proof-card">
+            <div class="proof-icon">📱</div>
+            <div>
+              <h4 class="proof-title">Dynamic QR Check-In Engine</h4>
+              <p class="proof-desc">Sub-second scanner validation with member pass generation and offline retry resiliency.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">💳</div>
+            <div>
+              <h4 class="proof-title">Localized Payment Webhooks</h4>
+              <p class="proof-desc">Automated logging for GCash, Maya, and cash with automatic membership extension logic.</p>
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-icon">🔔</div>
+            <div>
+              <h4 class="proof-title">Smart Expiry Reminders</h4>
+              <p class="proof-desc">Automated SMS and email renewal alerts dispatched before membership lapse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="philosophy-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Engineering Principles</span>
+          <h2 class="section-title">How we approach building</h2>
+          <p class="section-desc">We reject bloat, layers of junior staff, and fragile codebases.</p>
+        </div>
+
+        <div class="phil-grid">
+          <div class="phil-card">
+            <span class="phil-num">01.</span>
+            <h3 class="phil-title">Bespoke, Not Template Clones</h3>
+            <p class="phil-desc">Off-the-shelf SaaS forces your operations into someone else's rigid workflow. We engineer systems specifically molded around how your business works.</p>
+          </div>
+
+          <div class="phil-card">
+            <span class="phil-num">02.</span>
+            <h3 class="phil-title">Direct Senior Collaboration</h3>
+            <p class="phil-desc">No accounts directors or intermediate phone games. You talk directly with the engineers designing and shipping the architecture every single week.</p>
+          </div>
+
+          <div class="phil-card">
+            <span class="phil-num">03.</span>
+            <h3 class="phil-title">Code Ownership & Independence</h3>
+            <p class="phil-desc">You own 100% of the repository, containers, and deployment recipes from day one. Zero vendor lock-in or licensing hostage situations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stories Section -->
+    <section id="stories" class="stories-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Client Collaborations</span>
+          <h2 class="section-title">What teams say about working with us</h2>
+          <p class="section-desc">Reliable delivery, thoughtful craftsmanship, and measurable business impact.</p>
+        </div>
+
+        <div class="stories-grid">
+          <div class="story-card">
+            <span class="story-tag">Legal Operations</span>
+            <p class="story-quote">"DraftStack replaced our fragmented spreadsheet workflow with an internal platform that saves our paralegal team 15+ hours every single week."</p>
+            <div class="story-author">Managing Partner</div>
+            <div class="story-role">Tier-1 Dispute & Litigation Practice</div>
+          </div>
+
+          <div class="story-card">
+            <span class="story-tag">Fitness Enterprise</span>
+            <p class="story-quote">"The QR check-in speed and automated GCash expiry extension changed our front-desk bottleneck completely. Flawless execution."</p>
+            <div class="story-author">Chief Operations Officer</div>
+            <div class="story-role">Metro Manila Fitness Network</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Questions & Clarity</span>
+          <h2 class="section-title">Frequently asked questions</h2>
+          <p class="section-desc">Clear answers on our engagement model, timelines, and technical standards.</p>
+        </div>
+
+        <div class="accordion-list">
+          <div class="accordion-item open">
+            <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+              <span>How does a project engagement work from start to ship?</span>
+              <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="accordion-content">
+              We start with a technical discovery deep-dive into your actual operational bottlenecks. We scope high-impact milestones, establish a staging environment within week one, and ship production-ready increments weekly.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+              <span>What technology stacks do you specialize in?</span>
+              <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="accordion-content">
+              Our core competencies focus on robust, modern architectures: TypeScript/React, Next.js, Node.js, Spring Boot (Java), .NET Core, PostgreSQL, and containerized Docker pipelines with AWS or private VPS infrastructure.
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+              <span>Do you provide dark mode support for applications?</span>
+              <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="accordion-content">
+              Yes, semantic tokenized theming is a foundational pillar of every design system we build. Themes sync seamlessly with OS preferences (`prefers-color-scheme`) and persist user choices in local storage with zero layout shift or flash of unstyled content.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inquiry / Contact Section -->
+    <section id="inquire" class="inquiry-section">
+      <div class="container">
+        <div class="inquiry-card">
+          <div class="inquiry-grid">
+            <div>
+              <h2 class="inquiry-title">Ready to build something thoughtful?</h2>
+              <p class="inquiry-desc">Tell us about your operational bottleneck or the system you envision. We respond within 24 hours with senior engineering feedback.</p>
+              
+              <div class="inquiry-email-badge">
+                <span>✉</span>
+                <span>info.draftstack@gmail.com</span>
+              </div>
+            </div>
+
+            <form class="inquiry-form" onsubmit="event.preventDefault(); alert('Inquiry demo submitted!');">
+              <div class="form-row">
+                <input type="text" class="form-input" placeholder="Your name" required>
+                <input type="email" class="form-input" placeholder="Work email" required>
+              </div>
+
+              <select class="form-select" required>
+                <option value="" disabled selected>Project domain of interest</option>
+                <option value="web">Custom Web Platform</option>
+                <option value="ops">Internal Operations OS</option>
+                <option value="intake">Intake & Client Portal</option>
+                <option value="other">Other Bespoke Engineering</option>
+              </select>
+
+              <textarea class="form-textarea" rows="3" placeholder="Briefly describe what you're aiming to build or solve..." required></textarea>
+
+              <button type="submit" class="form-btn-submit">
+                <span>Send project inquiry</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="logo">
+        <img src="images/draftstack-mark.svg" alt="DraftStack" class="logo-mark-img" width="22" height="26">
+        <span class="logo-text">Draft<span class="logo-accent">Stack</span></span>
+      </div>
+
+      <div class="footer-copy">
+        &copy; 2026 DraftStack Software Engineering Studio. All rights reserved.
+      </div>
+
+      <div class="footer-links">
+        <a href="#domains">Domains</a>
+        <a href="#experience">Experience</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Token Matrix Specification Modal -->
+  <div class="spec-modal-overlay" id="specModal" onclick="if(event.target===this) closeSpecModal()">
+    <div class="spec-modal-box">
+      <div class="spec-modal-header">
+        <div>
+          <h3 class="spec-modal-title">DraftStack Design Tokens — Dark Mode Architecture</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Semantic CSS custom properties mapped across all three dark mode proposals.</p>
+        </div>
+        <button type="button" class="spec-modal-close" onclick="closeSpecModal()">&times;</button>
+      </div>
+
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Token Name</th>
+            <th>Light Baseline</th>
+            <th>Concept 1: Slate Obsidian</th>
+            <th>Concept 2: Pure Carbon</th>
+            <th>Concept 3: Midnight Sapphire</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--bg-primary</code></td>
+            <td><span class="token-preview-dot" style="background:#F8FAFC;"></span> #F8FAFC</td>
+            <td><span class="token-preview-dot" style="background:#090D16;"></span> #090D16</td>
+            <td><span class="token-preview-dot" style="background:#070709;"></span> #070709</td>
+            <td><span class="token-preview-dot" style="background:#050B18;"></span> #050B18</td>
+          </tr>
+          <tr>
+            <td><code>--bg-card</code></td>
+            <td><span class="token-preview-dot" style="background:#FFFFFF;"></span> #FFFFFF</td>
+            <td><span class="token-preview-dot" style="background:#0F172A;"></span> #0F172A</td>
+            <td><span class="token-preview-dot" style="background:#121318;"></span> #121318</td>
+            <td><span class="token-preview-dot" style="background:#0D1936;"></span> #0D1936</td>
+          </tr>
+          <tr>
+            <td><code>--text-primary</code></td>
+            <td><span class="token-preview-dot" style="background:#0F172A;"></span> #0F172A</td>
+            <td><span class="token-preview-dot" style="background:#F8FAFC;"></span> #F8FAFC</td>
+            <td><span class="token-preview-dot" style="background:#FFFFFF;"></span> #FFFFFF</td>
+            <td><span class="token-preview-dot" style="background:#F0F6FF;"></span> #F0F6FF</td>
+          </tr>
+          <tr>
+            <td><code>--accent-primary</code></td>
+            <td><span class="token-preview-dot" style="background:#2563EB;"></span> #2563EB</td>
+            <td><span class="token-preview-dot" style="background:#3B82F6;"></span> #3B82F6</td>
+            <td><span class="token-preview-dot" style="background:#38BDF8;"></span> #38BDF8</td>
+            <td><span class="token-preview-dot" style="background:#60A5FA;"></span> #60A5FA</td>
+          </tr>
+          <tr>
+            <td><code>--border-stone</code></td>
+            <td>rgba(15, 23, 42, 0.14)</td>
+            <td>rgba(255, 255, 255, 0.14)</td>
+            <td>rgba(255, 255, 255, 0.13)</td>
+            <td>rgba(96, 165, 250, 0.22)</td>
+          </tr>
+          <tr>
+            <td><strong>Contrast Ratio</strong></td>
+            <td><strong>15.2:1 (AAA)</strong></td>
+            <td><strong>16.4:1 (AAA)</strong></td>
+            <td><strong>19.8:1 (AAA)</strong></td>
+            <td><strong>15.8:1 (AAA)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="background: var(--bg-subtle-1); padding: 16px 20px; border-radius: 12px; font-size: 0.86rem; border: 1px solid var(--border-stone);">
+        <strong>Implementation Recommendation:</strong> Concept 1 (Slate Obsidian) maintains DraftStack's authoritative, executive presence while completely eliminating eye strain. It uses a high-contrast slate navy base (`#090D16`) with cobalt accent glow that pairs seamlessly with the legal and gym operations product screenshots.
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Mockup Scripts -->
+  <script>
+    // State
+    let currentTheme = 'dark';
+    let currentConcept = 'obsidian';
+
+    function setConcept(concept) {
+      currentConcept = concept;
+      document.documentElement.setAttribute('data-concept', concept);
+      
+      // Update active button styling
+      document.querySelectorAll('#conceptPicker .concept-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-concept') === concept);
+      });
+
+      // If currently light, switch to dark so concept is visible
+      if (currentTheme === 'light') {
+        toggleThemeMode();
+      }
+    }
+
+    function toggleThemeMode() {
+      currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+
+      const label = document.getElementById('themeModeLabel');
+      const knob = document.getElementById('modeSwitchKnob');
+      const sunIcon = document.getElementById('navSunIcon');
+      const moonIcon = document.getElementById('navMoonIcon');
+
+      if (currentTheme === 'light') {
+        label.textContent = '☀️ Light Mode';
+        knob.textContent = '☀️';
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        label.textContent = '🌙 Dark Mode';
+        knob.textContent = '🌙';
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    }
+
+    function openSpecModal() {
+      document.getElementById('specModal').classList.add('open');
+    }
+
+    function closeSpecModal() {
+      document.getElementById('specModal').classList.remove('open');
+    }
+
+    // Project Switcher
+    function switchProject(type) {
+      const isLegal = type === 'legal';
+      document.getElementById('btnProjectLegal').classList.toggle('active', isLegal);
+      document.getElementById('btnProjectGym').classList.toggle('active', !isLegal);
+      document.getElementById('tabsLegal').style.display = isLegal ? 'flex' : 'none';
+      document.getElementById('tabsGym').style.display = isLegal ? 'none' : 'flex';
+      document.getElementById('proofLegal').style.display = isLegal ? 'grid' : 'none';
+      document.getElementById('proofGym').style.display = isLegal ? 'none' : 'grid';
+
+      if (isLegal) {
+        switchShot('product-annex-processing.png', 'Annex Document Pipeline', 'Secure multi-document OCR ingestion and automated annex bundling.', 'legal.internal.io/annex-pipeline', 'blue');
+      } else {
+        switchShot('gymflow-dashboard.png', 'Gym Dashboard', 'Membership operations, revenue tracking, and 7-day attendance trends.', 'app.gymflow.ph/dashboard', 'green');
+      }
+    }
+
+    function switchShot(imgFile, title, desc, url, tagColor = 'blue') {
+      const img = document.getElementById('mainScreenshotImg');
+      img.src = 'images/' + imgFile;
+      document.getElementById('activeUrlText').textContent = url;
+      document.getElementById('captionTitle').textContent = title;
+      document.getElementById('captionDesc').textContent = desc;
+
+      const tag = document.getElementById('captionTag');
+      tag.className = 'caption-tag ' + tagColor;
+      tag.textContent = tagColor === 'green' ? 'GymFlow PH \u2022 Production System' : 'LegalPlatform \u2022 Production System';
+
+      const techStack = document.getElementById('captionTechStack');
+      if (tagColor === 'green') {
+        techStack.innerHTML = `
+          <span class="tech-pill">React 18</span>
+          <span class="tech-pill">Spring Boot 3</span>
+          <span class="tech-pill">PostgreSQL 16</span>
+          <span class="tech-pill">Tailwind CSS</span>
+        `;
+      } else {
+        techStack.innerHTML = `
+          <span class="tech-pill">.NET 9</span>
+          <span class="tech-pill">React 18</span>
+          <span class="tech-pill">PostgreSQL</span>
+          <span class="tech-pill">Docker</span>
+        `;
+      }
+
+      // Update active tab button in current bar
+      const activeBar = tagColor === 'green' ? document.getElementById('tabsGym') : document.getElementById('tabsLegal');
+      activeBar.querySelectorAll('.screenshot-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(title.split(' ')[0]));
+      });
+    }
+
+    function toggleAccordion(btn) {
+      const item = btn.closest('.accordion-item');
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

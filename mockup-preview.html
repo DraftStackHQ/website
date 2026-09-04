@@ -136,10 +136,13 @@
 
     <div class="switcher">
       <button class="tab-btn active" id="btn-opt1" onclick="switchOption(1)">
-        DraftStack: Thoughtful Software Studio
+        DraftStack: Live Light
+      </button>
+      <button class="tab-btn" id="btn-opt3" onclick="switchOption(3)" style="background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.35);">
+        🌙 Dark Mode Mockup
       </button>
       <button class="tab-btn" id="btn-opt2" onclick="switchOption(2)">
-        Softly Baseline Template
+        Softly Template
       </button>
     </div>
 
@@ -156,12 +159,14 @@
   <script>
     const urls = {
       1: "index.html",
-      2: "https://p.superdesign.dev/draft/27bb1512-ff88-4458-8027-8f2abd84dacd"
+      2: "https://p.superdesign.dev/draft/27bb1512-ff88-4458-8027-8f2abd84dacd",
+      3: "dark-mode-mockups.html"
     };
 
     function switchOption(num) {
       document.getElementById('btn-opt1').classList.toggle('active', num === 1);
       document.getElementById('btn-opt2').classList.toggle('active', num === 2);
+      document.getElementById('btn-opt3').classList.toggle('active', num === 3);
       document.getElementById('preview-frame').src = urls[num];
       document.getElementById('preview-link').href = urls[num];
     }
